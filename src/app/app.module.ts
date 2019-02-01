@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
+import { DynamicFormModule } from './dynamic-form/dynamic-form.module';
 
 @NgModule({
   declarations: [
@@ -10,7 +10,9 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    FormsModule,
+    ReactiveFormsModule,
+    DynamicFormModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
