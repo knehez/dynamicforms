@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { InputBase } from './inputBase';
+import { InputBase } from './form-elements/inputBase';
 import { DropdownInput } from './form-elements/dropdown';
 import { TextboxInput } from './form-elements/textBox';
+import { RadioInput } from './form-elements/radio';
 
 @Injectable()
 export class InputService {
@@ -9,6 +10,18 @@ export class InputService {
     getInputs() {
 
         const inputs: InputBase<any>[] = [
+
+            new RadioInput({
+                key: 'gender',
+                label: 'Gender',
+                options: [
+                    { key: 'Male', value: 'Male' },
+                    { key: 'Female', value: 'Female' }
+                ],
+                value: 'Male',
+                required: true,
+                order: 5
+            }),
 
             new DropdownInput({
                 key: 'education',
@@ -20,13 +33,12 @@ export class InputService {
                     { key: '3', value: 'Excellent' }
                 ],
                 required: true,
-                order: 3
+                order: 4
             }),
 
             new TextboxInput({
                 key: 'firstName',
                 label: 'First name',
-                value: '',
                 required: true,
                 order: 1
             }),
@@ -34,16 +46,15 @@ export class InputService {
             new TextboxInput({
                 key: 'lastName',
                 label: 'Last name',
-                value: '',
                 required: true,
-                order: 1
+                order: 2
             }),
 
             new TextboxInput({
                 key: 'emailAddress',
                 label: 'Email',
                 type: 'email',
-                order: 2
+                order: 3
             })
         ];
 

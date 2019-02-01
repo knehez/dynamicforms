@@ -1,4 +1,4 @@
-import { InputBase } from '../inputBase';
+import { InputBase } from './inputBase';
 
 export class TextboxInput extends InputBase<string> {
     controlType = 'textbox';

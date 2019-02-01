@@ -5,10 +5,16 @@
 
         <input *ngSwitchCase="'textbox'" class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.controlType">
 
-        <select [id]="input.key" *ngSwitchCase="'dropdown'" [formControlName]="input.key" class="form-control">
-            <option *ngFor="let opt of input.options" [value]="opt.key">{{opt.value}}</option>
+        <select *ngSwitchCase="'dropdown'" [id]="input.key" [formControlName]="input.key" class="form-control">
+            <option *ngFor="let opt of input['options']" [value]="opt.key">{{opt.value}}</option>
         </select>
 
+        <div *ngSwitchCase="'radio'">
+            <div *ngFor="let opt of input['options']" class="form-check form-check-inline">
+                <input [id]="input.key" value="{{opt.key}}" [formControlName]="input.key" class="form-check-input" [type]="'radio'" [checked]="input.value == opt.key">
+                <span class="form-check-label">{{opt.value}}</span>
+            </div>
+        </div>
     </div>
 
     <small class="text-danger" *ngIf="!isValid">{{input.label}} is required</small>

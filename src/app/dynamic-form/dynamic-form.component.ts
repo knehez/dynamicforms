@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { InputBase } from './inputBase';
+import { InputBase } from './form-elements/inputBase';
 import { InputControlService } from './inputControl.service';
 
 @Component({

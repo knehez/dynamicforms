@@ -1,8 +1,7 @@
 import { InputBase } from './inputBase';
 
-
-export class DropdownInput extends InputBase<string> {
-    controlType = 'dropdown';
+export class RadioInput extends InputBase<string> {
+    controlType = 'radio';
     options: { key: string, value: string }[] = [];
 
     constructor(options: {} = {}) {
