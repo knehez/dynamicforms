@@ -1,0 +1,16 @@
+{
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": "root",
+    "database": "nodedb",
+    "entities": ["dist-server/entities/*.js"],
+    "logging": true,
+    "migrationsTableName": "custom_migration_table",
+    "migrations": ["dist-server/migration/*.js"],
+    "cli": {
+        "entitiesDir": "src/backend/entities",
+        "migrationsDir": "src/backend/migration"
+    }
+  }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { InputBase } from './form-elements/inputBase';
 import { InputControlService } from './inputControl.service';
@@ -11,8 +11,8 @@ import { InputControlService } from './inputControl.service';
 export class DynamicFormComponent implements OnInit {
 
     @Input() inputs: InputBase<any>[] = [];
+    @Output() saved = new EventEmitter<boolean>();
     form: FormGroup;
-    payLoad = '';
 
     constructor(private qcs: InputControlService) { }
 
@@ -20,7 +20,18 @@ export class DynamicFormComponent implements OnInit {
         this.form = this.qcs.toFormGroup(this.inputs);
     }
 
-    onSubmit() {
-        this.payLoad = JSON.stringify(this.form.value);
+    getPayload(): any {
+        if (!this.form.valid) {
+            return null;
+        }
+
+        // add hidden, non modified data, because these were hidden on the form
+        this.inputs.forEach(element => {
+            if (element.hidden) {
+                this.form.value[element.key] = element.value;
+            }
+        });
+
+        return this.form.value;
     }
 }

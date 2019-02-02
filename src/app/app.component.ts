@@ -1,6 +1,17 @@
 import { Component } from '@angular/core';
 import { InputService } from './dynamic-form/input.service';
 
+export interface User {
+
+  id: number;
+
+  firstName: string;
+
+  lastName: string;
+
+  email: string;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,9 +19,11 @@ import { InputService } from './dynamic-form/input.service';
   providers: [InputService],
 })
 export class AppComponent {
-  title = 'dynamic-forms';
+  title = 'crud';
   inputs: any[];
   private _opened = false;
+  user: User;
+  cols: any[];
 
   constructor(service: InputService) {
     this.inputs = service.getInputs();

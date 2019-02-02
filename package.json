@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "gulp": "gulp",
+    "migration:run": "typeorm migration:run"
   },
   "private": true,
   "dependencies": {
@@ -20,8 +22,19 @@
     "@angular/platform-browser-dynamic": "~7.2.0",
     "bootstrap": "^4.2.1",
     "core-js": "^2.5.4",
+    "dotenv": "^6.2.0",
+    "express-jwt": "^5.3.1",
+    "express-unless": "^0.5.0",
+    "gulp": "^4.0.0",
+    "gulp-nodemon": "^2.4.2",
+    "morgan": "^1.9.1",
+    "mysql": "^2.16.0",
+    "primeicons": "^1.0.0",
+    "primeng": "^7.0.5",
+    "reflect-metadata": "^0.1.13",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
+    "typeorm": "^0.2.12",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
