@@ -9,8 +9,8 @@ import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
   providers: [GeneralRestService],
 })
 export class CrudTableComponent implements OnInit {
-  @Input() inputs = [];
-  @Input() name: string;
+  @Input() formElements = [];
+  @Input() entity: string;
 
   @ViewChild(DynamicFormComponent) formComponent: DynamicFormComponent;
 
@@ -26,9 +26,9 @@ export class CrudTableComponent implements OnInit {
   constructor(private service: GeneralRestService) { }
 
   ngOnInit() {
-    this.cols = this.inputs.map(input => ({ field: input.key, header: input.header }));
+    this.cols = this.formElements.map(input => ({ field: input.key, header: input.header }));
 
-    this.service.objectName = this.name;
+    this.service.objectName = this.entity;
     this.service.getAll().then(
       (res) => { this.models = res; },
       (err) => {
@@ -79,7 +79,7 @@ export class CrudTableComponent implements OnInit {
     for (const key in this.model) {
       if (this.model.hasOwnProperty(key)) {
         const element = this.model[key];
-        const found = this.inputs.find(item => item.key === key);
+        const found = this.formElements.find(item => item.key === key);
         if (found) {
           found.value = element;
         }

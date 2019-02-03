@@ -25,10 +25,10 @@
   </ng-template>
 </p-table>
 
-<p-dialog header="{{name}} details" *ngIf="displayDialog" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+<p-dialog header="{{entity}} details" *ngIf="displayDialog" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
   [style]="{width: '300px'}">
   <div class="ui-g ui-fluid" *ngIf="model">
-    <app-dynamic-form [inputs]="inputs"></app-dynamic-form>
+    <app-dynamic-form [inputs]="formElements"></app-dynamic-form>
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">

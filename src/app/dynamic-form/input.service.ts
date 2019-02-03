@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { InputBase } from './form-elements/inputBase';
 import { DropdownInput } from './form-elements/dropdown';
 import { TextboxInput } from './form-elements/textBox';
 import { RadioInput } from './form-elements/radio';
@@ -31,7 +30,7 @@ export function FormField(updates: any) {
 @Injectable()
 export class InputService {
 
-    getInputs() {
+    getFormElements() {
         const user = new User();
         const metadata = Reflect.getMetadata(PROPERTY_METADATA_KEY, user);
         const userInputs = [];
