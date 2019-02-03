@@ -8,10 +8,12 @@ export default function setRoutes(app) {
   const userCtrl = new UserCtrl();
 
   // Users
-  router.route('/users').get(userCtrl.getAll);
-  router.route('/users/:id').get(userCtrl.get);
-  router.route('/users').post(userCtrl.insert);
-  router.route('/users/:id').put(userCtrl.update);
-  router.route('/users/:id').delete(userCtrl.delete);
+  const user = 'users';
+  router.route('/' + `${user}`).get(userCtrl.getAll);
+  router.route('/' + `${user}` + '/:id').get(userCtrl.get);
+  router.route('/' + `${user}`).post(userCtrl.insert);
+  router.route('/' + `${user}` + '/:id').put(userCtrl.update);
+  router.route('/' + `${user}` + '/:id').delete(userCtrl.delete);
+
   app.use('/backend', router);
 }

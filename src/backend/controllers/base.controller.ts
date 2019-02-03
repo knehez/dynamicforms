@@ -21,7 +21,7 @@ abstract class BaseCtrl {
   insert = async (req, res) => {
     const entity = this.model.create(req.body);
     await this.model.save(entity);
-    res.send({id: entity['id']});
+    res.send({ id: entity['id'] });
   }
 
   // Get by id
@@ -41,7 +41,7 @@ abstract class BaseCtrl {
   update = async (req, res) => {
     const entity = await this.model.findOne(req.params.id);
     await this.model.update(entity, req.body);
-    res.send({id: entity['id']});
+    res.send({ id: entity['id'] });
   }
 
   // Delete by id
