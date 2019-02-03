@@ -38,7 +38,7 @@ app.use(morgan('dev'));
 
 createConnection().then(connection => {
   process.stdout.write('Connected to MySQL DB\n');
-  const userRepository = connection.getRepository(User);
+
   setRoutes(app);
 
   app.get('/*', function (req, res) {

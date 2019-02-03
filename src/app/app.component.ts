@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { InputService } from './dynamic-form/input.service';
+import { User } from 'src/backend/entities/user';
+import { Task } from 'src/backend/entities/task';
 
 @Component({
   selector: 'app-root',
@@ -9,12 +11,14 @@ import { InputService } from './dynamic-form/input.service';
 })
 export class AppComponent {
   title = 'crud';
-  inputs: any[];
+  userFormElements: any[];
+  taskFormElements: any[];
   private _opened = false;
   cols: any[];
 
   constructor(service: InputService) {
-    this.inputs = service.getFormElements();
+    this.userFormElements = service.getFormElements(new User);
+    this.taskFormElements = service.getFormElements(new Task);
   }
 
   private _toggleSidebar() {

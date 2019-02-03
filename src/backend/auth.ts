@@ -6,4 +6,5 @@ export const PERMISSION = {
     EXPERIMENT_VIEWER: 'experimentviewer',
     MEASUREMENT_MANAGER: 'measurementmanager',
     MEASUREMENT_VIEWER: 'measurementviewer',
-}
+};
+

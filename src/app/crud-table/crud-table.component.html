@@ -1,7 +1,7 @@
 <p-table [columns]="cols" [value]="models" selectionMode="single" [(selection)]="selectedModel" (onRowSelect)="onRowSelect($event)"
   [paginator]="true" [rows]="15">
   <ng-template pTemplate="caption">
-    List of {{name}}
+    List of {{entity}}
   </ng-template>
   <ng-template pTemplate="header" let-columns>
     <tr>

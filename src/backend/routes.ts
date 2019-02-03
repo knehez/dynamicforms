@@ -1,19 +1,30 @@
 import * as express from 'express';
 import UserCtrl from './controllers/user.controller';
+import BaseCtrl from './controllers/base.controller';
+import TaskCtrl from './controllers/task.controller';
 
 export default function setRoutes(app) {
 
   const router = express.Router();
 
-  const userCtrl = new UserCtrl();
-
   // Users
+  const userCtrl = new UserCtrl();
   const user = 'users';
-  router.route('/' + `${user}`).get(userCtrl.getAll);
-  router.route('/' + `${user}` + '/:id').get(userCtrl.get);
-  router.route('/' + `${user}`).post(userCtrl.insert);
-  router.route('/' + `${user}` + '/:id').put(userCtrl.update);
-  router.route('/' + `${user}` + '/:id').delete(userCtrl.delete);
+  getGeneralRoutes(router, user, userCtrl);
+
+  // Tasks
+  const tasks = 'tasks';
+  const taskCtrl = new TaskCtrl();
+
+  getGeneralRoutes(router, tasks, taskCtrl);
 
   app.use('/backend', router);
+}
+
+function getGeneralRoutes(router, entityName: string, ctrl: BaseCtrl) {
+  router.route('/' + `${entityName}`).get(ctrl.getAll);
+  router.route('/' + `${entityName}` + '/:id').get(ctrl.get);
+  router.route('/' + `${entityName}`).post(ctrl.insert);
+  router.route('/' + `${entityName}` + '/:id').put(ctrl.update);
+  router.route('/' + `${entityName}` + '/:id').delete(ctrl.delete);
 }

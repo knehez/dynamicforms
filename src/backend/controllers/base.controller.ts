@@ -1,4 +1,4 @@
-import { Repository, Entity } from 'typeorm';
+import { Repository } from 'typeorm';
 
 abstract class BaseCtrl {
 

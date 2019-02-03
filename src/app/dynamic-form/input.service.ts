@@ -30,9 +30,8 @@ export function FormField(updates: any) {
 @Injectable()
 export class InputService {
 
-    getFormElements() {
-        const user = new User();
-        const metadata = Reflect.getMetadata(PROPERTY_METADATA_KEY, user);
+    getFormElements(entity) {
+        const metadata = Reflect.getMetadata(PROPERTY_METADATA_KEY, entity);
         const userInputs = [];
         for (const key in metadata) {
             if (metadata.hasOwnProperty(key)) {
