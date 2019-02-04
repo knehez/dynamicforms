@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">entity</h4>
+  <h4 class="modal-title" id="modal-basic-title">{{entityName}}</h4>
   <button type="button" class="close" aria-label="Close" (click)="close()">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -11,5 +11,5 @@
 </div>
 <div class="modal-footer">
   <button *ngIf="!isNewModel" type="button" class="btn btn-outline-dark" (click)="delete()">Delete</button>
-  <button type="button" class="btn btn-outline-dark" (click)="save()">{{isNewModel ? 'Save' : 'Edit'}}</button>
+  <button type="button" class="btn btn-outline-dark" (click)="save()" [disabled]="!formComponent.getPayload()">{{isNewModel ? 'Save' : 'Edit'}}</button>
 </div>

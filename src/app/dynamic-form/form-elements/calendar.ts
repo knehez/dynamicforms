@@ -1,8 +1,8 @@
 import { InputBase } from './inputBase';
 
-export class CalendarInput extends InputBase<string> {
+export class CalendarInput extends InputBase<Date> {
     controlType = 'calendar';
-    type: string;
+    type: 'date';
 
     constructor(options: {} = {}) {
         super(options);

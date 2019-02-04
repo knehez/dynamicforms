@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { GeneralRestService } from './general-rest.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalFormComponent } from './modal-form/modal-form.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-crud-table',
@@ -12,7 +13,7 @@ import { ModalFormComponent } from './modal-form/modal-form.component';
 export class CrudTableComponent implements OnInit {
 
   @Input() formElements = [];
-  @Input() entity: string;
+  @Input() entityName: string;
 
   columns = [];
   models = [];
@@ -29,9 +30,9 @@ export class CrudTableComponent implements OnInit {
   ngOnInit() {
     this.columns = this.formElements.map(input => ({ field: input.key, header: input.header }));
 
-    this.service.objectName = this.entity;
+    this.service.objectName = this.entityName;
     this.service.getAll().then(
-      (res) => { this.models = res; console.dir(this.models); },
+      (res) => { this.models = res; this.convertDates(); },
       (err) => {
         console.log(err);
       });
@@ -43,10 +44,13 @@ export class CrudTableComponent implements OnInit {
     return this.models.slice(begin, end);
   }
 
-
   add() {
     this.oneModel = {};
     this.isNewModel = true;
+    // fill in form with current elements (if any)
+    for (const elem of this.formElements) {
+      elem.value = elem.defaultValue;
+    }
     this.openModalForm();
   }
 
@@ -54,7 +58,7 @@ export class CrudTableComponent implements OnInit {
     this.isNewModel = false;
     this.oneModel = rowData;
 
-    // fill in form with dynamic elements
+    // fill in form with current elements (if any)
     for (const key in this.oneModel) {
       if (this.oneModel.hasOwnProperty(key)) {
         const element = this.oneModel[key];
@@ -74,6 +78,7 @@ export class CrudTableComponent implements OnInit {
     // @Input manually added this way
     modalRef.componentInstance.formElements = this.formElements;
     modalRef.componentInstance.isNewModel = this.isNewModel;
+    modalRef.componentInstance.entityName = this.entityName;
 
     modalRef.result.then((result) => {
       switch (result['action']) {
@@ -103,6 +108,7 @@ export class CrudTableComponent implements OnInit {
     }
 
     this.models = models;
+    this.convertDates();
     this.oneModel = null;
   }
 
@@ -113,7 +119,25 @@ export class CrudTableComponent implements OnInit {
     this.oneModel = null;
   }
 
-  isDate(obj) {
-    return obj instanceof Date;
+  //
+  // converts Date objects to string and vica versa
+  //
+  convertDates() {
+    for (const key in this.formElements) {
+      if (this.formElements.hasOwnProperty(key)) {
+        const element = this.formElements[key];
+        if (element.type === 'date') {
+          this.convertDate(element.key, element.dateFormat);
+        }
+      }
+    }
+  }
+
+  convertDate(key, dateFormat) {
+    for (const iterator of this.models) {
+      if (iterator[key]) {
+        iterator[key] = moment(iterator[key]).format(dateFormat);
+      }
+    }
   }
 }

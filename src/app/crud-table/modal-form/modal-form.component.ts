@@ -10,6 +10,7 @@ import { DynamicFormComponent } from 'src/app/dynamic-form/dynamic-form.componen
 export class ModalFormComponent implements OnInit {
   @Input() formElements = [];
   @Input() isNewModel: boolean;
+  @Input() entityName: string;
 
   @ViewChild(DynamicFormComponent) formComponent: DynamicFormComponent;
 

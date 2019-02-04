@@ -13,7 +13,7 @@
   </tbody>
 </table>
 
-<div class="d-flex justify-content-center p-2">
-  <button type="button" class="btn btn-outline-primary" (click)="add()">Add</button>
+<div class="d-flex justify-content-between p-2">
+  <button type="button" class="btn btn-outline-primary align-self-start" (click)="add()">Add</button>
   <ngb-pagination [collectionSize]="models.length" [(page)]="page" [pageSize]="4"></ngb-pagination>
 </div>

@@ -1,3 +1,4 @@
+
 export class InputBase<T> {
     value: T;
     key: string;
@@ -7,9 +8,11 @@ export class InputBase<T> {
     controlType: string;
     type: string;
     hidden: boolean;
-    convert: any;
+    dateFormat: string;
+    defaultValue: T;
     constructor(options: {
         value?: T,
+        defaultValue?: T;
         key?: string,
         header?: string,
         required?: boolean,
@@ -17,9 +20,10 @@ export class InputBase<T> {
         controlType?: string,
         type?: string,
         hidden?: boolean,
-        convert?: any;
+        dateFormat?: string;
     } = {}) {
         this.value = options.value;
+        this.defaultValue = options.defaultValue;
         this.key = options.key || '';
         this.header = options.header || '';
         this.required = !!options.required;
@@ -27,6 +31,6 @@ export class InputBase<T> {
         this.controlType = options.controlType || '';
         this.type = options.controlType || 'text';
         this.hidden = options.hidden || false;
-        this.convert = function (o) { return 'nincs'; };
+        this.dateFormat = options.dateFormat || '';
     }
 }
