@@ -8,13 +8,16 @@ import { CrudTableComponent } from './crud-table/crud-table.component';
 import { PanelModule } from 'primeng/panel';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-import {TableModule} from 'primeng/table';
+import { TableModule } from 'primeng/table';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalFormComponent } from './crud-table/modal-form/modal-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CrudTableComponent
+    CrudTableComponent,
+    ModalFormComponent
   ],
   imports: [
     BrowserModule,
@@ -27,6 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
     DialogModule,
     ButtonModule,
     TableModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

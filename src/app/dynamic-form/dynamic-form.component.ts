@@ -2,6 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { InputBase } from './form-elements/inputBase';
 import { InputControlService } from './inputControl.service';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-dynamic-form',

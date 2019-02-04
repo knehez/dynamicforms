@@ -9,6 +9,7 @@
     "logging": true,
     "migrationsTableName": "custom_migration_table",
     "migrations": ["dist-server/migration/*.js"],
+    "timezone": "Z",
     "cli": {
         "entitiesDir": "src/backend/entities",
         "migrationsDir": "src/backend/migration"

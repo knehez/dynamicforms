@@ -3,8 +3,8 @@ import { DropdownInput } from './form-elements/dropdown';
 import { TextboxInput } from './form-elements/textBox';
 import { RadioInput } from './form-elements/radio';
 import 'reflect-metadata';
-import { User } from 'src/backend/entities/user';
 import { PROPERTY_METADATA_KEY } from 'src/backend/entities/decorator';
+import { CalendarInput } from './form-elements/calendar';
 
 export function FormField(updates: any) {
     return (target: any, propertyKey: string | symbol) => {
@@ -50,6 +50,9 @@ export class InputService {
                         break;
                     case 'RadioInput':
                         controlObject = new RadioInput(params);
+                        break;
+                    case 'CalendarInput':
+                        controlObject = new CalendarInput(params);
                         break;
                     default:
                         throw new Error('dynamicForm: className not found');

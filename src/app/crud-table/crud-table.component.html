@@ -1,39 +1,19 @@
-<p-table [columns]="cols" [value]="models" selectionMode="single" [(selection)]="selectedModel" (onRowSelect)="onRowSelect($event)"
-  [paginator]="true" [rows]="15">
-  <ng-template pTemplate="caption">
-    List of {{entity}}
-  </ng-template>
-  <ng-template pTemplate="header" let-columns>
+<table class="table table-striped">
+  <thead>
     <tr>
-      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-        {{col.header}}
-        <p-sortIcon [field]="col.field"></p-sortIcon>
-      </th>
+      <th *ngFor="let col of columns" scope="col">{{col.header}}</th>
     </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-rowData let-columns="columns">
-    <tr [pSelectableRow]="rowData">
-      <td *ngFor="let col of columns">
-        {{rowData[col.field]}}
+  </thead>
+  <tbody>
+    <tr *ngFor="let dataRow of tableData">
+      <td *ngFor="let col of columns" scope="row" (click)="rowSelect(dataRow)">
+        {{dataRow[col.field]}}
       </td>
     </tr>
-  </ng-template>
-  <ng-template pTemplate="summary" let-rowData>
-    <div style="text-align:left">
-      <button type="button" pButton icon="pi pi-plus" (click)="showDialogToAdd()" label="Add"></button>
-    </div>
-  </ng-template>
-</p-table>
+  </tbody>
+</table>
 
-<p-dialog header="{{entity}} details" *ngIf="displayDialog" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
-  [style]="{width: '300px'}">
-  <div class="ui-g ui-fluid" *ngIf="model">
-    <app-dynamic-form [inputs]="formElements"></app-dynamic-form>
-  </div>
-  <p-footer>
-    <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button *ngIf="!newModel" type="button" pButton icon="pi pi-times" (click)="delete()" label="Delete"></button>
-      <button type="button" pButton icon="pi pi-check" (click)="edit()" label="{{newModel?'Save':'Edit'}}"></button>
-    </div>
-  </p-footer>
-</p-dialog>
+<div class="d-flex justify-content-center p-2">
+  <button type="button" class="btn btn-outline-primary" (click)="add()">Add</button>
+  <ngb-pagination [collectionSize]="models.length" [(page)]="page" [pageSize]="4"></ngb-pagination>
+</div>

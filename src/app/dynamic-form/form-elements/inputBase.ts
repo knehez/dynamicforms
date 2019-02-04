@@ -7,6 +7,7 @@ export class InputBase<T> {
     controlType: string;
     type: string;
     hidden: boolean;
+    convert: any;
     constructor(options: {
         value?: T,
         key?: string,
@@ -15,7 +16,8 @@ export class InputBase<T> {
         order?: number,
         controlType?: string,
         type?: string,
-        hidden?: boolean;
+        hidden?: boolean,
+        convert?: any;
     } = {}) {
         this.value = options.value;
         this.key = options.key || '';
@@ -25,5 +27,6 @@ export class InputBase<T> {
         this.controlType = options.controlType || '';
         this.type = options.controlType || 'text';
         this.hidden = options.hidden || false;
+        this.convert = function (o) { return 'nincs'; };
     }
 }

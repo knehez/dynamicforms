@@ -8,6 +8,8 @@
             <option *ngFor="let opt of input['options']" [value]="opt.key">{{opt.value}}</option>
         </select>
 
+        <p-calendar *ngSwitchCase="'calendar'" [formControlName]="input.key" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+
         <div *ngSwitchCase="'radio'">
             <div *ngFor="let opt of input['options']" class="form-check form-check-inline">
                 <input [id]="input.key" value="{{opt.key}}" [formControlName]="input.key" class="form-check-input"

@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { FormField } from './decorator';
+import * as moment from 'moment';
 
 @Entity()
 export class Task {
@@ -16,21 +17,23 @@ export class Task {
 
     @FormField({
         className: 'TextboxInput',
-        header: 'Due Date',
-        required: true,
-        type: 'string',
-        order: 3
-    })
-    @Column('date')
-    taskName: string;
-
-    @FormField({
-        className: 'TextboxInput',
         header: 'Task Name',
         required: true,
         type: 'string',
         order: 2
     })
     @Column()
-    dueDate: string;
+    taskName: string;
+
+    @FormField({
+        className: 'CalendarInput',
+        header: 'Due Date',
+        value: { date: moment().format('YYYY-MM-DD') },
+        toString: (o) => { 'hello'; },
+        required: true,
+        type: 'string',
+        order: 3
+    })
+    @Column('datetime')
+    dueDate: Date;
 }
