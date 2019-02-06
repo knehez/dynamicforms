@@ -17,6 +17,8 @@ export class AppComponent {
   taskItemFormElements: any[];
   private _opened = false;
   cols: any[];
+  isNavbarCollapsed = true;
+  currentSelection = 'user';
 
   constructor(service: InputService) {
     this.userFormElements = service.getFormElements(new User);

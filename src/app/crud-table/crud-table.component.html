@@ -10,9 +10,7 @@
         <div *ngIf="!col.linkedObject">{{dataRow[col.key]}}</div>
 
         <div *ngIf="col.linkedObject">
-          <div *ngFor="let val of dataRow[col.linkedObject]">
-            <div>{{val[col.linkedData.value]}}</div>
-          </div>
+          <span *ngFor="let val of dataRow[col.linkedObject]" class="badge badge-success m-1">{{val[col.linkedData.value]}}</span>
         </div>
 
       </td>

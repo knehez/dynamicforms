@@ -44,7 +44,6 @@ export class CrudTableComponent implements OnInit {
         elem.allValues = await this.service.getAllSync(elem.linkedObject);
       }
     }
-
   }
 
   get tableData(): any[] {
