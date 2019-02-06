@@ -2,6 +2,7 @@ import * as express from 'express';
 import UserCtrl from './controllers/user.controller';
 import BaseCtrl from './controllers/base.controller';
 import TaskCtrl from './controllers/task.controller';
+import TaskItemCtrl from './controllers/taskItem.controller';
 
 export default function setRoutes(app) {
 
@@ -17,6 +18,12 @@ export default function setRoutes(app) {
   const taskCtrl = new TaskCtrl();
 
   getGeneralRoutes(router, tasks, taskCtrl);
+
+  // Task Items
+  const tasksItems = 'taskitems';
+  const taskItemCtrl = new TaskItemCtrl();
+
+  getGeneralRoutes(router, tasksItems, taskItemCtrl);
 
   app.use('/backend', router);
 }

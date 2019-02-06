@@ -1,9 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { FormField } from './decorator';
-import { TaskItem } from './taskItem';
+import { Task } from './task';
 
 @Entity()
-export class Task {
+export class TaskItem {
     @FormField({
         className: 'TextboxInput',
         header: 'Id',
@@ -17,13 +17,13 @@ export class Task {
 
     @FormField({
         className: 'TextboxInput',
-        header: 'Task Name',
+        header: 'Item Name',
         required: true,
         type: 'string',
         order: 2
     })
     @Column()
-    taskName: string;
+    itemName: string;
 
     @FormField({
         className: 'CalendarInput',
@@ -36,16 +36,6 @@ export class Task {
     @Column('datetime')
     dueDate: Date;
 
-    @FormField({
-        className: 'DropdownInput',
-        header: 'Task Items',
-        linkedObject: 'taskItems',
-        linkedData: { key: 'id', value: 'itemName' },
-        required: true,
-        order: 4
-    })
-    @OneToMany(type => TaskItem, taskItem => taskItem.task, {
-        eager: true, cascade: true,
-    })
-    taskItems: TaskItem[];
+    @ManyToOne(type => Task, task => task.taskItems)
+    task: Task;
 }

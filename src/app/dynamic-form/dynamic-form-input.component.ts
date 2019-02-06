@@ -12,5 +12,10 @@ export class DynamicFormInputComponent {
     get isValid() {
         return this.form.controls[this.input.key].valid;
     }
+
+    debug(obj) {
+        console.dir(obj);
+        return obj;
+    }
 }
 

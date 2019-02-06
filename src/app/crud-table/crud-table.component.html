@@ -6,8 +6,15 @@
   </thead>
   <tbody>
     <tr *ngFor="let dataRow of tableData">
-      <td *ngFor="let col of columns" scope="row" (click)="rowSelect(dataRow)">
-        {{dataRow[col.field]}}
+      <td *ngFor="let col of formElements" scope="row" (click)="rowSelect(dataRow)">
+        <div *ngIf="!col.linkedObject">{{dataRow[col.key]}}</div>
+
+        <div *ngIf="col.linkedObject">
+          <div *ngFor="let val of dataRow[col.linkedObject]">
+            <div>{{val[col.linkedData.value]}}</div>
+          </div>
+        </div>
+
       </td>
     </tr>
   </tbody>

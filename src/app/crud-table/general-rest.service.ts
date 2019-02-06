@@ -22,6 +22,10 @@ export class GeneralRestService {
         });
     }
 
+    async getAllSync(objectName) {
+        return await this._http.get(`${this.actionUrl}${objectName}`).toPromise();
+    }
+
     save(obj) {
         return new Promise((resolve, reject) => {
             this._http.post(`${this.actionUrl}${this.objectName}`, obj)

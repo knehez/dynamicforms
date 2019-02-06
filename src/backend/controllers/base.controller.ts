@@ -39,8 +39,7 @@ abstract class BaseCtrl {
 
   // Update by id
   update = async (req, res) => {
-    const entity = await this.model.findOne(req.params.id);
-    await this.model.update(entity, req.body);
+    const entity = await this.model.save(req.body);
     res.send({ id: entity['id'] });
   }
 

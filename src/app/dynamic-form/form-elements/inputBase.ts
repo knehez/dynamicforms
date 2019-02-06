@@ -1,6 +1,11 @@
+export interface ILinkedData {
+    key: string;
+    value: string;
+}
 
 export class InputBase<T> {
     value: T;
+    defaultValue: T;
     key: string;
     header: string;
     required: boolean;
@@ -9,7 +14,8 @@ export class InputBase<T> {
     type: string;
     hidden: boolean;
     dateFormat: string;
-    defaultValue: T;
+    linkedObject: string;
+    linkedData: {};
     constructor(options: {
         value?: T,
         defaultValue?: T;
@@ -21,6 +27,8 @@ export class InputBase<T> {
         type?: string,
         hidden?: boolean,
         dateFormat?: string;
+        linkedObject?: string,
+        linkedData?: ILinkedData;
     } = {}) {
         this.value = options.value;
         this.defaultValue = options.defaultValue;
@@ -32,5 +40,7 @@ export class InputBase<T> {
         this.type = options.controlType || 'text';
         this.hidden = options.hidden || false;
         this.dateFormat = options.dateFormat || '';
+        this.linkedObject = options.linkedObject || null;
+        this.linkedData = options.linkedData || null;
     }
 }

@@ -27,7 +27,7 @@ export class CrudTableComponent implements OnInit {
 
   constructor(private service: GeneralRestService, private modalService: NgbModal) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.columns = this.formElements.map(input => ({ field: input.key, header: input.header }));
 
     this.service.objectName = this.entityName;
@@ -36,6 +36,15 @@ export class CrudTableComponent implements OnInit {
       (err) => {
         console.log(err);
       });
+
+    // get all linked object data
+    for (const elem of this.formElements) {
+      // if array the we must query all possible values
+      if (elem.linkedObject) {
+        elem.allValues = await this.service.getAllSync(elem.linkedObject);
+      }
+    }
+
   }
 
   get tableData(): any[] {
@@ -83,7 +92,7 @@ export class CrudTableComponent implements OnInit {
     modalRef.result.then((result) => {
       switch (result['action']) {
         case 'save':
-          this.edit(result['data']);
+          this.save(result['data']);
           break;
         case 'delete':
           this.delete();
@@ -92,7 +101,7 @@ export class CrudTableComponent implements OnInit {
     });
   }
 
-  edit(payLoad) {
+  save(payLoad) {
     if (payLoad == null) {
       return;
     }
@@ -115,12 +124,13 @@ export class CrudTableComponent implements OnInit {
   delete() {
     const index = this.models.indexOf(this.oneModel);
     this.models = this.models.filter((val, i) => i !== index);
+
     this.service.delete(this.oneModel);
     this.oneModel = null;
   }
 
   //
-  // converts Date objects to string and vica versa
+  // converts Date objects to string or vica versa
   //
   convertDates() {
     for (const key in this.formElements) {
@@ -139,5 +149,10 @@ export class CrudTableComponent implements OnInit {
         iterator[key] = moment(iterator[key]).format(dateFormat);
       }
     }
+  }
+
+  debug(obj) {
+    console.dir(obj);
+    return obj;
   }
 }

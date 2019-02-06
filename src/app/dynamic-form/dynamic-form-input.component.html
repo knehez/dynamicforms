@@ -4,10 +4,15 @@
     <div [ngSwitch]="input.controlType">
         <input *ngSwitchCase="'textbox'" class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.type">
 
-        <select *ngSwitchCase="'dropdown'" [id]="input.key" [formControlName]="input.key" class="form-control">
-            <option *ngFor="let opt of input['options']" [value]="opt.key">{{opt.value}}</option>
-        </select>
+        <div *ngSwitchCase="'dropdown'">
+            <ng-select *ngIf="input.linkedObject" [items]="input['allValues']" [multiple]="true" [closeOnSelect]="false" [searchable]="false"
+                [bindLabel]="input.linkedData['value']" placeholder="Select ..." [formControlName]="input.key">
+            </ng-select>
 
+            <select *ngIf="!input.linkedObject" [id]="input.key" [formControlName]="input.key" class="form-control">
+                <option *ngFor="let opt of input['options']" [value]="opt.key">{{opt.value}}</option>
+            </select>
+        </div>
         <p-calendar *ngSwitchCase="'calendar'" [formControlName]="input.key" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
 
         <div *ngSwitchCase="'radio'">
