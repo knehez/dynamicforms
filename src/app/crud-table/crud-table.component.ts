@@ -18,8 +18,12 @@ export class CrudTableComponent implements OnInit {
   models = [];
 
   page = 1;
-
+  firstEntity: number;
+  lastEntity: number;
   isNewModel: boolean;
+  allEntities: number;
+  searchFilter: string;
+  currentEntities: number;
 
   oneModel: any = [];
 
@@ -28,7 +32,7 @@ export class CrudTableComponent implements OnInit {
   async ngOnInit() {
     this.service.objectName = this.entityName;
     this.service.getAll().then(
-      (res) => { this.models = res; this.convertDates(); },
+      (res) => { this.models = res; this.allEntities = this.models.length; this.convertDates(); },
       (err) => {
         console.log(err);
       });
@@ -43,9 +47,20 @@ export class CrudTableComponent implements OnInit {
   }
 
   get tableData(): any[] {
-    const begin = ((this.page - 1) * this.itemsPerPage);
-    const end = begin + this.itemsPerPage;
-    return this.models.slice(begin, end);
+    this.firstEntity = ((this.page - 1) * this.itemsPerPage);
+    this.lastEntity = this.firstEntity + this.itemsPerPage;
+
+    if (!this.searchFilter) {
+      this.lastEntity = this.lastEntity > this.allEntities ? this.allEntities : this.lastEntity;
+      this.currentEntities = this.models.length;
+      return this.models.slice(this.firstEntity, this.lastEntity);
+    } else {
+      const filtered = this.models.filter(item =>
+        Object.keys(item).some(k => ('' + item[k]).toLowerCase().includes(this.searchFilter.toLowerCase())));
+      this.currentEntities = filtered.length;
+      this.lastEntity = this.lastEntity > this.currentEntities ? filtered.length : this.lastEntity;
+      return filtered.slice(this.firstEntity, this.lastEntity);
+    }
   }
 
   add() {

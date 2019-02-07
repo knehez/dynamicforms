@@ -1,3 +1,7 @@
+<div class="d-flex justify-content-end p-2 form-inline">
+  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="searchFilter">
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</div>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -13,17 +17,18 @@
           <div *ngIf="!col.linkedObject">
 
             <div [ngSwitch]="col.controlType">
-                <div *ngSwitchCase="'checkbox'">
-                    <i *ngIf="dataRow[col.key]" class="pi pi-check text-success"></i>
-                    <i *ngIf="!dataRow[col.key]" class="pi pi-times text-primary"></i>
-                </div>
-                <div *ngSwitchDefault>{{dataRow[col.key]}}</div>
+              <div *ngSwitchCase="'checkbox'">
+                <i *ngIf="dataRow[col.key]" class="pi pi-check text-success"></i>
+                <i *ngIf="!dataRow[col.key]" class="pi pi-times text-danger"></i>
+              </div>
+              <ngb-highlight *ngSwitchDefault [result]="dataRow[col.key]" [term]="searchFilter"></ngb-highlight>
             </div>
 
           </div>
 
           <div *ngIf="col.linkedObject">
-            <span *ngFor="let val of dataRow[col.linkedObject]" class="badge badge-success m-1">{{val[col.linkedData.value]}}</span>
+            <span *ngFor="let val of dataRow[col.linkedObject]"
+              class="badge badge-success m-1">{{val[col.linkedData.value]}}</span>
           </div>
 
         </td>
@@ -33,6 +38,8 @@
 </table>
 
 <div class="d-flex justify-content-between p-2">
-  <button type="button" class="btn btn-outline-primary align-self-start" (click)="add()">Add</button>
-  <ngb-pagination [collectionSize]="models.length" [(page)]="page" [pageSize]="itemsPerPage"></ngb-pagination>
+  <small class="mr-auto p-2">Showing {{firstEntity + 1}} to {{lastEntity}} of {{currentEntities}} </small>
+  <small *ngIf="searchFilter">(filtered from {{allEntities}} entries)</small>
+  <button type="button" class="btn btn-outline-primary align-self-start m-2" (click)="add()">Add</button>
+  <ngb-pagination class="m-2" [collectionSize]="currentEntities" [(page)]="page" [pageSize]="itemsPerPage"></ngb-pagination>
 </div>
