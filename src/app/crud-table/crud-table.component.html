@@ -10,7 +10,17 @@
     <tr *ngFor="let dataRow of tableData">
       <ng-container *ngFor="let col of formElements">
         <td scope="row" (click)="rowSelect(dataRow)" *ngIf="!col.hidden">
-          <div *ngIf="!col.linkedObject">{{dataRow[col.key]}}</div>
+          <div *ngIf="!col.linkedObject">
+
+            <div [ngSwitch]="col.controlType">
+                <div *ngSwitchCase="'checkbox'">
+                    <i *ngIf="dataRow[col.key]" class="pi pi-check"></i>
+                    <i *ngIf="!dataRow[col.key]" class="pi pi-times"></i>
+                </div>
+                <div *ngSwitchDefault>{{dataRow[col.key]}}</div>
+            </div>
+
+          </div>
 
           <div *ngIf="col.linkedObject">
             <span *ngFor="let val of dataRow[col.linkedObject]" class="badge badge-success m-1">{{val[col.linkedData.value]}}</span>

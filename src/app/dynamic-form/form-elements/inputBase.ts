@@ -36,8 +36,7 @@ export class InputBase<T> {
         this.header = options.header || '';
         this.required = !!options.required;
         this.order = options.order === undefined ? 1 : options.order;
-        this.controlType = options.controlType || '';
-        this.type = options.controlType || 'text';
+        this.type = options.type || 'text';
         this.hidden = options.hidden || false;
         this.dateFormat = options.dateFormat || '';
         this.linkedObject = options.linkedObject || null;

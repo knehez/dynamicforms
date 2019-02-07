@@ -33,7 +33,7 @@ export class Task {
         dateFormat: 'YYYY-MM-DD',
         order: 3
     })
-    @Column('datetime')
+    @Column({ type: 'datetime', precision: 0 })
     dueDate: Date;
 
     @FormField({
@@ -48,4 +48,13 @@ export class Task {
         eager: true, cascade: true,
     })
     taskItems: TaskItem[];
+
+    @FormField({
+        className: 'CheckBoxInput',
+        header: 'Done?',
+        type: 'checkbox',
+        order: 5
+    })
+    @Column()
+    isDone: boolean;
 }

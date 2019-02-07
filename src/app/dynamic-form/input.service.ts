@@ -5,6 +5,7 @@ import { RadioInput } from './form-elements/radio';
 import 'reflect-metadata';
 import { PROPERTY_METADATA_KEY } from 'src/backend/entities/decorator';
 import { CalendarInput } from './form-elements/calendar';
+import { CheckBoxInput } from './form-elements/checkbox';
 
 export function FormField(updates: any) {
     return (target: any, propertyKey: string | symbol) => {
@@ -50,6 +51,9 @@ export class InputService {
                         break;
                     case 'RadioInput':
                         controlObject = new RadioInput(params);
+                        break;
+                    case 'CheckBoxInput':
+                        controlObject = new CheckBoxInput(params);
                         break;
                     case 'CalendarInput':
                         controlObject = new CalendarInput(params);

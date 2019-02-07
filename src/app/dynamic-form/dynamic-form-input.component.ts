@@ -4,7 +4,8 @@ import { InputBase } from './form-elements/inputBase';
 
 @Component({
     selector: 'app-input',
-    templateUrl: './dynamic-form-input.component.html'
+    templateUrl: './dynamic-form-input.component.html',
+    styleUrls: ['./dynamic-form-input.component.css'],
 })
 export class DynamicFormInputComponent {
     @Input() input: InputBase<any>;

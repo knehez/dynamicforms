@@ -33,7 +33,7 @@ export class TaskItem {
         dateFormat: 'YYYY-MM-DD',
         order: 3
     })
-    @Column('datetime')
+    @Column({ type: 'datetime', precision: 0 })
     dueDate: Date;
 
     @ManyToOne(type => Task, task => task.taskItems)

@@ -5,8 +5,8 @@
         <input *ngSwitchCase="'textbox'" class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.type">
 
         <div *ngSwitchCase="'dropdown'">
-            <ng-select *ngIf="input.linkedObject" [items]="input['allValues']" [multiple]="true" [closeOnSelect]="false" [searchable]="false"
-                [bindLabel]="input.linkedData['value']" placeholder="Select ..." [formControlName]="input.key">
+            <ng-select *ngIf="input.linkedObject" [items]="input['allValues']" [multiple]="true" [closeOnSelect]="false"
+                [searchable]="false" [bindLabel]="input.linkedData['value']" placeholder="Select ..." [formControlName]="input.key">
             </ng-select>
 
             <select *ngIf="!input.linkedObject" [id]="input.key" [formControlName]="input.key" class="form-control">
@@ -21,6 +21,10 @@
                     [type]="'radio'" [checked]="input.value == opt.key">
                 <span class="form-check-label">{{opt.value}}</span>
             </div>
+        </div>
+
+        <div *ngSwitchCase="'checkbox'">
+            <input [id]="input.key" [formControlName]="input.key" class="form-control" type="checkbox">
         </div>
     </div>
 
