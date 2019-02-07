@@ -14,11 +14,10 @@ export class CrudTableComponent implements OnInit {
 
   @Input() formElements = [];
   @Input() entityName: string;
-
+  @Input() itemsPerPage: number;
   models = [];
 
   page = 1;
-  pageSize = 4;
 
   isNewModel: boolean;
 
@@ -44,8 +43,8 @@ export class CrudTableComponent implements OnInit {
   }
 
   get tableData(): any[] {
-    const begin = ((this.page - 1) * this.pageSize);
-    const end = begin + this.pageSize;
+    const begin = ((this.page - 1) * this.itemsPerPage);
+    const end = begin + this.itemsPerPage;
     return this.models.slice(begin, end);
   }
 

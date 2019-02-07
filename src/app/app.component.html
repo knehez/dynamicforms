@@ -27,9 +27,9 @@
     </div>
   </nav>
   <!--app-dynamic-form [inputs]="inputs"></app-dynamic-form-->
-  <app-crud-table *ngIf="currentSelection == 'user'" [entityName]="'users'" [formElements]="userFormElements"></app-crud-table>
+  <app-crud-table *ngIf="currentSelection == 'user'" [entityName]="'users'" [formElements]="userFormElements" [itemsPerPage] = "5"></app-crud-table>
   <h1></h1>
-  <app-crud-table *ngIf="currentSelection == 'task'" [entityName]="'tasks'" [formElements]="taskFormElements"></app-crud-table>
+  <app-crud-table *ngIf="currentSelection == 'task'" [entityName]="'tasks'" [formElements]="taskFormElements" [itemsPerPage] = "5"></app-crud-table>
   <h1></h1>
-  <app-crud-table *ngIf="currentSelection == 'taskitem'" [entityName]="'taskitems'" [formElements]="taskItemFormElements"></app-crud-table>
+  <app-crud-table *ngIf="currentSelection == 'taskitem'" [entityName]="'taskitems'" [formElements]="taskItemFormElements" [itemsPerPage] = "5"></app-crud-table>
 </div>
