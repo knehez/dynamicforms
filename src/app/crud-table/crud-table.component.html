@@ -14,8 +14,8 @@
 
             <div [ngSwitch]="col.controlType">
                 <div *ngSwitchCase="'checkbox'">
-                    <i *ngIf="dataRow[col.key]" class="pi pi-check"></i>
-                    <i *ngIf="!dataRow[col.key]" class="pi pi-times"></i>
+                    <i *ngIf="dataRow[col.key]" class="pi pi-check text-success"></i>
+                    <i *ngIf="!dataRow[col.key]" class="pi pi-times text-primary"></i>
                 </div>
                 <div *ngSwitchDefault>{{dataRow[col.key]}}</div>
             </div>

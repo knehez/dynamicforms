@@ -5,8 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CalendarModule } from 'primeng/calendar';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
-import { ModalFormComponent } from '../crud-table/modal-form/modal-form.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ModalFormComponent } from '../modal-form/modal-form.component';
 
 @NgModule({
     imports: [CommonModule, ReactiveFormsModule, CalendarModule, NgbPaginationModule, NgSelectModule],

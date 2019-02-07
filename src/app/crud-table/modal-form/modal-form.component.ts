@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { DynamicFormComponent } from 'src/app/dynamic-form/dynamic-form.component';
+import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
 
 @Component({
   selector: 'app-modal-form',

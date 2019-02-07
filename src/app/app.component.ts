@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { InputService } from './dynamic-form/input.service';
+
 import { User } from 'src/backend/entities/user';
 import { Task } from 'src/backend/entities/task';
 import { TaskItem } from 'src/backend/entities/taskItem';
+import { InputService } from './crud-table/dynamic-form/input.service';
 
 @Component({
   selector: 'app-root',
