@@ -15,7 +15,6 @@ export class CrudTableComponent implements OnInit {
   @Input() formElements = [];
   @Input() entityName: string;
 
-  columns = [];
   models = [];
 
   page = 1;
@@ -28,8 +27,6 @@ export class CrudTableComponent implements OnInit {
   constructor(private service: GeneralRestService, private modalService: NgbModal) { }
 
   async ngOnInit() {
-    this.columns = this.formElements.map(input => ({ field: input.key, header: input.header }));
-
     this.service.objectName = this.entityName;
     this.service.getAll().then(
       (res) => { this.models = res; this.convertDates(); },

@@ -1,19 +1,23 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th *ngFor="let col of columns" scope="col">{{col.header}}</th>
+      <ng-container *ngFor="let col of formElements">
+        <th scope="col" *ngIf="!col.hidden">{{col.header}}</th>
+      </ng-container>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let dataRow of tableData">
-      <td *ngFor="let col of formElements" scope="row" (click)="rowSelect(dataRow)">
-        <div *ngIf="!col.linkedObject">{{dataRow[col.key]}}</div>
+      <ng-container *ngFor="let col of formElements">
+        <td scope="row" (click)="rowSelect(dataRow)" *ngIf="!col.hidden">
+          <div *ngIf="!col.linkedObject">{{dataRow[col.key]}}</div>
 
-        <div *ngIf="col.linkedObject">
-          <span *ngFor="let val of dataRow[col.linkedObject]" class="badge badge-success m-1">{{val[col.linkedData.value]}}</span>
-        </div>
+          <div *ngIf="col.linkedObject">
+            <span *ngFor="let val of dataRow[col.linkedObject]" class="badge badge-success m-1">{{val[col.linkedData.value]}}</span>
+          </div>
 
-      </td>
+        </td>
+      </ng-container>
     </tr>
   </tbody>
 </table>
