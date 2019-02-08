@@ -38,8 +38,11 @@
 </table>
 
 <div class="d-flex justify-content-between p-2">
-  <small class="mr-auto p-2">Showing {{firstEntity + 1}} to {{lastEntity}} of {{currentEntities}} </small>
-  <small *ngIf="searchFilter">(filtered from {{allEntities}} entries)</small>
+  <div class="mr-auto">
+    <small>Showing {{firstEntity + 1}} to {{lastEntity}} of {{currentEntities}} </small>
+    <small *ngIf="searchFilter">(filtered from {{allEntities}} entries)</small>
+  </div>
   <button type="button" class="btn btn-outline-primary align-self-start m-2" (click)="add()">Add</button>
-  <ngb-pagination class="m-2" [collectionSize]="currentEntities" [(page)]="page" [pageSize]="itemsPerPage"></ngb-pagination>
+  <ngb-pagination class="m-2" [collectionSize]="currentEntities" [(page)]="page" [pageSize]="itemsPerPage">
+  </ngb-pagination>
 </div>
