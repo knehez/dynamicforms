@@ -93,7 +93,7 @@ export class TypeormERDComponent implements OnInit {
       node = nodes[i];
       for (const e of node.entity) {
         if (e.linkedObject !== null) {
-          this.g.setEdge(this.capitalizeFirstLetterTrimLast(e.linkedObject), node.name);
+          this.g.setEdge(this.capitalizeFirstLetterTrimLast(e.linkedObject), node.name, {label: '* : 1'});
         }
       }
     }
