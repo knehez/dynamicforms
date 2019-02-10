@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
-import { User } from 'src/backend/entities/user';
-import { Task } from 'src/backend/entities/task';
-import { TaskItem } from 'src/backend/entities/taskItem';
+import { User } from '../backend/entities/user';
+import { Task } from '../backend/entities/task';
+import { TaskItem } from '../backend/entities/taskItem';
 import { InputService } from './crud-table/dynamic-form/input.service';
 
 @Component({
