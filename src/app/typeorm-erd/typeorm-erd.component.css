@@ -1,0 +1,31 @@
+::ng-deep svg {
+    background-color: white;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+::ng-deep .node rect {
+    stroke: #aaa;
+    opacity: 0.8;
+    fill-opacity: 0;
+}
+
+::ng-deep .edgePath .path {
+    stroke: #999;
+    stroke-width: 1.5px;
+    fill: #999;
+}
+
+::ng-deep .node .name {
+    margin-block-end: 0em;
+    border-bottom: solid 1px;
+    font-weight: 500;
+}
+
+::ng-deep .node .field {
+    border-bottom: solid 1px;
+}

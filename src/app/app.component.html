@@ -2,7 +2,8 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Admininstration</a>
     <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-toggle="collapse"
-      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -18,16 +19,24 @@
           <label ngbButtonLabel class="btn-outline-primary btn-sm">
             <input ngbButton type="radio" value="taskitem">Task item
           </label>
+          <label ngbButtonLabel class="btn-outline-primary btn-sm">
+            <input ngbButton type="radio" value="erdiagram">ER Diagram
+          </label>
         </div>
       </ul>
     </div>
   </nav>
   <!--app-dynamic-form [inputs]="inputs"></app-dynamic-form-->
-  <app-crud-table *ngIf="currentSelection == 'user'" [entityName]="'users'" [formElements]="userFormElements" [itemsPerPage] = "5"></app-crud-table>
+  <app-crud-table *ngIf="currentSelection == 'user'" [entityName]="'users'" [formElements]="userFormElements"
+    [itemsPerPage]="5"></app-crud-table>
   <h1></h1>
-  <app-crud-table *ngIf="currentSelection == 'task'" [entityName]="'tasks'" [formElements]="taskFormElements" [itemsPerPage] = "5"></app-crud-table>
+  <app-crud-table *ngIf="currentSelection == 'task'" [entityName]="'tasks'" [formElements]="taskFormElements"
+    [itemsPerPage]="5"></app-crud-table>
   <h1></h1>
-  <app-crud-table *ngIf="currentSelection == 'taskitem'" [entityName]="'taskitems'" [formElements]="taskItemFormElements" [itemsPerPage] = "5"></app-crud-table>
+  <app-crud-table *ngIf="currentSelection == 'taskitem'" [entityName]="'taskitems'"
+    [formElements]="taskItemFormElements" [itemsPerPage]="5"></app-crud-table>
 
+  <app-typeorm-erd *ngIf="currentSelection == 'erdiagram'" [entities]="allEntities"></app-typeorm-erd>
+  
   <nav class="navbar navbar-expand-lg navbar-light bg-light"></nav>
 </div>

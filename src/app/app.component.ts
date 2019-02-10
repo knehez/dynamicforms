@@ -20,11 +20,16 @@ export class AppComponent {
   cols: any[];
   isNavbarCollapsed = true;
   currentSelection = 'user';
+  allEntities: any[] = [];
 
   constructor(service: InputService) {
     this.userFormElements = service.getFormElements(new User);
     this.taskFormElements = service.getFormElements(new Task);
     this.taskItemFormElements = service.getFormElements(new TaskItem);
+
+    this.allEntities.push({name: 'User', entity: this.userFormElements});
+    this.allEntities.push({name: 'Task', entity: this.taskFormElements});
+    this.allEntities.push({name: 'TaskItem', entity: this.taskItemFormElements});
   }
 
   private _toggleSidebar() {

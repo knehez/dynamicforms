@@ -12,12 +12,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalFormComponent } from './crud-table/modal-form/modal-form.component';
 import { DynamicFormModule } from './crud-table/dynamic-form/dynamic-form.module';
+import { TypeormERDComponent } from './typeorm-erd/typeorm-erd.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CrudTableComponent,
-    ModalFormComponent
+    ModalFormComponent,
+    TypeormERDComponent
   ],
   imports: [
     BrowserModule,
