@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { GeneralRestService } from './general-rest.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ModalFormComponent } from './modal-form/modal-form.component';
 import * as moment from 'moment';
 
@@ -108,7 +108,7 @@ export class CrudTableComponent implements OnInit {
           this.delete();
           break;
       }
-    });
+    }, (err) => ('dismissed'));
   }
 
   save(payLoad) {
@@ -159,6 +159,10 @@ export class CrudTableComponent implements OnInit {
         iterator[key] = moment(iterator[key]).format(dateFormat);
       }
     }
+  }
+
+  singleName(str) {
+    return str.substring(0, str.length - 1);
   }
 
   debug(obj) {

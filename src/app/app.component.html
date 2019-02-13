@@ -11,6 +11,12 @@
       <ul class="navbar-nav mr-auto">
         <div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="currentSelection">
           <label ngbButtonLabel class="btn-outline-primary btn-sm">
+            <input ngbButton type="radio" value="project">Project
+          </label>
+          <label ngbButtonLabel class="btn-outline-primary btn-sm">
+            <input ngbButton type="radio" value="product">Product
+          </label>
+          <label ngbButtonLabel class="btn-outline-primary btn-sm">
             <input ngbButton type="radio" value="user">User
           </label>
           <label ngbButtonLabel class="btn-outline-primary btn-sm">
@@ -26,7 +32,12 @@
       </ul>
     </div>
   </nav>
-  <!--app-dynamic-form [inputs]="inputs"></app-dynamic-form-->
+  <app-crud-table *ngIf="currentSelection == 'product'" [entityName]="'products'" [formElements]="productFormElements"
+    [itemsPerPage]="5"></app-crud-table>
+  <h1></h1>
+  <app-crud-table *ngIf="currentSelection == 'project'" [entityName]="'projects'" [formElements]="projectFormElements"
+    [itemsPerPage]="5"></app-crud-table>
+  <h1></h1>
   <app-crud-table *ngIf="currentSelection == 'user'" [entityName]="'users'" [formElements]="userFormElements"
     [itemsPerPage]="5"></app-crud-table>
   <h1></h1>
@@ -37,6 +48,6 @@
     [formElements]="taskItemFormElements" [itemsPerPage]="5"></app-crud-table>
 
   <app-typeorm-erd *ngIf="currentSelection == 'erdiagram'" [entities]="allEntities"></app-typeorm-erd>
-  
+
   <nav class="navbar navbar-expand-lg navbar-light bg-light"></nav>
 </div>

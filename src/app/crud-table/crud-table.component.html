@@ -26,9 +26,12 @@
 
           </div>
 
-          <div *ngIf="col.linkedObject">
+          <div *ngIf="col.linkedObject && col.multipleSelect">
             <span *ngFor="let val of dataRow[col.linkedObject]"
               class="badge badge-success m-1">{{val[col.linkedData.value]}}</span>
+          </div>
+          <div *ngIf="col.linkedObject && !col.multipleSelect"> 
+            <span class="badge badge-success m-1">{{dataRow[singleName(col.linkedObject)][col.linkedData.value]}}</span>
           </div>
 
         </td>

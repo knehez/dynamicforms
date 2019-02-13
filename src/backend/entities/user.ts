@@ -62,6 +62,7 @@ export class User {
         header: 'Tasks',
         linkedObject: 'tasks',
         linkedData: { key: 'id', value: 'taskName' },
+        multipleSelect: true,
         required: true,
         order: 4
     })

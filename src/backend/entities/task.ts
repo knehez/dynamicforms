@@ -41,6 +41,7 @@ export class Task {
         header: 'Task Items',
         linkedObject: 'taskItems',
         linkedData: { key: 'id', value: 'itemName' },
+        multipleSelect: true,
         required: true,
         order: 4
     })

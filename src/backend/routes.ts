@@ -3,6 +3,8 @@ import UserCtrl from './controllers/user.controller';
 import BaseCtrl from './controllers/base.controller';
 import TaskCtrl from './controllers/task.controller';
 import TaskItemCtrl from './controllers/taskItem.controller';
+import ProductCtrl from './controllers/product-controller';
+import ProjectCtrl from './controllers/project-controller';
 
 export default function setRoutes(app) {
 
@@ -24,6 +26,18 @@ export default function setRoutes(app) {
   const taskItemCtrl = new TaskItemCtrl();
 
   getGeneralRoutes(router, tasksItems, taskItemCtrl);
+
+  // Products
+  const products = 'products';
+  const productCtrl = new ProductCtrl();
+
+  getGeneralRoutes(router, products, productCtrl);
+
+  // Projects
+  const projets = 'projects';
+  const projectCtrl = new ProjectCtrl();
+
+  getGeneralRoutes(router, projets, projectCtrl);
 
   app.use('/backend', router);
 }
