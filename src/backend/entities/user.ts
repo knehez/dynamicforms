@@ -61,7 +61,7 @@ export class User {
         className: 'DropdownInput',
         header: 'Tasks',
         linkedObject: 'tasks',
-        linkedData: { key: 'id', value: 'taskName' },
+        linkedData: { entity: 'task', value: 'taskName' },
         multipleSelect: true,
         required: true,
         order: 4

@@ -32,16 +32,16 @@
       </ul>
     </div>
   </nav>
-  <app-crud-table *ngIf="currentSelection == 'product'" [entityName]="'products'" [formElements]="productFormElements"
-    [itemsPerPage]="5"></app-crud-table>
-  <h1></h1>
   <app-crud-table *ngIf="currentSelection == 'project'" [entityName]="'projects'" [formElements]="projectFormElements"
-    [itemsPerPage]="5"></app-crud-table>
+    (rowSelect)="projectSelected($event)" [itemsPerPage]="5" [filter]="projectFilter"></app-crud-table>
+  <h1></h1>
+  <app-crud-table *ngIf="currentSelection == 'product'" [entityName]="'products'" [formElements]="productFormElements"
+    [itemsPerPage]="5" [filter]="productFilter" (cellSelect)="productCellSelected($event)"></app-crud-table>
   <h1></h1>
   <app-crud-table *ngIf="currentSelection == 'user'" [entityName]="'users'" [formElements]="userFormElements"
-    [itemsPerPage]="5"></app-crud-table>
+    [itemsPerPage]="5" [filter]="userFilter" (cellSelect)="userCellSelected($event)"></app-crud-table>
   <h1></h1>
-  <app-crud-table *ngIf="currentSelection == 'task'" [entityName]="'tasks'" [formElements]="taskFormElements"
+  <app-crud-table *ngIf="currentSelection == 'task'" [entityName]="'tasks'" [formElements]="taskFormElements" [filter]="taskFilter"
     [itemsPerPage]="5"></app-crud-table>
   <h1></h1>
   <app-crud-table *ngIf="currentSelection == 'taskitem'" [entityName]="'taskitems'"

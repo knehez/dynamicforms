@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
@@ -11,11 +11,12 @@ export class GeneralRestService {
     constructor(protected _http: HttpClient) {
     }
 
-    getAll(): Promise<any[]> {
+    getAll(filter): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._http.get(`${this.actionUrl}${this.objectName}`)
+            const params = new HttpParams().set('filter', filter);
+            this._http.get(`${this.actionUrl}${this.objectName}`, { params: { param: JSON.stringify(filter) } })
                 .subscribe(res => {
-                    resolve(res as []);
+                    resolve(res);
                 }, (err) => {
                     reject(err);
                 });

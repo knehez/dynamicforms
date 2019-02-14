@@ -8,12 +8,13 @@
       <ng-container *ngFor="let col of formElements">
         <th scope="col" *ngIf="!col.hidden">{{col.header}}</th>
       </ng-container>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let dataRow of tableData">
       <ng-container *ngFor="let col of formElements">
-        <td scope="row" (click)="rowSelect(dataRow)" *ngIf="!col.hidden">
+        <td scope="row" *ngIf="!col.hidden" (click)="rowSelect.emit(dataRow)">
           <div *ngIf="!col.linkedObject">
 
             <div [ngSwitch]="col.controlType">
@@ -28,14 +29,21 @@
 
           <div *ngIf="col.linkedObject && col.multipleSelect">
             <span *ngFor="let val of dataRow[col.linkedObject]"
-              class="badge badge-success m-1">{{val[col.linkedData.value]}}</span>
+              class="badge badge-success m-1" (click)="cellSelect.emit({col:col.linkedData, data:val[col.linkedData.value]})"
+              appClickStopPropagation>
+              {{val[col.linkedData.value]}}</span>
           </div>
-          <div *ngIf="col.linkedObject && !col.multipleSelect"> 
-            <span class="badge badge-success m-1">{{dataRow[singleName(col.linkedObject)][col.linkedData.value]}}</span>
+          <div *ngIf="col.linkedObject && !col.multipleSelect">
+            <span class="badge badge-success m-1" 
+                  (click)="cellSelect.emit({col:col.linkedData, data: dataRow[singleName(col.linkedObject)][col.linkedData.value]})"
+                  appClickStopPropagation>
+              {{dataRow[singleName(col.linkedObject)][col.linkedData.value]}}</span>
           </div>
 
         </td>
       </ng-container>
+      <td align="right"><button type="button" class="btn btn-outline-primary"
+          (click)="editRow(dataRow)"><span class="pi pi-pencil"></span></button></td>
     </tr>
   </tbody>
 </table>

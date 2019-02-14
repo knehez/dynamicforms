@@ -30,7 +30,7 @@ export class Product {
         className: 'DropdownInput',
         header: 'Project',
         linkedObject: 'projects',
-        linkedData: { key: 'id', value: 'projectName' },
+        linkedData: { entity: 'project', value: 'projectName' },
         required: true,
         order: 3
     })

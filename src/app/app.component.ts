@@ -23,8 +23,13 @@ export class AppComponent {
   private _opened = false;
   cols: any[];
   isNavbarCollapsed = true;
-  currentSelection = 'user';
+  currentSelection: 'user' | 'taskitem' | 'task' | 'product' | 'project' = 'user';
   allEntities: any[] = [];
+
+  productFilter = {};
+  userFilter = {};
+  taskFilter = {};
+  projectFilter = {};
 
   constructor(service: InputService) {
     this.userFormElements = service.getFormElements(new User);
@@ -41,7 +46,20 @@ export class AppComponent {
 
   }
 
-  private _toggleSidebar() {
-    this._opened = !this._opened;
+  projectSelected(project: Project) {
+    this.productFilter = { where: { project: project.id } };
+    this.currentSelection = 'product';
+  }
+
+  userCellSelected(obj: any) {
+    const colName = obj['col']['value'];
+    this.taskFilter = { where: { [colName]: obj['data'] } };
+    this.currentSelection = 'task';
+  }
+
+  productCellSelected(obj) {
+    const colName = obj['col']['value'];
+    this.projectFilter = { where: { [colName]: obj['data'] } };
+    this.currentSelection = 'project';
   }
 }

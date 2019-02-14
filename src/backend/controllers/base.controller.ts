@@ -6,7 +6,13 @@ abstract class BaseCtrl {
 
   // Get all
   getAll = async (req, res) => {
-    const post = await this.model.find();
+    let param = {};
+    try {
+      param = JSON.parse(req.query.param);
+    } catch (e) {
+
+    }
+    const post = await this.model.find(param);
 
     if (!post) {
       res.status(404);

@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { GeneralRestService } from './general-rest.service';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalFormComponent } from './modal-form/modal-form.component';
 import * as moment from 'moment';
 
@@ -15,6 +15,10 @@ export class CrudTableComponent implements OnInit {
   @Input() formElements = [];
   @Input() entityName: string;
   @Input() itemsPerPage: number;
+  @Input() filter: any;
+  @Output() rowSelect = new EventEmitter();
+  @Output() cellSelect = new EventEmitter();
+
   models = [];
 
   page = 1;
@@ -31,7 +35,7 @@ export class CrudTableComponent implements OnInit {
 
   async ngOnInit() {
     this.service.objectName = this.entityName;
-    this.service.getAll().then(
+    this.service.getAll(this.filter).then(
       (res) => { this.models = res; this.allEntities = this.models.length; this.convertDates(); },
       (err) => {
         console.log(err);
@@ -73,7 +77,7 @@ export class CrudTableComponent implements OnInit {
     this.openModalForm();
   }
 
-  rowSelect(rowData) {
+  editRow(rowData) {
     this.isNewModel = false;
     this.oneModel = rowData;
 
@@ -169,4 +173,5 @@ export class CrudTableComponent implements OnInit {
     console.dir(obj);
     return obj;
   }
+
 }
