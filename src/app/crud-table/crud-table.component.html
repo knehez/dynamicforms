@@ -1,6 +1,12 @@
-<div class="d-flex justify-content-end p-2 form-inline">
-  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="searchFilter">
-  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+<div class="d-flex justify-content-between p-2">
+  <div>
+      <button class="form-control btn btn-outline-success" type="button" aria-label="Search"
+      (click)="backClicked.emit()"><span class="pi pi-angle-double-left"></span></button>
+  </div>
+  <div class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+      [(ngModel)]="searchFilter">
+  </div>
 </div>
 <table class="table table-striped">
   <thead>
@@ -28,22 +34,21 @@
           </div>
 
           <div *ngIf="col.linkedObject && col.multipleSelect">
-            <span *ngFor="let val of dataRow[col.linkedObject]"
-              class="badge badge-success m-1" (click)="cellSelect.emit({col:col.linkedData, data:val[col.linkedData.value]})"
-              appClickStopPropagation>
+            <span *ngFor="let val of dataRow[col.linkedObject]" class="badge badge-success m-1"
+              (click)="cellSelect.emit({col:col.linkedData, data:val[col.linkedData.value]})" appClickStopPropagation>
               {{val[col.linkedData.value]}}</span>
           </div>
           <div *ngIf="col.linkedObject && !col.multipleSelect">
-            <span class="badge badge-success m-1" 
-                  (click)="cellSelect.emit({col:col.linkedData, data: dataRow[singleName(col.linkedObject)][col.linkedData.value]})"
-                  appClickStopPropagation>
+            <span class="badge badge-success m-1"
+              (click)="cellSelect.emit({col:col.linkedData, data: dataRow[singleName(col.linkedObject)][col.linkedData.value]})"
+              appClickStopPropagation>
               {{dataRow[singleName(col.linkedObject)][col.linkedData.value]}}</span>
           </div>
 
         </td>
       </ng-container>
-      <td align="right"><button type="button" class="btn btn-outline-primary"
-          (click)="editRow(dataRow)"><span class="pi pi-pencil"></span></button></td>
+      <td align="right"><button type="button" class="btn btn-outline-primary" (click)="editRow(dataRow)"><span
+            class="pi pi-pencil"></span></button></td>
     </tr>
   </tbody>
 </table>
@@ -53,6 +58,7 @@
     <small>Showing {{firstEntity + 1}} to {{lastEntity}} of {{currentEntities}} </small>
     <small *ngIf="searchFilter">(filtered from {{allEntities}} entries)</small>
   </div>
+  <button type="button" class="btn btn-outline-primary align-self-start m-2" (click)="showAll()">Show all</button>
   <button type="button" class="btn btn-outline-primary align-self-start m-2" (click)="add()">Add</button>
   <ngb-pagination class="m-2" [collectionSize]="currentEntities" [(page)]="page" [pageSize]="itemsPerPage">
   </ngb-pagination>

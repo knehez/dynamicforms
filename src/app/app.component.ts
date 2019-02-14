@@ -30,6 +30,9 @@ export class AppComponent {
   userFilter = {};
   taskFilter = {};
   projectFilter = {};
+  taskItemFilter = {};
+
+  backList = [];
 
   constructor(service: InputService) {
     this.userFormElements = service.getFormElements(new User);
@@ -48,18 +51,34 @@ export class AppComponent {
 
   projectSelected(project: Project) {
     this.productFilter = { where: { project: project.id } };
+    this.backList.push(this.currentSelection);
     this.currentSelection = 'product';
   }
 
   userCellSelected(obj: any) {
     const colName = obj['col']['value'];
     this.taskFilter = { where: { [colName]: obj['data'] } };
+    this.backList.push(this.currentSelection);
     this.currentSelection = 'task';
   }
 
   productCellSelected(obj) {
     const colName = obj['col']['value'];
     this.projectFilter = { where: { [colName]: obj['data'] } };
+    this.backList.push(this.currentSelection);
     this.currentSelection = 'project';
+  }
+
+  taskCellSelected(obj) {
+    const colName = obj['col']['value'];
+    this.taskItemFilter = { where: { [colName]: obj['data'] } };
+    this.backList.push(this.currentSelection);
+    this.currentSelection = 'taskitem';
+  }
+
+  goBack() {
+    if (this.backList.length !== 0) {
+      this.currentSelection = this.backList.pop();
+    }
   }
 }

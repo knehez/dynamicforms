@@ -33,19 +33,19 @@
     </div>
   </nav>
   <app-crud-table *ngIf="currentSelection == 'project'" [entityName]="'projects'" [formElements]="projectFormElements"
-    (rowSelect)="projectSelected($event)" [itemsPerPage]="5" [filter]="projectFilter"></app-crud-table>
+    (rowSelect)="projectSelected($event)" [itemsPerPage]="5" [filter]="projectFilter" (backClicked)="goBack()"></app-crud-table>
   <h1></h1>
   <app-crud-table *ngIf="currentSelection == 'product'" [entityName]="'products'" [formElements]="productFormElements"
-    [itemsPerPage]="5" [filter]="productFilter" (cellSelect)="productCellSelected($event)"></app-crud-table>
+    [itemsPerPage]="5" [filter]="productFilter" (cellSelect)="productCellSelected($event)" (backClicked)="goBack()"></app-crud-table>
   <h1></h1>
   <app-crud-table *ngIf="currentSelection == 'user'" [entityName]="'users'" [formElements]="userFormElements"
-    [itemsPerPage]="5" [filter]="userFilter" (cellSelect)="userCellSelected($event)"></app-crud-table>
+    [itemsPerPage]="5" [filter]="userFilter" (cellSelect)="userCellSelected($event)" (backClicked)="goBack()"></app-crud-table>
   <h1></h1>
   <app-crud-table *ngIf="currentSelection == 'task'" [entityName]="'tasks'" [formElements]="taskFormElements" [filter]="taskFilter"
-    [itemsPerPage]="5"></app-crud-table>
+    [itemsPerPage]="5" (cellSelect)="taskCellSelected($event)" (backClicked)="goBack()"></app-crud-table>
   <h1></h1>
-  <app-crud-table *ngIf="currentSelection == 'taskitem'" [entityName]="'taskitems'"
-    [formElements]="taskItemFormElements" [itemsPerPage]="5"></app-crud-table>
+  <app-crud-table *ngIf="currentSelection == 'taskitem'" [entityName]="'taskitems'" [filter]="taskItemFilter"
+    [formElements]="taskItemFormElements" [itemsPerPage]="5" (backClicked)="goBack()"></app-crud-table>
 
   <app-typeorm-erd *ngIf="currentSelection == 'erdiagram'" [entities]="allEntities"></app-typeorm-erd>
 

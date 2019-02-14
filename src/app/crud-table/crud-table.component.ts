@@ -18,6 +18,7 @@ export class CrudTableComponent implements OnInit {
   @Input() filter: any;
   @Output() rowSelect = new EventEmitter();
   @Output() cellSelect = new EventEmitter();
+  @Output() backClicked = new EventEmitter();
 
   models = [];
 
@@ -33,8 +34,12 @@ export class CrudTableComponent implements OnInit {
 
   constructor(private service: GeneralRestService, private modalService: NgbModal) { }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.service.objectName = this.entityName;
+    this.loadData();
+  }
+
+  async loadData() {
     this.service.getAll(this.filter).then(
       (res) => { this.models = res; this.allEntities = this.models.length; this.convertDates(); },
       (err) => {
@@ -167,6 +172,11 @@ export class CrudTableComponent implements OnInit {
 
   singleName(str) {
     return str.substring(0, str.length - 1);
+  }
+
+  showAll() {
+    this.filter = '';
+    this.loadData();
   }
 
   debug(obj) {
