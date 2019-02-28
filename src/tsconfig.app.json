@@ -4,7 +4,7 @@
     "outDir": "../out-tsc/app",
     "types": [],
     "paths": {
-      "typeorm": ["node_modules/typeorm/typeorm-model-shim.js"],
+      "typeorm": ["node_modules/typeorm/typeorm-model-shim.js"]
     }
   },
   "exclude": [

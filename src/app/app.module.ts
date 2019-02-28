@@ -1,8 +1,9 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AppComponent } from './app.component';
 import { CrudTableComponent } from './crud-table/crud-table.component';
 import { PanelModule } from 'primeng/panel';
 import { DialogModule } from 'primeng/dialog';
@@ -15,13 +16,30 @@ import { DynamicFormModule } from './crud-table/dynamic-form/dynamic-form.module
 import { TypeormERDComponent } from './typeorm-erd/typeorm-erd.component';
 import { ClickStopPropagationDirective } from './crud-table/click-stop-propagation.directive';
 
+import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { AdministrationComponent } from './administration/administration.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: AdministrationComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  }
+];
+
 @NgModule({
   declarations: [
-    AppComponent,
     CrudTableComponent,
     ModalFormComponent,
     TypeormERDComponent,
-    ClickStopPropagationDirective
+    ClickStopPropagationDirective,
+    AppComponent,
+    LoginComponent,
+    AdministrationComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +52,8 @@ import { ClickStopPropagationDirective } from './crud-table/click-stop-propagati
     DialogModule,
     ButtonModule,
     TableModule,
-    NgbModule
+    NgbModule,
+    RouterModule.forRoot(routes, { enableTracing: true }) //TODO: tracing is for debugging only
   ],
   providers: [],
   bootstrap: [AppComponent]
