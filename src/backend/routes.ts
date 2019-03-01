@@ -5,6 +5,7 @@ import TaskCtrl from './controllers/task.controller';
 import TaskItemCtrl from './controllers/taskItem.controller';
 import ProductCtrl from './controllers/product-controller';
 import ProjectCtrl from './controllers/project-controller';
+import AuthenticationCtrl from './controllers/authentication.controller';
 
 export default function setRoutes(app) {
 
@@ -38,6 +39,10 @@ export default function setRoutes(app) {
   const projectCtrl = new ProjectCtrl();
 
   getGeneralRoutes(router, projets, projectCtrl);
+
+  // Authentication
+  const authenticationCtrl = new AuthenticationCtrl();
+  router.post('/login', authenticationCtrl.login);
 
   app.use('/backend', router);
 }

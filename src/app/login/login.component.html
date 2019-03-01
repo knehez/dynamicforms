@@ -1,3 +1,40 @@
-<p>
-  login works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+
+      <h2>Login</h2>
+      
+      <hr>
+
+      <div *ngIf="!loginSuccess" class="alert alert-danger">
+          You have entered an invalid username or password.
+      </div>
+
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" class="form-control" required 
+              [(ngModel)]="user.name" #username="ngModel">
+          <div *ngIf="username.invalid && (username.dirty || username.touched)" class="text-danger">
+            <small *ngIf="username.errors.required">Name is required.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password"class="form-control" required
+              [(ngModel)]="user.password" #password="ngModel">
+          <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+            <small *ngIf="password.errors.required">Password is required.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
