@@ -19,6 +19,7 @@ import { ClickStopPropagationDirective } from './crud-table/click-stop-propagati
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AdministrationComponent } from './administration/administration.component';
+import { environment } from 'src/environments/environment';
 
 const routes: Routes = [
   {
@@ -53,7 +54,7 @@ const routes: Routes = [
     ButtonModule,
     TableModule,
     NgbModule,
-    RouterModule.forRoot(routes, { enableTracing: true }) //TODO: tracing is for debugging only
+    RouterModule.forRoot(routes, { enableTracing: !environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

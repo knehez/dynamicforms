@@ -3,8 +3,8 @@ import UserCtrl from './controllers/user.controller';
 import BaseCtrl from './controllers/base.controller';
 import TaskCtrl from './controllers/task.controller';
 import TaskItemCtrl from './controllers/taskItem.controller';
-import ProductCtrl from './controllers/product-controller';
-import ProjectCtrl from './controllers/project-controller';
+import ProductCtrl from './controllers/product.controller';
+import ProjectCtrl from './controllers/project.controller';
 import AuthenticationCtrl from './controllers/authentication.controller';
 
 export default function setRoutes(app) {
