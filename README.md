@@ -1,6 +1,6 @@
-# Angular 7 - Dynamic Reactive Forms directly form typeorm models
+# Angular 7 - Dynamic Reactive Forms directly from TypeORM models
 
-This project demonstartes how to generate Angular7+ dynamic reactive forms and CRUD tables directly from [typeORM](http://typeorm.io) models.
+This project demonstartes how to generate Angular7+ dynamic reactive forms and CRUD tables, directly from [typeORM](http://typeorm.io) models.
 
 ## Creates tables and reactive forms for data handing
 ![diagram](images/main.png)
