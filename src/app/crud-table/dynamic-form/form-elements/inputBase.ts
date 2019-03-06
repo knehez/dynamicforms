@@ -15,6 +15,8 @@ export class InputBase<T> {
     hidden: boolean;
     dateFormat: string;
     linkedObject: string;
+    cols: number;
+    rows: number;
     linkedData: {};
     constructor(options: {
         value?: T,
@@ -27,6 +29,8 @@ export class InputBase<T> {
         type?: string,
         hidden?: boolean,
         dateFormat?: string;
+        cols?: number;
+        rows?: number;
         linkedObject?: string,
         linkedData?: ILinkedData;
     } = {}) {
@@ -39,6 +43,8 @@ export class InputBase<T> {
         this.type = options.type || 'text';
         this.hidden = options.hidden || false;
         this.dateFormat = options.dateFormat || '';
+        this.cols = options.cols === undefined ? 20 : options.cols;
+        this.rows = options.rows === undefined ? 3 : options.rows;
         this.linkedObject = options.linkedObject || null;
         this.linkedData = options.linkedData || null;
     }

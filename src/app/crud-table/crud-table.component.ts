@@ -179,6 +179,14 @@ export class CrudTableComponent implements OnInit {
     this.loadData();
   }
 
+  truncate(string, length = 200) {
+    if (string.length > length) {
+      return string.substring(0, length) + '...';
+    } else {
+      return string;
+    }
+  }
+
   debug(obj) {
     console.dir(obj);
     return obj;

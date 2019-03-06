@@ -3,6 +3,9 @@
 
     <div [ngSwitch]="input.controlType">
         <input *ngSwitchCase="'textbox'" class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.type">
+        
+        <textarea *ngSwitchCase="'textarea'" class="form-control" [formControlName]="input.key" [id]="input.key" [cols]="input.cols"
+            [rows]="input.rows"></textarea>
 
         <div *ngSwitchCase="'dropdown'">
             <ng-select *ngIf="input.linkedObject" [items]="input['allValues']" [multiple]="input['multipleSelect']" [closeOnSelect]="false"

@@ -6,6 +6,7 @@ import { TaskItem } from 'src/backend/entities/taskItem';
 import { InputService } from 'src/app/crud-table/dynamic-form/input.service';
 import { Project } from 'src/backend/entities/project';
 import { Product } from 'src/backend/entities/product';
+import { Schedule } from 'src/backend/entities/schedule';
 
 @Component({
   selector: 'app-administration',
@@ -13,17 +14,18 @@ import { Product } from 'src/backend/entities/product';
   styleUrls: ['./administration.component.css'],
   providers: [InputService]
 })
-export class  AdministrationComponent {
+export class AdministrationComponent {
   title = 'crud';
   userFormElements: any[];
   taskFormElements: any[];
   taskItemFormElements: any[];
   productFormElements: any[];
   projectFormElements: any[];
+  scheduleFormElements: any[];
   private _opened = false;
   cols: any[];
   isNavbarCollapsed = true;
-  currentSelection: 'user' | 'taskitem' | 'task' | 'product' | 'project' = 'user';
+  currentSelection: 'user' | 'taskitem' | 'task' | 'product' | 'project' | 'schedule' | 'gantt' = 'user';
   allEntities: any[] = [];
 
   productFilter = {};
@@ -31,6 +33,7 @@ export class  AdministrationComponent {
   taskFilter = {};
   projectFilter = {};
   taskItemFilter = {};
+  ganttEntities;
 
   backList = [];
 
@@ -40,13 +43,14 @@ export class  AdministrationComponent {
     this.taskItemFormElements = service.getFormElements(new TaskItem);
     this.productFormElements = service.getFormElements(new Product);
     this.projectFormElements = service.getFormElements(new Project);
+    this.scheduleFormElements = service.getFormElements(new Schedule);
 
     this.allEntities.push({ name: 'User', entity: this.userFormElements });
     this.allEntities.push({ name: 'Task', entity: this.taskFormElements });
     this.allEntities.push({ name: 'TaskItem', entity: this.taskItemFormElements });
     this.allEntities.push({ name: 'Product', entity: this.productFormElements });
     this.allEntities.push({ name: 'Project', entity: this.projectFormElements });
-
+    this.allEntities.push({ name: 'Schedule', entity: this.scheduleFormElements });
   }
 
   projectSelected(project: Project) {
@@ -74,6 +78,11 @@ export class  AdministrationComponent {
     this.taskItemFilter = { where: { [colName]: obj['data'] } };
     this.backList.push(this.currentSelection);
     this.currentSelection = 'taskitem';
+  }
+
+  showScheudule(obj) {
+    this.currentSelection = 'gantt';
+    this.ganttEntities = JSON.parse(obj.log);
   }
 
   goBack() {

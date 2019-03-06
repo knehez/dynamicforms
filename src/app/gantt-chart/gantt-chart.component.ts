@@ -12,6 +12,7 @@ export class GanttChartComponent implements OnInit {
   inner;
   zoom;
 
+  @Input()
   entities = [];
 
   transform = {
@@ -23,15 +24,6 @@ export class GanttChartComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.entities = [{
-      "machines": ["Machine 1", "Machine 2", "Machine 3"], makespan: 300, jobs: [{ name: 'Job 1' }, { name: 'Job 2' }, { name: 'Job 3' }],
-      log: [{ "machine": "Machine 1", "event": "s", "job": 'Job 1', 'startTime': 0, 'endTime': 30 },
-      { "machine": "Machine 2", "event": "w", "job": 'Job 1', 'startTime': 0, 'endTime': 10 },
-      { "machine": "Machine 3", "event": "w", "job": 'Job 1', 'startTime': 0, 'endTime': 30 },
-      { "machine": "Machine 2", "event": "w", "job": 'Job 1', 'startTime': 15, 'endTime': 20 }
-      ]
-    }];
-
     d3.select('svg').remove();
     this.svg = d3.select('.gantt-svg-wrapper').append('svg').attr('width', '100%').attr('height', '600');
     const defs = this.svg.append('defs').append('pattern').attr('id', 'dashedBackground')
@@ -77,7 +69,7 @@ export class GanttChartComponent implements OnInit {
 
     let ganttHeight;
 
-    if (type == 'MACHINE_ORIENTED') {
+    if (type === 'MACHINE_ORIENTED') {
       ganttHeight = entity.machines.length;
     } else {
       ganttHeight = jobs.length;

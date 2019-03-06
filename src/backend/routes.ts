@@ -6,6 +6,7 @@ import TaskItemCtrl from './controllers/taskItem.controller';
 import ProductCtrl from './controllers/product.controller';
 import ProjectCtrl from './controllers/project.controller';
 import AuthenticationCtrl from './controllers/authentication.controller';
+import ScheduleCtrl from './controllers/schedule.controller';
 
 export default function setRoutes(app) {
 
@@ -35,10 +36,16 @@ export default function setRoutes(app) {
   getGeneralRoutes(router, products, productCtrl);
 
   // Projects
-  const projets = 'projects';
+  const projects = 'projects';
   const projectCtrl = new ProjectCtrl();
 
-  getGeneralRoutes(router, projets, projectCtrl);
+  getGeneralRoutes(router, projects, projectCtrl);
+
+  // Schedules
+  const schedules = 'schedules';
+  const scheduleCtrl = new ScheduleCtrl();
+
+  getGeneralRoutes(router, schedules, scheduleCtrl);
 
   // Authentication
   const authenticationCtrl = new AuthenticationCtrl();

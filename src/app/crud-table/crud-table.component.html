@@ -28,7 +28,7 @@
                 <i *ngIf="dataRow[col.key]" class="pi pi-check text-success"></i>
                 <i *ngIf="!dataRow[col.key]" class="pi pi-times text-danger"></i>
               </div>
-              <ngb-highlight *ngSwitchDefault [result]="dataRow[col.key]" [term]="searchFilter"></ngb-highlight>
+              <ngb-highlight *ngSwitchDefault [result]="truncate(dataRow[col.key])" [term]="searchFilter"></ngb-highlight>
             </div>
 
           </div>

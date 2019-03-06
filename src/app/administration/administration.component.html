@@ -29,6 +29,9 @@
               <input ngbButton type="radio" value="erdiagram">ER Diagram
             </label>
             <label ngbButtonLabel class="btn-outline-primary btn-sm">
+                <input ngbButton type="radio" value="schedule">Schedule
+            </label>
+            <label ngbButtonLabel class="btn-outline-primary btn-sm">
               <input ngbButton type="radio" value="gantt">Gantt Diagram
             </label>
           </div>
@@ -53,7 +56,10 @@
   
     <app-typeorm-erd *ngIf="currentSelection == 'erdiagram'" [entities]="allEntities"></app-typeorm-erd>
   
-    <app-gantt-chart *ngIf="currentSelection == 'gantt'"></app-gantt-chart>
+    <app-crud-table *ngIf="currentSelection == 'schedule'" [entityName]="'schedules'" [filter]="''"
+    [formElements]="scheduleFormElements" [itemsPerPage]="5" (rowSelect)="showScheudule($event)" (backClicked)="goBack()"></app-crud-table>
+
+    <app-gantt-chart *ngIf="currentSelection == 'gantt'" [entities]="ganttEntities"></app-gantt-chart>
     
     <nav class="navbar navbar-expand-lg navbar-light bg-light"></nav>
   </div>
