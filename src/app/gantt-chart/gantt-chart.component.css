@@ -1,0 +1,53 @@
+::ng-deep svg {
+    background-color: white;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+::ng-deep .tick line {
+    fill: none;
+    stroke: gainsboro;
+    stroke-width: 0.3;
+    stroke-dashoffset: 5px;
+    stroke-dasharray: 2px;
+}
+
+::ng-deep .tick line {
+    fill: none;
+    stroke: gainsboro;
+    stroke-width: 0.3;
+    stroke-dashoffset: 5px;
+    stroke-dasharray: 2px;
+}
+
+::ng-deep .domain {
+    fill: none;
+    stroke: gainsboro;
+    stroke-width: 0.3;
+}
+
+::ng-deep div.tooltip {
+    color: white;
+    position: absolute;
+    text-align: center;
+    width: 150px;
+    height: 50px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: rgba(0, 0, 0, .8);
+    border: 2px solid black;
+    pointer-events: none;
+    border-radius: 5px;
+}
+
+::ng-deep .setup-dashed {
+    fill:url(#dashedBackground);		
+}
+
+::ng-deep .selectJob {
+    opacity: 0.2;
+}

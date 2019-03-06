@@ -20,6 +20,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AdministrationComponent } from './administration/administration.component';
 import { environment } from 'src/environments/environment';
+import { GanttChartComponent } from './gantt-chart/gantt-chart.component';
 
 const routes: Routes = [
   {
@@ -40,7 +41,8 @@ const routes: Routes = [
     ClickStopPropagationDirective,
     AppComponent,
     LoginComponent,
-    AdministrationComponent
+    AdministrationComponent,
+    GanttChartComponent
   ],
   imports: [
     BrowserModule,

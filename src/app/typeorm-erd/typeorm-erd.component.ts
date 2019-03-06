@@ -25,8 +25,9 @@ export class TypeormERDComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.svg = d3.select('svg');
-    this.inner = this.svg.select('g');
+    d3.select('svg').remove();
+    this.svg = d3.select('.typeorm-svg-wrapper').append('svg').attr('width', '100%').attr('height', '600');
+    this.inner = this.svg.append('g');
 
     this.g.setGraph({
       nodesep: 70,
