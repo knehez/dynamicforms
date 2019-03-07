@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between p-2">
   <div>
-      <button class="form-control btn btn-outline-success" type="button" aria-label="Search"
+    <button class="form-control btn btn-outline-success" type="button" aria-label="Search"
       (click)="backClicked.emit()"><span class="pi pi-angle-double-left"></span></button>
   </div>
   <div class="form-inline">
@@ -28,7 +28,13 @@
                 <i *ngIf="dataRow[col.key]" class="pi pi-check text-success"></i>
                 <i *ngIf="!dataRow[col.key]" class="pi pi-times text-danger"></i>
               </div>
-              <ngb-highlight *ngSwitchDefault [result]="truncate(dataRow[col.key])" [term]="searchFilter"></ngb-highlight>
+              <div *ngSwitchDefault [ngSwitch]="col.controlType">
+                <!-- textareas will be displayed with small font-->
+                <small *ngSwitchCase="'textarea'">{{truncate(dataRow[col.key])}}</small>
+                <!-- all other cell values-->
+                <ngb-highlight *ngSwitchDefault [result]="dataRow[col.key]" [term]="searchFilter">
+                </ngb-highlight>
+              </div>
             </div>
 
           </div>
