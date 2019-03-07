@@ -12,6 +12,7 @@ export class InputBase<T> {
     order: number;
     controlType: string;
     type: string;
+    style: string;
     hidden: boolean;
     dateFormat: string;
     linkedObject: string;
@@ -27,6 +28,7 @@ export class InputBase<T> {
         order?: number,
         controlType?: string,
         type?: string,
+        style?: string;
         hidden?: boolean,
         dateFormat?: string;
         cols?: number;
@@ -41,6 +43,7 @@ export class InputBase<T> {
         this.required = !!options.required;
         this.order = options.order === undefined ? 1 : options.order;
         this.type = options.type || 'text';
+        this.style = options.style || '';
         this.hidden = options.hidden || false;
         this.dateFormat = options.dateFormat || '';
         this.cols = options.cols === undefined ? 20 : options.cols;
