@@ -44,6 +44,17 @@ export class User {
     email: string;
 
     @FormField({
+        className: 'TextboxInput',
+        header: 'Password',
+        type: 'password',
+        order: 5
+    })
+    @Column({
+        select: false
+    })
+    password: string;
+
+    @FormField({
         className: 'RadioInput',
         header: 'Gender',
         options: [
@@ -51,8 +62,7 @@ export class User {
             { key: 'Female', value: 'Female' }
         ],
         value: 'Male',
-        required: true,
-        order: 5
+        order: 6
     })
     @Column()
     gender: string;
@@ -64,7 +74,7 @@ export class User {
         linkedData: { entity: 'task', value: 'taskName' },
         multipleSelect: true,
         required: true,
-        order: 4
+        order: 7
     })
     @ManyToMany(type => Task, {
         eager: true, cascade: true,
