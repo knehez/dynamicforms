@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  bcrypt_salt_rounds: 10
+  bcrypt_salt_rounds: 10,
+  jwt_secret: 'soLongAndSecretKey',
+  jwt_expires_in: '2d'
 };
 
 /*

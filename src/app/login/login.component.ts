@@ -16,30 +16,25 @@ export class LoginComponent {
 
   constructor(
     private router: Router, 
-    private authenticationService: AuthenticationService
-    ) { 
+    private authenticationService: AuthenticationService) { 
 
-    //TODO: if the user is logged in, redirect to index page
-
+    if (authenticationService.getToken() != null) {
+      this.router.navigate(['/']);
+    }
   }
 
   onSubmit () { 
     this.authenticationService.login(this.user.name, this.user.password)
-      .subscribe(
-        data => {
-          //TODO: handle JWT token from response
-          if (data['success']) {
-            return this.router.navigate([ '/' ]);
-          }
-        },
-        err => {
-          if (err.status === 401) {
-            this.loginSuccess = false;
-            return;
-          }
-
-          console.error(err);
+      .then(() => {
+        this.router.navigate(['/']);
+      })
+      .catch(err => {
+        if (err.status === 401) {
+          this.loginSuccess = false;
+          return;
         }
-      );
+
+        console.error(err);
+      });
   }
 }

@@ -9,7 +9,7 @@ import { PanelModule } from 'primeng/panel';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalFormComponent } from './crud-table/modal-form/modal-form.component';
 import { DynamicFormModule } from './crud-table/dynamic-form/dynamic-form.module';
@@ -21,6 +21,7 @@ import { LoginComponent } from './login/login.component';
 import { AdministrationComponent } from './administration/administration.component';
 import { environment } from 'src/environments/environment';
 import { GanttChartComponent } from './gantt-chart/gantt-chart.component';
+import { AuthHttpInterceptorService } from './_services/auth-http-interceptor.service';
 
 const routes: Routes = [
   {
@@ -58,7 +59,13 @@ const routes: Routes = [
     NgbModule,
     RouterModule.forRoot(routes, { enableTracing: !environment.production })
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthHttpInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

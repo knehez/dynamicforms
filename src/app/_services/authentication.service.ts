@@ -9,6 +9,24 @@ export class AuthenticationService {
   constructor(private http: HttpClient) { }
 
   login (username: string, password: string) {
-    return this.http.post('/backend/login', { username, password });
+    return new Promise((resolve, reject) => {
+      this.http.post('/backend/login', { username, password })
+        .subscribe(data => {
+          if (data['success'] && data['accessToken']) {
+            localStorage.setItem('accessToken', data['accessToken']);
+            return resolve();
+          }
+        }, err => {
+          return reject(err);
+        });
+    });
+  }
+
+  logout () {
+    localStorage.removeItem('accessToken');
+  }
+
+  getToken () {
+    return localStorage.getItem('accessToken');
   }
 }
