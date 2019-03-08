@@ -29,9 +29,9 @@ export default class AuthenticationCtrl extends BaseCtrl {
             return this.handleError(res, 'Bad credentials given.');
         }
 
-        let payload = { id: user.id };
-        let jwtSecret = environment.jwt_secret;
-        let options = { expiresIn: environment.jwt_expires_in };
+        const payload = { id: user.id };
+        const jwtSecret = environment.jwt_secret;
+        const options = { expiresIn: environment.jwt_expires_in };
 
         jwt.sign(payload, jwtSecret, options, (err, token) => {
             if (err) {
@@ -44,7 +44,7 @@ export default class AuthenticationCtrl extends BaseCtrl {
                 accessToken: token
             });
         });
-    };
+    }
 
     handleError (res, message) {
         res.status(401).json({

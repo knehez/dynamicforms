@@ -1,8 +1,18 @@
 var gulp = require('gulp');
 var del = require('del');
+var fs = require('fs');
 var exec = require('child_process').exec;
 var nodemon = require('gulp-nodemon');
 var stream;
+
+gulp.task('clean-backend', function (done) {
+    const dir = 'dist-server';
+    del([dir]);
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+    }
+    done();
+});
 
 gulp.task('compile-backend', function (done) {
     exec('tsc --sourcemap -p ./src/backend', function (err, stdout, stderr) {
@@ -25,10 +35,10 @@ gulp.task('watch-backend', function (done) {
     done();
 });
 
-gulp.task('backend', gulp.series('watch-backend', function () {
+gulp.task('backend', gulp.series('clean-backend', 'compile-backend', 'watch-backend', function () {
     stream = nodemon({
-        script: 'dist-server/app.js',
-        watch: 'dist-server/backend',
+        script: 'dist-server/backend/app.js',
+        watch: 'dist-server/',
         delay: 1000, // milliseconds
     })
         .on('restart', function () {
