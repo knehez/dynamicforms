@@ -41,7 +41,6 @@ export class InputService {
                 // copy element name as key
                 params['key'] = key;
                 const className = params['className'];
-                delete params['className'];
                 let controlObject: any;
                 switch (className) {
                     case 'TextboxInput':

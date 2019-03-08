@@ -32,11 +32,13 @@
                 <!-- textareas will be displayed with small font-->
                 <small *ngSwitchCase="'textarea'">{{truncate(dataRow[col.key])}}</small>
                 <!-- all other cell values-->
-                <ngb-highlight *ngSwitchDefault [result]="dataRow[col.key]" [term]="searchFilter">
-                </ngb-highlight>
+
+                <div *ngSwitchDefault>
+                  <ngb-highlight *ngIf="col.type != 'password'" [result]="dataRow[col.key]" [term]="searchFilter">
+                  </ngb-highlight>
+                </div>
               </div>
             </div>
-
           </div>
 
           <div *ngIf="col.linkedObject && col.multipleSelect">
