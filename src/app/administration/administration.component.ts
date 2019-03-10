@@ -7,6 +7,8 @@ import { InputService } from 'src/app/crud-table/dynamic-form/input.service';
 import { Project } from 'src/backend/entities/project';
 import { Product } from 'src/backend/entities/product';
 import { Schedule } from 'src/backend/entities/schedule';
+import { AuthenticationService } from '../_services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-administration',
@@ -37,7 +39,11 @@ export class AdministrationComponent {
 
   backList = [];
 
-  constructor(service: InputService) {
+  constructor(
+    service: InputService, 
+    private authService: AuthenticationService,
+    private router: Router) {
+
     this.userFormElements = service.getFormElements(new User);
     this.taskFormElements = service.getFormElements(new Task);
     this.taskItemFormElements = service.getFormElements(new TaskItem);
@@ -89,6 +95,11 @@ export class AdministrationComponent {
     if (this.backList.length !== 0) {
       this.currentSelection = this.backList.pop();
     }
+  }
+
+  onLogoutClicked() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }
 
