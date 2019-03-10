@@ -38,8 +38,8 @@
     height: 50px;
     padding: 2px;
     font: 12px sans-serif;
-    background: rgba(0, 0, 0, .8);
-    border: 2px solid black;
+    background: rgba(78, 78, 78, 0.747);
+    border: 2px solid rgb(78, 78, 78);
     pointer-events: none;
     border-radius: 5px;
 }
@@ -50,4 +50,10 @@
 
 ::ng-deep .selectJob {
     opacity: 0.2;
+}
+
+::ng-deep .timeLine {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 0.5px;
 }

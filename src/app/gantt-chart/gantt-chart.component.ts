@@ -21,6 +21,8 @@ export class GanttChartComponent implements OnInit {
     scale: 1
   };
 
+  showTooltip = false;
+
   constructor() { }
 
   ngOnInit() {
@@ -101,6 +103,10 @@ export class GanttChartComponent implements OnInit {
       .attr('class', 'y axis')
       .call(d3.axisLeft(yAxis).tickSize(-width)); // Create an axis component with d3.axisLeft
 
+    const timeLine = d3Elem.append('line')
+      .attr('id', 'timeLineY')
+      .attr('class', 'timeLine');
+
     const chart = d3Elem.selectAll().data(entity.log).enter();
 
     const div = d3
@@ -115,7 +121,7 @@ export class GanttChartComponent implements OnInit {
         .duration(200)
         .style('opacity', 0.9);
       div
-        .html(d.job + '<br>' + 'start:' + d.startTime + '<br>' + 'end:' + d.endTime)
+        .html(d.job + '<br>' + '[ ' + d.startTime + ' - ' + d.endTime + ' ] <br>' + d.machine)
         .style('left', d3.event.pageX + 'px')
         .style('top', d3.event.pageY - 50 + 'px');
     };
@@ -123,7 +129,7 @@ export class GanttChartComponent implements OnInit {
     const hideToolTip = () => {
       div
         .transition()
-        .duration(500)
+        .duration(1000)
         .style('opacity', 0);
     };
 
@@ -142,7 +148,7 @@ export class GanttChartComponent implements OnInit {
         }
         return d3.schemeCategory10[jobs.indexOf(d.job) % 10];
       })
-      .on('mouseover', toolTip)
+      .on('mouseover', (d) => { if (this.showTooltip) { toolTip(d); } })
       .on('mouseout', hideToolTip)
       .on('click', (d) => {
         const otherSelectedJobs = d3.selectAll('rect:not([class^="J' + d.job + '"])');
@@ -151,6 +157,12 @@ export class GanttChartComponent implements OnInit {
         } else {
           otherSelectedJobs.classed('selectJob', true);
         }
+      }).on('mousemove', (d) => {
+        timeLine.style('display', null);
+        const mouseX = d3.mouse(d3.event.target)[0];
+        timeLine
+          .attr('x1', mouseX).attr('y1', 0)
+          .attr('x2', mouseX).attr('y2', height);
       });
 
     chart.append('text')
