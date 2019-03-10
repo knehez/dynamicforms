@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DropdownInput } from './form-elements/dropdown';
 import { TextboxInput } from './form-elements/textBox';
-import { TextareaInput } from './form-elements/textarea';
+import { TextareaInput } from './form-elements/textArea';
 import { RadioInput } from './form-elements/radio';
 import 'reflect-metadata';
 import { PROPERTY_METADATA_KEY } from 'src/backend/entities/decorator';

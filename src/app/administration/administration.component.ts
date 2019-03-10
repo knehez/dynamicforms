@@ -25,7 +25,7 @@ export class AdministrationComponent {
   private _opened = false;
   cols: any[];
   isNavbarCollapsed = true;
-  currentSelection: 'user' | 'taskitem' | 'task' | 'product' | 'project' | 'schedule' | 'gantt' = 'user';
+  currentSelection: 'user' | 'taskitem' | 'task' | 'product' | 'project' | 'schedule' | 'erdiagram' | 'gantt' = 'user';
   allEntities: any[] = [];
 
   productFilter = {};
