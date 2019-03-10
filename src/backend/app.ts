@@ -6,6 +6,7 @@ import * as path from 'path';
 import setRoutes from './routes';
 import { createConnection } from 'typeorm';
 import { protectRoutes } from './protect.routes';
+import initializeDatabase from './initial-data';
 
 const app = express();
 
@@ -25,6 +26,8 @@ app.use(morgan('dev'));
 
 createConnection().then(connection => {
   process.stdout.write('Connected to MySQL DB\n');
+
+  initializeDatabase();
 
   setRoutes(app);
 
