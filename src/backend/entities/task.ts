@@ -1,7 +1,14 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { FormField } from './decorator';
+import { FormField, Permissions } from './decorator';
 import { TaskItem } from './taskItem';
+import { RoleName } from './role';
 
+@Permissions({
+    create: [ RoleName.Admin ],
+    read:   [ RoleName.Admin, RoleName.Manager, RoleName.Viewer ],
+    update: [ RoleName.Admin ],
+    delete: [ RoleName.Admin ]
+})
 @Entity()
 export class Task {
     @FormField({

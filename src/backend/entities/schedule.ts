@@ -1,6 +1,13 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { FormField } from './decorator';
+import { FormField, Permissions } from './decorator';
+import { RoleName } from './role';
 
+@Permissions({
+    create: [ RoleName.Admin ],
+    read:   [ RoleName.Admin, RoleName.Manager, RoleName.Viewer ],
+    update: [ RoleName.Admin ],
+    delete: [ RoleName.Admin ]
+})
 @Entity()
 export class Schedule {
     @FormField({
