@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinTable, ManyToMany } from 'typeorm';
 import { FormField } from './decorator';
 import { Task } from './task';
+import { Role, RoleName } from './role';
 
 @Entity()
 export class User {
@@ -81,4 +82,18 @@ export class User {
     })
     @JoinTable()
     tasks: Task[];
+
+    @FormField({
+        className: 'DropdownInput',
+        header: 'Roles',
+        linkedObject: 'roles',
+        linkedData: { entity: 'role', value: 'roleName' },
+        multipleSelect: true,
+        order: 8
+    })
+    @ManyToMany(type => Role, {
+        eager: true, cascade: true
+    })
+    @JoinTable()
+    roles: Role[];
 }
