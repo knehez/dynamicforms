@@ -4,6 +4,7 @@ import BaseCtrl from './base.controller';
 import { environment } from '../../environments/environment';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
+import { Role } from '../entities/role';
 
 export default class AuthenticationCtrl extends BaseCtrl {
 
@@ -23,13 +24,23 @@ export default class AuthenticationCtrl extends BaseCtrl {
             }
         });
 
+        const roles = await getRepository(Role).find({
+            select: [ 'roleName' ],
+            where: {
+                userId: user.id
+            }
+        });
+
         const passwordMatches = await bcrypt.compare(credentials.password, user.password);
 
-        if (!user || !passwordMatches) {
+        if (!user || !roles || !passwordMatches) {
             return this.handleError(res, 'Bad credentials given.');
         }
 
-        const payload = { id: user.id };
+        const payload = {
+            id: user.id,
+            roles: this.getRoleNames(roles)
+        };
         const jwtSecret = environment.jwt_secret;
         const options = { expiresIn: environment.jwt_expires_in };
 
@@ -41,7 +52,8 @@ export default class AuthenticationCtrl extends BaseCtrl {
 
             res.json({
                 success: true,
-                accessToken: token
+                accessToken: token,
+                roles: this.getRoleNames(roles)
             });
         });
     }
@@ -51,5 +63,9 @@ export default class AuthenticationCtrl extends BaseCtrl {
             success: false,
             message: message
         });
+    }
+
+    getRoleNames (roles: Role[]): string[] {
+        return roles.map(role => role.roleName);
     }
 }

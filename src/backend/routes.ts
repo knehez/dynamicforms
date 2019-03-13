@@ -7,6 +7,7 @@ import ProductCtrl from './controllers/product.controller';
 import ProjectCtrl from './controllers/project.controller';
 import AuthenticationCtrl from './controllers/authentication.controller';
 import ScheduleCtrl from './controllers/schedule.controller';
+import RoleCtrl from './controllers/role.controller';
 
 export default function setRoutes(app) {
 
@@ -46,6 +47,12 @@ export default function setRoutes(app) {
   const scheduleCtrl = new ScheduleCtrl();
 
   getGeneralRoutes(router, schedules, scheduleCtrl);
+
+  // Roles
+  const roles = 'roles';
+  const roleCtrl = new RoleCtrl();
+
+  getGeneralRoutes(router, roles, roleCtrl);
 
   // Authentication
   const authenticationCtrl = new AuthenticationCtrl();
