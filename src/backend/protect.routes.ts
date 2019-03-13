@@ -7,7 +7,7 @@ export function protectRoutes (app) {
         credentialsRequired: true
     })
     .unless({ path: ['/backend/login'] }));
-      
+
     app.use(function (err, req, res, next) {
         if (err.name === 'UnauthorizedError') {
             res.status(401).json({
@@ -16,4 +16,4 @@ export function protectRoutes (app) {
             });
         }
     });
-};
+}

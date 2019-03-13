@@ -15,15 +15,15 @@ export class LoginComponent {
   };
 
   constructor(
-    private router: Router, 
-    private authenticationService: AuthenticationService) { 
+    private router: Router,
+    private authenticationService: AuthenticationService) {
 
     if (authenticationService.getToken() != null) {
       this.router.navigate(['/']);
     }
   }
 
-  onSubmit () { 
+  onSubmit () {
     this.authenticationService.login(this.user.name, this.user.password)
       .then(() => {
         this.router.navigate(['/']);

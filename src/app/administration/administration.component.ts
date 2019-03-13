@@ -40,7 +40,7 @@ export class AdministrationComponent {
   backList = [];
 
   constructor(
-    service: InputService, 
+    service: InputService,
     private authService: AuthenticationService,
     private router: Router) {
 

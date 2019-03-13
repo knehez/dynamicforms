@@ -9,49 +9,49 @@ export default class UserCtrl extends BaseCtrl {
     model = getRepository(User);
 
     insert = async (req, res) => {
-        let user = req.body;
+        const user = req.body;
 
         this.hashPassword(user.password)
             .then(hashedPassword => {
                 user.password = hashedPassword;
                 return user;
             })
-            .then(async (user) => {
-                const entity = this.model.create(user);
+            .then(async (userToCreate) => {
+                const entity = this.model.create(userToCreate);
                 await this.model.save(entity);
                 res.json({ id: entity['id'] });
             })
             .catch(err => this.handleError(err, res));
-    };
+    }
 
     update = async (req, res) => {
-        let user = req.body;
+        const user = req.body;
 
         if (!user.password) {
-            delete user.password; //avoid overwrite to empty string
-            
+            delete user.password; // avoid overwrite to empty string
+
             const entity = await this.model.save(user);
             return res.json({ id: entity['id'] });
         }
 
-        this.hashPassword(req.body.password)
+        this.hashPassword(user.password)
             .then(hashedPassword => {
                 user.password = hashedPassword;
                 return user;
             })
-            .then(async (user) => {
-                const entity = await this.model.save(user);
+            .then(async (userToUpdate) => {
+                const entity = await this.model.save(userToUpdate);
                 return res.json({ id: entity['id'] });
             })
             .catch(err => this.handleError(err, res));
-    };
+    }
 
     handleError (err, res) {
         console.error(err);
 
         res.status(500).json({
             success: false,
-            message: "Unable to save user."
+            message: 'Unable to save user.'
         });
     }
 

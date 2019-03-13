@@ -5,7 +5,7 @@ export abstract class Initializer {
     repository: Repository<any>;
 
     async initialize () {
-        let entityCount = await this.repository.createQueryBuilder().getCount();
+        const entityCount = await this.repository.createQueryBuilder().getCount();
 
         if (entityCount === 0) {
             this.repository.save(this.entities);
