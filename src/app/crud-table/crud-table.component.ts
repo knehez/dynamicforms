@@ -3,6 +3,8 @@ import { GeneralRestService } from './general-rest.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalFormComponent } from './modal-form/modal-form.component';
 import * as moment from 'moment';
+import { AuthenticationService } from '../_services/authentication.service';
+import { haveIntersection } from 'src/utils/array';
 
 @Component({
   selector: 'app-crud-table',
@@ -13,6 +15,7 @@ import * as moment from 'moment';
 export class CrudTableComponent implements OnInit {
 
   @Input() formElements = [];
+  @Input() formPermissions = {};
   @Input() entityName: string;
   @Input() itemsPerPage: number;
   @Input() filter: any;
@@ -32,7 +35,10 @@ export class CrudTableComponent implements OnInit {
 
   oneModel: any = [];
 
-  constructor(private service: GeneralRestService, private modalService: NgbModal) { }
+  constructor(
+    private service: GeneralRestService,
+    private authenticationService: AuthenticationService,
+    private modalService: NgbModal) { }
 
   ngOnInit() {
     this.service.objectName = this.entityName;
@@ -107,6 +113,7 @@ export class CrudTableComponent implements OnInit {
     modalRef.componentInstance.formElements = this.formElements;
     modalRef.componentInstance.isNewModel = this.isNewModel;
     modalRef.componentInstance.entityName = this.entityName;
+    modalRef.componentInstance.formPermissions = this.formPermissions;
 
     modalRef.result.then((result) => {
       switch (result['action']) {
@@ -185,6 +192,13 @@ export class CrudTableComponent implements OnInit {
     } else {
       return string;
     }
+  }
+
+  canCreateEntity () {
+    const userRoles = this.authenticationService.getRoles() || [];
+    const allowedRoles = this.formPermissions['create'] || [];
+
+    return haveIntersection(userRoles, allowedRoles);
   }
 
   debug(obj) {

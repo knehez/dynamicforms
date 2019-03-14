@@ -67,7 +67,7 @@
     <small *ngIf="searchFilter">(filtered from {{allEntities}} entries)</small>
   </div>
   <button type="button" class="btn btn-outline-primary align-self-start m-2" (click)="showAll()">Show all</button>
-  <button type="button" class="btn btn-outline-primary align-self-start m-2" (click)="add()">Add</button>
+  <button type="button" class="btn btn-outline-primary align-self-start m-2" (click)="add()" [disabled]="!canCreateEntity()">Add</button>
   <ngb-pagination class="m-2" [collectionSize]="currentEntities" [(page)]="page" [pageSize]="itemsPerPage">
   </ngb-pagination>
 </div>

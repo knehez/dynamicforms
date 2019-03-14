@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { RoleName } from './role';
 
 export const PROPERTY_METADATA_KEY = Symbol('dynamicFormMetadata');
+export const CLASS_PERMISSION_METADATA_KEY = Symbol('dynamicFormMetadata:permissions');
 
 export function FormField(updates: any) {
     return (target: any, propertyKey: string | symbol) => {
@@ -31,7 +32,7 @@ export function Permissions(info: {
     delete: RoleName[]
 }): Function {
     return (constructor: Function) => {
-        Reflect.defineMetadata('custom:permissionInfo', info, constructor);
+        Reflect.defineMetadata(CLASS_PERMISSION_METADATA_KEY, info, constructor);
         return constructor;
     };
 }

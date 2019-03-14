@@ -10,28 +10,28 @@
       <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="currentSelection">
-            <label ngbButtonLabel class="btn-outline-primary btn-sm">
+            <label *ngIf="canReadEntity(projectFormPermissions)" ngbButtonLabel class="btn-outline-primary btn-sm">
               <input ngbButton type="radio" value="project">Project
             </label>
-            <label ngbButtonLabel class="btn-outline-primary btn-sm">
+            <label *ngIf="canReadEntity(productFormPermissions)" ngbButtonLabel class="btn-outline-primary btn-sm">
               <input ngbButton type="radio" value="product">Product
             </label>
-            <label ngbButtonLabel class="btn-outline-primary btn-sm">
+            <label *ngIf="canReadEntity(userFormPermissions)" ngbButtonLabel class="btn-outline-primary btn-sm">
               <input ngbButton type="radio" value="user">User
             </label>
-            <label ngbButtonLabel class="btn-outline-primary btn-sm">
+            <label *ngIf="canReadEntity(taskFormPermissions)" ngbButtonLabel class="btn-outline-primary btn-sm">
               <input ngbButton type="radio" value="task">Task
             </label>
-            <label ngbButtonLabel class="btn-outline-primary btn-sm">
+            <label *ngIf="canReadEntity(taskItemFormPermissions)" ngbButtonLabel class="btn-outline-primary btn-sm">
               <input ngbButton type="radio" value="taskitem">Task item
             </label>
             <label ngbButtonLabel class="btn-outline-primary btn-sm">
               <input ngbButton type="radio" value="erdiagram">ER Diagram
             </label>
-            <label ngbButtonLabel class="btn-outline-primary btn-sm">
+            <label *ngIf="canReadEntity(scheduleFormPermissions)" ngbButtonLabel class="btn-outline-primary btn-sm">
                 <input ngbButton type="radio" value="schedule">Schedule
             </label>
-            <label ngbButtonLabel class="btn-outline-primary btn-sm">
+            <label *ngIf="canReadEntity(scheduleFormPermissions)" ngbButtonLabel class="btn-outline-primary btn-sm">
               <input ngbButton type="radio" value="gantt">Gantt Diagram
             </label>
           </div>
@@ -42,25 +42,25 @@
       </div>
     </nav>
     
-    <app-crud-table *ngIf="currentSelection == 'project'" [entityName]="'projects'" [formElements]="projectFormElements"
+    <app-crud-table *ngIf="currentSelection == 'project'" [entityName]="'projects'" [formElements]="projectFormElements" [formPermissions]="projectFormPermissions"
       (rowSelect)="projectSelected($event)" [itemsPerPage]="5" [filter]="projectFilter" (backClicked)="goBack()"></app-crud-table>
     <h1></h1>
-    <app-crud-table *ngIf="currentSelection == 'product'" [entityName]="'products'" [formElements]="productFormElements"
+    <app-crud-table *ngIf="currentSelection == 'product'" [entityName]="'products'" [formElements]="productFormElements" [formPermissions]="productFormPermissions"
       [itemsPerPage]="5" [filter]="productFilter" (cellSelect)="productCellSelected($event)" (backClicked)="goBack()"></app-crud-table>
     <h1></h1>
-    <app-crud-table *ngIf="currentSelection == 'user'" [entityName]="'users'" [formElements]="userFormElements"
+    <app-crud-table *ngIf="currentSelection == 'user'" [entityName]="'users'" [formElements]="userFormElements" [formPermissions]="userFormPermissions"
       [itemsPerPage]="5" [filter]="userFilter" (cellSelect)="userCellSelected($event)" (backClicked)="goBack()"></app-crud-table>
     <h1></h1>
-    <app-crud-table *ngIf="currentSelection == 'task'" [entityName]="'tasks'" [formElements]="taskFormElements" [filter]="taskFilter"
-      [itemsPerPage]="5" (cellSelect)="taskCellSelected($event)" (backClicked)="goBack()"></app-crud-table>
+    <app-crud-table *ngIf="currentSelection == 'task'" [entityName]="'tasks'" [formElements]="taskFormElements" [formPermissions]="taskFormPermissions" 
+    [filter]="taskFilter" [itemsPerPage]="5" (cellSelect)="taskCellSelected($event)" (backClicked)="goBack()"></app-crud-table>
     <h1></h1>
-    <app-crud-table *ngIf="currentSelection == 'taskitem'" [entityName]="'taskitems'" [filter]="taskItemFilter"
+    <app-crud-table *ngIf="currentSelection == 'taskitem'" [entityName]="'taskitems'" [formPermissions]="taskItemFormPermissions" [filter]="taskItemFilter" 
       [formElements]="taskItemFormElements" [itemsPerPage]="5" (backClicked)="goBack()"></app-crud-table>
   
     <app-typeorm-erd *ngIf="currentSelection == 'erdiagram'" [entities]="allEntities"></app-typeorm-erd>
   
     <app-crud-table *ngIf="currentSelection == 'schedule'" [entityName]="'schedules'" [filter]="''"
-    [formElements]="scheduleFormElements" [itemsPerPage]="5" (rowSelect)="showScheudule($event)" (backClicked)="goBack()"></app-crud-table>
+    [formElements]="scheduleFormElements" [formPermissions]="scheduleFormPermissions" [itemsPerPage]="5" (rowSelect)="showScheudule($event)" (backClicked)="goBack()"></app-crud-table>
 
     <app-gantt-chart *ngIf="currentSelection == 'gantt'" [entities]="ganttEntities"></app-gantt-chart>
     

@@ -12,8 +12,9 @@ export class AuthenticationService {
     return new Promise((resolve, reject) => {
       this.http.post('/backend/login', { username, password })
         .subscribe(data => {
-          if (data['success'] && data['accessToken']) {
+          if (data['success'] && data['accessToken'] && data['roles']) {
             localStorage.setItem('accessToken', data['accessToken']);
+            localStorage.setItem('roles', JSON.stringify(data['roles']));
             return resolve();
           }
         }, err => {
@@ -24,9 +25,14 @@ export class AuthenticationService {
 
   logout () {
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('roles');
   }
 
   getToken () {
     return localStorage.getItem('accessToken');
+  }
+
+  getRoles () {
+    return JSON.parse(localStorage.getItem('roles'));
   }
 }

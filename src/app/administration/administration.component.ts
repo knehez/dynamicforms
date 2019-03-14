@@ -9,6 +9,7 @@ import { Product } from 'src/backend/entities/product';
 import { Schedule } from 'src/backend/entities/schedule';
 import { AuthenticationService } from '../_services/authentication.service';
 import { Router } from '@angular/router';
+import { haveIntersection } from 'src/utils/array';
 
 @Component({
   selector: 'app-administration',
@@ -19,11 +20,18 @@ import { Router } from '@angular/router';
 export class AdministrationComponent {
   title = 'crud';
   userFormElements: any[];
+  userFormPermissions: any;
   taskFormElements: any[];
+  taskFormPermissions: any;
   taskItemFormElements: any[];
+  taskItemFormPermissions: any;
   productFormElements: any[];
+  productFormPermissions: any;
   projectFormElements: any[];
+  projectFormPermissions: any;
   scheduleFormElements: any[];
+  scheduleFormPermissions: any;
+
   private _opened = false;
   cols: any[];
   isNavbarCollapsed = true;
@@ -45,11 +53,22 @@ export class AdministrationComponent {
     private router: Router) {
 
     this.userFormElements = service.getFormElements(new User);
+    this.userFormPermissions = service.getEntityPermissions(new User);
+
     this.taskFormElements = service.getFormElements(new Task);
+    this.taskFormPermissions = service.getEntityPermissions(new Task);
+
     this.taskItemFormElements = service.getFormElements(new TaskItem);
+    this.taskItemFormPermissions = service.getEntityPermissions(new TaskItem);
+
     this.productFormElements = service.getFormElements(new Product);
+    this.productFormPermissions = service.getEntityPermissions(new Product);
+
     this.projectFormElements = service.getFormElements(new Project);
+    this.projectFormPermissions = service.getEntityPermissions(new Project);
+
     this.scheduleFormElements = service.getFormElements(new Schedule);
+    this.scheduleFormPermissions = service.getEntityPermissions(new Schedule);
 
     this.allEntities.push({ name: 'User', entity: this.userFormElements });
     this.allEntities.push({ name: 'Task', entity: this.taskFormElements });
@@ -100,6 +119,13 @@ export class AdministrationComponent {
   onLogoutClicked() {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  canReadEntity (permissions) {
+    const userRoles = this.authService.getRoles();
+    const allowedRoles = permissions['read'];
+
+    return haveIntersection(userRoles, allowedRoles);
   }
 }
 
