@@ -24,12 +24,12 @@ export default class AuthenticationCtrl extends BaseCtrl {
             }
         });
 
-        const roles = await getRepository(Role).find({
-            select: [ 'roleName' ],
-            where: {
-                userId: user.id
-            }
-        });
+        const roles = await getRepository(Role)
+            .createQueryBuilder()
+            .innerJoin('user_roles_role', 'user_roles_role')
+            .where('user_roles_role.userId = :userId', { userId: user.id })
+            .andWhere('user_roles_role.roleId = role.id')
+            .getMany();
 
         const passwordMatches = await bcrypt.compare(credentials.password, user.password);
 
@@ -65,7 +65,7 @@ export default class AuthenticationCtrl extends BaseCtrl {
         });
     }
 
-    getRoleNames (roles: Role[]): string[] {
-        return roles.map(role => role.roleName);
+    getRoleNames (roles: {}[]): string[] {
+        return roles.map(role => role['roleName']);
     }
 }
