@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
+import errorCodes from 'src/utils/error.codes';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class AuthHttpInterceptorService implements HttpInterceptor {
 
     return next.handle(req).pipe(
       catchError(err => {
-        if (err.status === 401) {
+        if (err.status === 401 && err.errcode === errorCodes.invalidAccessToken) {
           this.authenticationService.logout();
           this.router.navigate(['/login']);
         }
