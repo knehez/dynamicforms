@@ -34,6 +34,10 @@ export class ModalFormComponent implements OnInit {
     this.activeModal.close({ action: 'save', data: this.formComponent.getPayload() });
   }
 
+  canCreateEntity () {
+    return haveIntersection(this.formPermissions['create'], this.authService.getRoles());
+  }
+
   canUpdateEntity () {
     return haveIntersection(this.formPermissions['update'], this.authService.getRoles());
   }
