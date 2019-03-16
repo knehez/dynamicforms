@@ -1,3 +1,17 @@
-Show Tooltip <input class="form-contorl" type="checkbox" [(ngModel)]="showTooltip">
+Show Tooltip <input type="checkbox" [(ngModel)]="showTooltip">
+<div class="btn-group btn-group-toggle float-right"  style="margin-left: 1em">
+    <label class="btn-outline-primary btn-sm" ngbButtonLabel>
+        <input type="checkbox" ngbButton [(ngModel)]="isSelectTime"> Select time
+    </label>
+</div>
+Time {{time}}
+<div class="btn-group btn-group-toggle float-right" ngbRadioGroup [(ngModel)]="ganttType">
+    <label class="btn-outline-success btn-sm" ngbButtonLabel>
+      <input type="radio" ngbButton [value]="'MACHINE_ORIENTED'" (click)="gantTypeChanged('MACHINE_ORIENTED')"> Machine Oriented
+    </label>
+    <label class="btn-outline-success btn-sm" ngbButtonLabel>
+      <input type="radio" ngbButton value="'JOB_ORIENTED'" (click)="gantTypeChanged('JOB_ORIENTED')"> Job Oriented
+    </label>
+  </div>
 <div class="gantt-svg-wrapper">
 </div>
