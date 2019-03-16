@@ -22,6 +22,11 @@ export class GanttChartComponent implements OnInit {
   };
 
   showTooltip = false;
+  time = 0;
+  isSelectTime;
+
+  zoomAndAnimate = true;
+  ganttType: 'MACHINE_ORIENTED' | 'JOB_ORIENTED' = 'MACHINE_ORIENTED';
 
   constructor() { }
 
@@ -40,8 +45,10 @@ export class GanttChartComponent implements OnInit {
     this.inner = this.svg.append('g');
 
     let lastHeight = 0;
+
     for (let i = 0; i < this.entities.length; i++) {
-      lastHeight = this.showGanttChart(this.entities[i], this.inner.append('g').attr('transform', 'translate(0,' + (lastHeight * i) + ')'));
+      lastHeight = this.showGanttChart(this.entities[i], this.inner.append('g').
+        attr('transform', 'translate(0,' + (lastHeight * (i)) + ')'), this.ganttType);
     }
 
     this.zoom = d3.zoom().on('zoom', () => {
@@ -60,7 +67,13 @@ export class GanttChartComponent implements OnInit {
     });
 
     this.svg.call(this.zoom);
-    this.renderGraph(true);
+    this.renderGraph(this.zoomAndAnimate);
+  }
+
+  gantTypeChanged(type) {
+    this.ganttType = type;
+    this.zoomAndAnimate = false;
+    this.ngOnInit();
   }
 
   showGanttChart(entity, d3Elem, type = 'MACHINE_ORIENTED') {
@@ -86,12 +99,14 @@ export class GanttChartComponent implements OnInit {
       .domain([0, entity.makespan]) // input
       .range([0, width]);
 
+    entity.jobNames = entity.jobs.map((j) => j.name);
+
     const yAxis = d3.scaleBand()
-      .domain(entity.machines) // input
+      .domain(type === 'MACHINE_ORIENTED' ? entity.machines : entity.jobNames) // input
       .range([0, height]);
 
     const y = d3.scaleOrdinal()
-      .domain(entity.machines) // input
+      .domain(type === 'MACHINE_ORIENTED' ? entity.machines : entity.jobNames) // input
       .range([0, height]); // output
 
     d3Elem.append('g')
@@ -99,9 +114,24 @@ export class GanttChartComponent implements OnInit {
       .attr('transform', 'translate(0,' + height + ')')
       .call(d3.axisBottom(x).tickSize(-height));
 
-    d3Elem.append('g')
-      .attr('class', 'y axis')
-      .call(d3.axisLeft(yAxis).tickSize(-width)); // Create an axis component with d3.axisLeft
+    const utilization = new Map<string, number>();
+
+    if (type === 'MACHINE_ORIENTED') {
+      for (const u of entity.utilization) {
+        utilization.set(u[0], u[1]);
+      }
+
+      d3Elem.append('g')
+        .attr('class', 'y axis')
+        .call(d3.axisLeft(yAxis).tickSize(-width)
+          .tickFormat(
+            (d) => d + ' (' + utilization.get(d) + '%)')
+        );
+    } else {
+      d3Elem.append('g')
+        .attr('class', 'y axis')
+        .call(d3.axisLeft(yAxis).tickSize(-width));
+    }
 
     const timeLine = d3Elem.append('line')
       .attr('id', 'timeLineY')
@@ -115,7 +145,10 @@ export class GanttChartComponent implements OnInit {
       .attr('class', 'tooltip')
       .style('opacity', 0);
 
-    const toolTip = d => {
+    const operationToolTip = d => {
+      if (!this.showTooltip) {
+        return;
+      }
       div
         .transition()
         .duration(200)
@@ -126,61 +159,137 @@ export class GanttChartComponent implements OnInit {
         .style('top', d3.event.pageY - 50 + 'px');
     };
 
-    const hideToolTip = () => {
+    const moveTimeline = () => {
+      if (!this.isSelectTime) {
+        return;
+      }
+      timeLine.style('display', null);
+      const mouseX = d3.mouse(d3.event.target)[0];
+      this.time = Math.round(x.invert(mouseX) + 0.5);
+      timeLine
+        .attr('x1', mouseX).attr('y1', 0)
+        .attr('x2', mouseX).attr('y2', height);
+    };
+
+    const hideOperationToolTip = () => {
       div
         .transition()
         .duration(1000)
         .style('opacity', 0);
     };
 
-    chart
+    const dataYPos = (data) => {
+      if (type === 'MACHINE_ORIENTED') {
+        return yAxis(data.machine) + yAxis(entity.machines[1]) * 0.1;
+      } else {
+        return yAxis(data.job) + yAxis(entity.jobNames[1]) * 0.1;
+      }
+    };
+
+    const dataYHeight = () => {
+      if (type === 'MACHINE_ORIENTED') {
+        return yAxis(entity.machines[1]) * 0.8;
+      } else {
+        return yAxis(entity.jobNames[1]) * 0.8;
+      }
+    };
+
+    // draw operations
+    chart.filter(function (d) {
+      if (d.event === 's' || d.event === 'w') {
+        return true;
+      }
+    })
       .append('rect')
-      .attr('x', (data, i) => x(data.startTime))
-      .attr('class', (data, i) => 'J' + data.job)
+      .attr('x', (data) => x(data.startTime))
+      .attr('class', (data) => 'J' + data.job)
       .attr('rx', '2')
       .attr('ry', '2')
-      .attr('y', (data, i) => yAxis(data.machine) + yAxis(entity.machines[1]) * 0.1)
-      .attr('width', (data, i) => x(data.endTime - data.startTime))
-      .attr('height', yAxis(entity.machines[1]) * 0.8)
-      .style('fill', function (d, i) {
+      .attr('y', dataYPos)
+      .attr('width', (data) => x(data.endTime - data.startTime))
+      .attr('height', dataYHeight)
+      .style('fill', function (d) {
         if (d.event === 's') {
           return 'url(#dashedBackground)';
         }
-        return d3.schemeCategory10[jobs.indexOf(d.job) % 10];
+        if (d.event === 'w') {
+          return d3.schemeCategory10[jobs.indexOf(d.job) % 10];
+        }
       })
-      .on('mouseover', (d) => { if (this.showTooltip) { toolTip(d); } })
-      .on('mouseout', hideToolTip)
+      .on('mouseover', operationToolTip)
+      .on('mouseout', hideOperationToolTip)
       .on('click', (d) => {
+        if (this.isSelectTime) {
+          this.isSelectTime = false;
+          return;
+        }
         const otherSelectedJobs = d3.selectAll('rect:not([class^="J' + d.job + '"])');
         if (otherSelectedJobs.classed('selectJob')) {
           otherSelectedJobs.classed('selectJob', false);
         } else {
           otherSelectedJobs.classed('selectJob', true);
         }
-      }).on('mousemove', (d) => {
-        timeLine.style('display', null);
-        const mouseX = d3.mouse(d3.event.target)[0];
-        timeLine
-          .attr('x1', mouseX).attr('y1', 0)
-          .attr('x2', mouseX).attr('y2', height);
-      });
+      }).on('mousemove', moveTimeline);
 
-    chart.append('text')
+    const textDyPos = () => {
+      if (type === 'MACHINE_ORIENTED') {
+        return yAxis(entity.machines[1]) * 0.6;
+      } else {
+        return yAxis(entity.jobNames[1]) * 0.6;
+      }
+    };
+
+    const textYPos = (data) => {
+      if (type === 'MACHINE_ORIENTED') {
+        return yAxis(data.machine);
+      } else {
+        return yAxis(data.job);
+      }
+    };
+
+    // draw operation text
+    chart.append('text').filter(function (d) {
+      if (d.event === 's' || d.event === 'w') {
+        return true;
+      }
+    })
       .attr('x', (data, i) => x(data.startTime))
-      .attr('dy', (data, i) => yAxis(entity.machines[1]) * 0.6)
-      .attr('dx', (data, i) => 3)
-      .attr('y', (data, i) => yAxis(data.machine))
+      .attr('dy', textDyPos)
+      .attr('dx', 3)
+      .attr('y', textYPos)
       .attr('font-size', '6px')
       .attr('fill', 'white')
       .text(function (d) {
         if (d.event === 's') {
           return '';
         } else if (x(d.endTime - d.startTime) > 66) {
-          return d.job;
+          return type === 'MACHINE_ORIENTED' ? d.job : d.machine;
         }
       })
-      .on('mouseover', toolTip)
-      .on('mouseout', hideToolTip);
+      .on('mouseover', operationToolTip)
+      .on('mouseout', hideOperationToolTip)
+      .on('mousemove', moveTimeline);
+
+    // draw inventory text
+    chart.append('text').filter(function (d) {
+      if (type !== 'MACHINE_ORIENTED') {
+        return false;
+      }
+      if (d.event === 'store') {
+        return true;
+      }
+    })
+      .attr('x', (data) => x(data.startTime))
+      .attr('dy', () => yAxis(entity.machines[1]) * 0.6)
+      .attr('dx', () => -2)
+      .attr('y', (data) => yAxis(data.machine))
+      .attr('font-size', '6px')
+      .attr('font-weight', 'bold')
+      .attr('fill', 'black')
+      .text((d) => d.numberOfItems)
+      .on('mouseover', operationToolTip)
+      .on('mouseout', hideOperationToolTip)
+      .on('mousemove', moveTimeline);
 
     return height + margin.bottom;
   }
@@ -206,8 +315,8 @@ export class GanttChartComponent implements OnInit {
     const width = parseInt(this.svg.style('width').replace(/px/, ''), 10);
     const height = parseInt(this.svg.style('height').replace(/px/, ''), 10);
     const zoomScale = Math.min(width / graphWidth, height / graphHeight);
-    const translateX = (width / 2) - ((graphWidth * zoomScale) / 2);
-    const translateY = (height / 2) - ((graphHeight * zoomScale) / 2) + 30;
+    const translateX = (width / 2) - ((graphWidth * zoomScale) / 2) + 100;
+    const translateY = (height / 2) - ((graphHeight * zoomScale) / 2) + 40;
     const svgZoom = this.svg.transition().duration(1000);
     svgZoom.call(this.zoom.transform, d3.zoomIdentity.translate(translateX, translateY).scale(zoomScale));
     this.transform.translateX = translateX;
