@@ -10,6 +10,7 @@ import { Schedule } from 'src/backend/entities/schedule';
 import { AuthenticationService } from '../_services/authentication.service';
 import { Router } from '@angular/router';
 import { haveIntersection } from 'src/utils/array';
+import { Role } from 'src/backend/entities/role';
 
 @Component({
   selector: 'app-administration',
@@ -21,6 +22,7 @@ export class AdministrationComponent {
   title = 'crud';
   userFormElements: any[];
   userFormPermissions: any;
+  roleFormElements: any[];
   taskFormElements: any[];
   taskFormPermissions: any;
   taskItemFormElements: any[];
@@ -55,6 +57,8 @@ export class AdministrationComponent {
     this.userFormElements = service.getFormElements(new User);
     this.userFormPermissions = service.getEntityPermissions(new User);
 
+    this.roleFormElements = service.getFormElements(new Role);
+
     this.taskFormElements = service.getFormElements(new Task);
     this.taskFormPermissions = service.getEntityPermissions(new Task);
 
@@ -76,6 +80,7 @@ export class AdministrationComponent {
     this.allEntities.push({ name: 'Product', entity: this.productFormElements });
     this.allEntities.push({ name: 'Project', entity: this.projectFormElements });
     this.allEntities.push({ name: 'Schedule', entity: this.scheduleFormElements });
+    this.allEntities.push({ name: 'Role', entity: this.roleFormElements });
   }
 
   projectSelected(project: Project) {
