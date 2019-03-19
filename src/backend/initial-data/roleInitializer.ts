@@ -1,6 +1,7 @@
 import { Initializer } from './initializer';
-import { Role, RoleName } from '../entities/role';
+import { Role } from '../entities/role';
 import { getRepository } from 'typeorm';
+import { RoleName } from '../entities/shared/roleName';
 
 export default class RoleInitializer extends Initializer {
     repository = getRepository(Role);

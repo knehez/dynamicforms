@@ -1,13 +1,11 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { FormField, Permissions } from './decorator';
 import { Product } from './product';
-import { RoleName } from './role';
+import { RoleName } from './shared/roleName';
 
 @Permissions({
-    create: [ RoleName.Admin ],
-    read:   [ RoleName.Admin, RoleName.Manager, RoleName.Viewer ],
-    update: [ RoleName.Admin ],
-    delete: [ RoleName.Admin ]
+    read:   '*',
+    update: [ RoleName.Admin, RoleName.Manager ]
 })
 @Entity()
 export class Project {

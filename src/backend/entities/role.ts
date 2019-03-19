@@ -1,17 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { Permissions } from './decorator';
-
-export enum RoleName {
-    Admin = 'admin',
-    Manager = 'manager',
-    Viewer = 'viewer'
-}
+import { RoleName } from './shared/roleName';
 
 @Permissions({
-    create: [ RoleName.Admin ],
-    read: [ RoleName.Admin, RoleName.Manager, RoleName.Viewer ],
-    update: [ RoleName.Admin, RoleName.Manager ],
-    delete: [ RoleName.Admin ]
+    read:   '*',
+    update: [ RoleName.Admin, RoleName.Manager ]
 })
 @Entity()
 export class Role {
