@@ -2,5 +2,14 @@
   "/backend": {
     "target": "http://localhost:3001",
     "secure": false
+  },
+  "/scheduler": {
+    "target": "http://localhost:3002",
+    "secure": false
+  },
+  "/socketio/*": {
+    "target": "http://localhost:3003/socket.io/",
+    "secure": false,
+    "ws": true
   }
 }
