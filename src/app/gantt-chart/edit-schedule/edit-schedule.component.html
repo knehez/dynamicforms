@@ -1,0 +1,15 @@
+<div class="d-flex">
+  <p-listbox [options]="jobs" (click)="selectJob()" [(ngModel)]="clickedJob" filter="filter" optionLabel="name"
+    [listStyle]="{'min-height':'150px','max-height':'150px','font-size':'0.8em'}"></p-listbox>
+  <div class="list-group align-self-center m-1" *ngFor="let ops of route; let i = index">
+    <li class="list-group-item list-group-item-action" *ngFor="let op of ops"
+      [ngClass]="{'active': selectedOperation[i] == op}" (click)="selectOperation(op,i)">{{op[0] + ' (' + op[1] + ')'}}
+    </li>
+  </div>
+</div>
+
+<div class="d-flex align-items-center">
+  <small>StartTime:</small>
+  <input type="number" class="m-1" style="width:50px" [(ngModel)]="startTime">
+  <button type="button" class="btn btn-sm btn-outline-success" (click)="setStartTime()">Set</button>
+</div>

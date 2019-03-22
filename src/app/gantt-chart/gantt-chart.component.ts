@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as d3 from 'd3';
-import { stringify } from '@angular/compiler/src/util';
+import { SchedulerService } from './schedulerService';
 
 @Component({
   selector: 'app-gantt-chart',
   templateUrl: './gantt-chart.component.html',
-  styleUrls: ['./gantt-chart.component.css']
+  styleUrls: ['./gantt-chart.component.css'],
+  providers: [SchedulerService]
 })
 export class GanttChartComponent implements OnInit {
   svg;
@@ -28,7 +29,9 @@ export class GanttChartComponent implements OnInit {
   zoomAndAnimate = true;
   ganttType: 'MACHINE_ORIENTED' | 'JOB_ORIENTED' = 'MACHINE_ORIENTED';
 
-  constructor() { }
+  selectedJob;
+
+  constructor(private schedulerService: SchedulerService) { }
 
   ngOnInit() {
     d3.select('svg').remove();
@@ -70,6 +73,13 @@ export class GanttChartComponent implements OnInit {
     this.renderGraph(this.zoomAndAnimate);
   }
 
+  async reschedule() {
+    this.entities[0].logs = null;
+    this.entities[0] = await this.schedulerService.reSchedule(this.entities[0]);
+    this.zoomAndAnimate = false;
+    this.ngOnInit();
+  }
+
   gantTypeChanged(type) {
     this.ganttType = type;
     this.zoomAndAnimate = false;
@@ -80,7 +90,10 @@ export class GanttChartComponent implements OnInit {
     const margin = { top: 20, right: 20, bottom: 20, left: 20 },
       width = entity.makespan - margin.left - margin.right;
 
-    const jobs = entity.jobs.map((j) => j.name);
+    let jobs = entity.jobs.map((j) => j.name);
+
+    // a színek miatt fontos, hogy a sorrend ugyanaz legyen
+    jobs = jobs.sort();
 
     let ganttHeight;
 
@@ -154,7 +167,8 @@ export class GanttChartComponent implements OnInit {
         .duration(200)
         .style('opacity', 0.9);
       div
-        .html(d.job + '<br>' + '[ ' + d.startTime + ' - ' + d.endTime + ' ] <br>' + d.machine)
+        .html(d.job + '<br>' + '[ ' + d.startTime + ' - ' + d.endTime + ' ] <br>' + d.machine
+          + '<br>' + this.getJob(entity, d.job).pieceType + '<br>Num of pieces: ' + this.getJob(entity, d.job).numOfPieces)
         .style('left', d3.event.pageX + 'px')
         .style('top', d3.event.pageY - 50 + 'px');
     };
@@ -194,6 +208,34 @@ export class GanttChartComponent implements OnInit {
       }
     };
 
+    let lastSelectedJob;
+
+    const selectJob = d => {
+      if (this.isSelectTime) {
+        this.isSelectTime = false;
+        return;
+      }
+
+      // reset selection
+      const selectedJobs = d3.selectAll('rect:not([class="J' + d.job + '"])');
+      selectedJobs.classed('unSelectedJob', false);
+
+      if (d.job === lastSelectedJob) {
+        lastSelectedJob = null;
+        return;
+      }
+
+      lastSelectedJob = d.job;
+
+      const unSelectedJobs = d3.selectAll('rect:not([class^="J' + d.job + '"])');
+      entity.selectedJob = entity.jobs.filter(j => j.name === d.job)[0];
+      if (unSelectedJobs.classed('unSelectedJob')) {
+        unSelectedJobs.classed('unSelectedJob', false);
+      } else {
+        unSelectedJobs.classed('unSelectedJob', true);
+      }
+    };
+
     // draw operations
     chart.filter(function (d) {
       if (d.event === 's' || d.event === 'w') {
@@ -218,18 +260,8 @@ export class GanttChartComponent implements OnInit {
       })
       .on('mouseover', operationToolTip)
       .on('mouseout', hideOperationToolTip)
-      .on('click', (d) => {
-        if (this.isSelectTime) {
-          this.isSelectTime = false;
-          return;
-        }
-        const otherSelectedJobs = d3.selectAll('rect:not([class^="J' + d.job + '"])');
-        if (otherSelectedJobs.classed('selectJob')) {
-          otherSelectedJobs.classed('selectJob', false);
-        } else {
-          otherSelectedJobs.classed('selectJob', true);
-        }
-      }).on('mousemove', moveTimeline);
+      .on('click', selectJob)
+      .on('mousemove', moveTimeline);
 
     const textDyPos = () => {
       if (type === 'MACHINE_ORIENTED') {
@@ -266,6 +298,7 @@ export class GanttChartComponent implements OnInit {
           return type === 'MACHINE_ORIENTED' ? d.job : d.machine;
         }
       })
+      .on('click', selectJob)
       .on('mouseover', operationToolTip)
       .on('mouseout', hideOperationToolTip)
       .on('mousemove', moveTimeline);
@@ -294,7 +327,10 @@ export class GanttChartComponent implements OnInit {
     return height + margin.bottom;
   }
 
-
+  getJob(entity, jobName) {
+    const job = entity.jobs.filter(j => j.name === jobName);
+    return job[0];
+  }
 
   renderGraph(centerEnabled) {
     if (centerEnabled) {
@@ -310,14 +346,14 @@ export class GanttChartComponent implements OnInit {
 
   zoomAndScaleGraph() {
     // Zoom and scale to fit
-    const graphWidth = 200;
-    const graphHeight = 200;
+    const graphWidth = 600;
+    const graphHeight = 390;
     const width = parseInt(this.svg.style('width').replace(/px/, ''), 10);
     const height = parseInt(this.svg.style('height').replace(/px/, ''), 10);
     const zoomScale = Math.min(width / graphWidth, height / graphHeight);
-    const translateX = (width / 2) - ((graphWidth * zoomScale) / 2) + 100;
-    const translateY = (height / 2) - ((graphHeight * zoomScale) / 2) + 40;
-    const svgZoom = this.svg.transition().duration(1000);
+    const translateX = (width / 2) - ((graphWidth * zoomScale) / 2) + 110;
+    const translateY = (height / 2) - ((graphHeight * zoomScale) / 2) + 20;
+    const svgZoom = this.svg.transition().duration(1500);
     svgZoom.call(this.zoom.transform, d3.zoomIdentity.translate(translateX, translateY).scale(zoomScale));
     this.transform.translateX = translateX;
     this.transform.translateY = translateY;

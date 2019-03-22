@@ -34,8 +34,8 @@
     color: white;
     position: absolute;
     text-align: center;
-    width: 150px;
-    height: 50px;
+    width: auto;
+    height: auto;
     padding: 2px;
     font: 12px sans-serif;
     background: rgba(78, 78, 78, 0.747);
@@ -45,10 +45,10 @@
 }
 
 ::ng-deep .setup-dashed {
-    fill:url(#dashedBackground);		
+    fill: url(#dashedBackground);
 }
 
-::ng-deep .selectJob {
+::ng-deep .unSelectedJob {
     opacity: 0.2;
 }
 
@@ -56,4 +56,8 @@
     fill: none;
     stroke: steelblue;
     stroke-width: 0.5px;
+}
+
+.gantt-svg-wrapper {
+    border: 1px solid #4444;
 }

@@ -1,17 +1,25 @@
-Show Tooltip <input type="checkbox" [(ngModel)]="showTooltip">
-<div class="btn-group btn-group-toggle float-right"  style="margin-left: 1em">
+<div class="d-flex row align-items-center">
+  <div class="m-2">Show Tooltip <input type="checkbox" [(ngModel)]="showTooltip"></div>
+  <div class="p-2">Time {{time}}</div>
+  <div class="btn-group btn-group-toggle p-2 ml-auto">
     <label class="btn-outline-primary btn-sm" ngbButtonLabel>
-        <input type="checkbox" ngbButton [(ngModel)]="isSelectTime"> Select time
+      <input type="checkbox" ngbButton [(ngModel)]="isSelectTime"> Select time
     </label>
-</div>
-Time {{time}}
-<div class="btn-group btn-group-toggle float-right" ngbRadioGroup [(ngModel)]="ganttType">
+  </div>
+  <button type="button" class="btn btn-sm btn-outline-success" (click)="reschedule()">Re-Schedule jobs</button>
+  <div class="btn-group btn-group-toggle p-2" ngbRadioGroup [(ngModel)]="ganttType">
     <label class="btn-outline-success btn-sm" ngbButtonLabel>
-      <input type="radio" ngbButton [value]="'MACHINE_ORIENTED'" (click)="gantTypeChanged('MACHINE_ORIENTED')"> Machine Oriented
+      <input type="radio" ngbButton [value]="'MACHINE_ORIENTED'" (click)="gantTypeChanged('MACHINE_ORIENTED')"> Machine
+      Oriented
     </label>
     <label class="btn-outline-success btn-sm" ngbButtonLabel>
       <input type="radio" ngbButton value="'JOB_ORIENTED'" (click)="gantTypeChanged('JOB_ORIENTED')"> Job Oriented
     </label>
   </div>
-<div class="gantt-svg-wrapper">
 </div>
+
+<div class="gantt-svg-wrapper"></div>
+<div class="h4">Route editor</div>
+<!--div *ngFor="let entity of entities"-->
+  <app-edit-schedule [entity]="entities[0]" [selectedJob]="entities[0].selectedJob"></app-edit-schedule>
+<!--/div-->

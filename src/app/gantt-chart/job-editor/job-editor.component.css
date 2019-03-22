@@ -1,0 +1,7 @@
+::ng-deep .ui-picklist-list{
+    font-size: 0.8em;
+}
+
+::ng-deep .ui-picklist {
+    font-size: 0.6em;
+}

@@ -7,11 +7,23 @@ abstract class BaseCtrl {
   // Get all
   getAll = async (req, res) => {
     let param = {};
+
+    const order = {
+      id: 'DESC'
+    };
+
     try {
       param = JSON.parse(req.query.param);
     } catch (e) {
 
     }
+
+    if (param === '') {
+      param = { order: order };
+    } else {
+      param['order'] = order;
+    }
+
     const post = await this.model.find(param);
 
     if (!post) {

@@ -22,6 +22,12 @@ import { AdministrationComponent } from './administration/administration.compone
 import { environment } from 'src/environments/environment';
 import { GanttChartComponent } from './gantt-chart/gantt-chart.component';
 import { AuthHttpInterceptorService } from './_services/auth-http-interceptor.service';
+import { EditScheduleComponent } from './gantt-chart/edit-schedule/edit-schedule.component';
+import { PickListModule } from 'primeng/picklist';
+import { ListboxModule } from 'primeng/listbox';
+import { JobEditorComponent } from './gantt-chart/job-editor/job-editor.component';
+import { SliderModule } from 'primeng/slider';
+import { CardModule } from 'primeng/card';
 
 const routes: Routes = [
   {
@@ -43,7 +49,9 @@ const routes: Routes = [
     AppComponent,
     LoginComponent,
     AdministrationComponent,
-    GanttChartComponent
+    GanttChartComponent,
+    EditScheduleComponent,
+    JobEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +64,10 @@ const routes: Routes = [
     DialogModule,
     ButtonModule,
     TableModule,
+    PickListModule,
+    ListboxModule,
+    SliderModule,
+    CardModule,
     NgbModule,
     RouterModule.forRoot(routes, { enableTracing: !environment.production })
   ],
