@@ -5,3 +5,7 @@
 ::ng-deep .ui-picklist {
     font-size: 0.6em;
 }
+
+p-picklist {
+    width: 100%;
+}

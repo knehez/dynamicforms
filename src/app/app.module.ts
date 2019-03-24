@@ -28,6 +28,7 @@ import { ListboxModule } from 'primeng/listbox';
 import { JobEditorComponent } from './gantt-chart/job-editor/job-editor.component';
 import { SliderModule } from 'primeng/slider';
 import { CardModule } from 'primeng/card';
+import { ChartModule } from 'primeng/chart';
 
 const routes: Routes = [
   {
@@ -69,6 +70,7 @@ const routes: Routes = [
     SliderModule,
     CardModule,
     NgbModule,
+    ChartModule,
     RouterModule.forRoot(routes, { enableTracing: !environment.production })
   ],
   providers: [

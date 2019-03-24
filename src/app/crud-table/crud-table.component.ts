@@ -105,6 +105,10 @@ export class CrudTableComponent implements OnInit {
     this.openModalForm();
   }
 
+  deleteRow(rowData) {
+    this.service.delete(rowData);
+    this.loadData();
+  }
 
   openModalForm() {
     const modalRef = this.modalService.open(ModalFormComponent);
@@ -186,7 +190,7 @@ export class CrudTableComponent implements OnInit {
     this.loadData();
   }
 
-  truncate(string, length = 200) {
+  truncate(string, length = 100) {
     if (string.length > length) {
       return string.substring(0, length) + '...';
     } else {

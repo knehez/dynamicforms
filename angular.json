@@ -33,7 +33,8 @@
             ],
             "scripts": [
               "node_modules/graphlib/dist/graphlib.js",
-              "node_modules/dagre/dist/dagre.js"
+              "node_modules/dagre/dist/dagre.js",
+              "node_modules/chart.js/dist/Chart.js"
             ]
           },
           "configurations": {
