@@ -1,40 +1,53 @@
-<div class="container">
-  <div class="row">
-    <div class="col-sm-6 offset-sm-3">
-
-      <h2>Login</h2>
-      
-      <hr>
-
-      <div *ngIf="!loginSuccess" class="alert alert-danger">
-          You have entered an invalid username or password.
+<div class="jumbotron d-flex align-items-center h-100">
+  <div class="container d-flex h-100">
+    <p-card>
+      <p-header>
+        <img src="assets/login_top.jpg">
+      </p-header>
+      <div class="d-flex flex-column justify-content-center align-items-center">
+        <h3>TimeSolware</h3>
+        <h4 class="align-self-center">Manufacturing Execution Simulation</h4>
       </div>
-
-      <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
-
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" id="username" name="username" class="form-control" required 
-              [(ngModel)]="user.name" #username="ngModel">
-          <div *ngIf="username.invalid && (username.dirty || username.touched)" class="text-danger">
-            <small *ngIf="username.errors.required">Name is required.</small>
+      <div class="row">
+        <div class="col-4 offset-4">
+          <hr />
+          <div *ngIf="!loginSuccess" class="alert alert-danger">
+            You have entered an invalid username or password.
           </div>
-        </div>
 
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password"class="form-control" required
-              [(ngModel)]="user.password" #password="ngModel">
-          <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
-            <small *ngIf="password.errors.required">Password is required.</small>
-          </div>
-        </div>
+          <form (ngSubmit)="onSubmit()">
 
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary">Login</button>
-        </div>
-      </form>
+            <div class="form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text border-right-0"><i
+                    class="pi pi-user text-success align-middle"></i></span>
+                <input type="text" id="username" name="username" class="form-control" required [(ngModel)]="user.name"
+                  #username="ngModel">
+              </div>
+              <div *ngIf="username.invalid && (username.dirty || username.touched)" class="text-danger">
+                <small *ngIf="username['errors']['required']">Name is required.</small>
+              </div>
+            </div>
 
-    </div>
+            <div class="form-group mb-3">
+              <div class="input-group-prepend">
+                  <span class="input-group-text border-right-0"><i
+                    class="pi pi-key text-success align-middle"></i></span>
+                <input type="password" id="password" name="password" class="form-control" required
+                  [(ngModel)]="user.password" #password="ngModel">
+              </div>
+              <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                <small *ngIf="password['errors']['required']">Password is required.</small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-outline-primary col-12">Login</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </p-card>
   </div>
 </div>
