@@ -19,7 +19,7 @@
 </div>
 
 <div class="gantt-svg-wrapper"></div>
-<div class="h4">Route editor</div>
+<hr/>
 <!--div *ngFor="let entity of entities"-->
-  <app-edit-schedule [entity]="entities[0]" [selectedJob]="entities[0].selectedJob"></app-edit-schedule>
+  <app-edit-schedule [entity]="entities[0]" [selectedJob]="entities[0].selectedJob" (rowSelect)="jobSelected($event)"></app-edit-schedule>
 <!--/div-->

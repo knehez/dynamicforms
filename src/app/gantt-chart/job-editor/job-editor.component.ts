@@ -11,9 +11,9 @@ import * as socketIo from 'socket.io-client';
 export class JobEditorComponent implements OnInit {
   targetJobs = [];
 
-  makespan = 20;
+  makespan = 80;
   setupTime = 50;
-  setups = 10;
+  setups = 30;
 
   population = 100;
   iteration = 50;
@@ -27,15 +27,19 @@ export class JobEditorComponent implements OnInit {
 
   async ngOnInit() {
     this.availableJobs = await this.schedulerService.getAllJobs();
-    this.socket = socketIo({ 'path': '/socketio' });
-    this.socket.on('log', (data) => this.logs.push(data));
+    // this.socket = socketIo({ 'path': '/socketio' });
+    // this.socket.on('log', (data) => { console.log(data); this.logs.push(data); });
   }
 
   async reschedule() {
     this.logs = [];
-    this.result = await this.schedulerService.optimize(this.targetJobs,
+
+    const result = await this.schedulerService.optimize(this.targetJobs,
       [this.makespan / 100, this.setups / 100, this.setupTime / 100], this.iteration, this.population);
-    setTimeout(() => { this.createDiagram(); this.socket.close(); }, 2000);
+
+    this.result = result['resultLog'];
+    this.logs = result['simulationLog'];
+    this.createDiagram();
   }
 
   async save() {
@@ -47,6 +51,7 @@ export class JobEditorComponent implements OnInit {
   }
 
   createDiagram() {
+    console.log(this.logs.length);
     const makespanData = this.logs.map(o => o.makespan);
     const setupData = this.logs.map(o => o.numberOfSetups);
     const setupTime = this.logs.map(o => o.setupTime);
@@ -56,19 +61,19 @@ export class JobEditorComponent implements OnInit {
       datasets: [
         {
           label: 'Makespan',
-          data: makespanData,
+          data: [...makespanData],
           fill: false,
           borderColor: '#3cb44b'
         },
         {
           label: 'Number of Setups',
-          data: setupData,
+          data: [...setupData],
           fill: false,
           borderColor: '#ffe119'
         },
         {
           label: 'Setup Time',
-          data: setupTime,
+          data: [...setupTime],
           fill: false,
           borderColor: '#4363d8'
         }

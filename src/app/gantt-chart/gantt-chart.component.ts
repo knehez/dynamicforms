@@ -30,12 +30,14 @@ export class GanttChartComponent implements OnInit {
   ganttType: 'MACHINE_ORIENTED' | 'JOB_ORIENTED' = 'MACHINE_ORIENTED';
 
   selectedJob;
+  lastSelectedJob;
 
   constructor(private schedulerService: SchedulerService) { }
 
   ngOnInit() {
+    this.lastSelectedJob = '';
     d3.select('svg').remove();
-    this.svg = d3.select('.gantt-svg-wrapper').append('svg').attr('width', '100%').attr('height', '600');
+    this.svg = d3.select('.gantt-svg-wrapper').append('svg').attr('width', '100%').attr('height', '500');
     const defs = this.svg.append('defs').append('pattern').attr('id', 'dashedBackground')
       .attr('width', '4').attr('height', '4').attr('patternUnits', 'userSpaceOnUse');
 
@@ -75,7 +77,9 @@ export class GanttChartComponent implements OnInit {
 
   async reschedule() {
     this.entities[0].logs = null;
-    this.entities[0] = await this.schedulerService.reSchedule(this.entities[0]);
+    const result = await this.schedulerService.reSchedule(this.entities[0]);
+    this.entities[0] = result['resultLog'];
+
     this.zoomAndAnimate = false;
     this.ngOnInit();
   }
@@ -84,6 +88,38 @@ export class GanttChartComponent implements OnInit {
     this.ganttType = type;
     this.zoomAndAnimate = false;
     this.ngOnInit();
+  }
+
+  jobSelected(event) {
+    if (event.name !== this.lastSelectedJob) {
+      this.selectJob({ job: event.name }, { jobs: event.jobs });
+    }
+  }
+
+  selectJob = (d, entity) => {
+    if (this.isSelectTime) {
+      this.isSelectTime = false;
+      return;
+    }
+
+    // reset selection
+    const selectedJobs = d3.selectAll('rect:not([class="J' + d.job + '"])');
+    selectedJobs.classed('unSelectedJob', false);
+
+    if (d.job === this.lastSelectedJob) {
+      this.lastSelectedJob = null;
+      return;
+    }
+
+    this.lastSelectedJob = d.job;
+
+    const unSelectedJobs = d3.selectAll('rect:not([class^="J' + d.job + '"])');
+    entity.selectedJob = entity.jobs.filter(j => j.name === d.job)[0];
+    if (unSelectedJobs.classed('unSelectedJob')) {
+      unSelectedJobs.classed('unSelectedJob', false);
+    } else {
+      unSelectedJobs.classed('unSelectedJob', true);
+    }
   }
 
   showGanttChart(entity, d3Elem, type = 'MACHINE_ORIENTED') {
@@ -208,34 +244,6 @@ export class GanttChartComponent implements OnInit {
       }
     };
 
-    let lastSelectedJob;
-
-    const selectJob = d => {
-      if (this.isSelectTime) {
-        this.isSelectTime = false;
-        return;
-      }
-
-      // reset selection
-      const selectedJobs = d3.selectAll('rect:not([class="J' + d.job + '"])');
-      selectedJobs.classed('unSelectedJob', false);
-
-      if (d.job === lastSelectedJob) {
-        lastSelectedJob = null;
-        return;
-      }
-
-      lastSelectedJob = d.job;
-
-      const unSelectedJobs = d3.selectAll('rect:not([class^="J' + d.job + '"])');
-      entity.selectedJob = entity.jobs.filter(j => j.name === d.job)[0];
-      if (unSelectedJobs.classed('unSelectedJob')) {
-        unSelectedJobs.classed('unSelectedJob', false);
-      } else {
-        unSelectedJobs.classed('unSelectedJob', true);
-      }
-    };
-
     // draw operations
     chart.filter(function (d) {
       if (d.event === 's' || d.event === 'w') {
@@ -260,7 +268,7 @@ export class GanttChartComponent implements OnInit {
       })
       .on('mouseover', operationToolTip)
       .on('mouseout', hideOperationToolTip)
-      .on('click', selectJob)
+      .on('click', d => this.selectJob(d, entity))
       .on('mousemove', moveTimeline);
 
     const textDyPos = () => {
@@ -298,7 +306,7 @@ export class GanttChartComponent implements OnInit {
           return type === 'MACHINE_ORIENTED' ? d.job : d.machine;
         }
       })
-      .on('click', selectJob)
+      .on('click', d => this.selectJob(d, entity))
       .on('mouseover', operationToolTip)
       .on('mouseout', hideOperationToolTip)
       .on('mousemove', moveTimeline);
@@ -347,11 +355,11 @@ export class GanttChartComponent implements OnInit {
   zoomAndScaleGraph() {
     // Zoom and scale to fit
     const graphWidth = 600;
-    const graphHeight = 390;
+    const graphHeight = 400;
     const width = parseInt(this.svg.style('width').replace(/px/, ''), 10);
     const height = parseInt(this.svg.style('height').replace(/px/, ''), 10);
     const zoomScale = Math.min(width / graphWidth, height / graphHeight);
-    const translateX = (width / 2) - ((graphWidth * zoomScale) / 2) + 110;
+    const translateX = (width / 2) - ((graphWidth * zoomScale) / 2) + 0;
     const translateY = (height / 2) - ((graphHeight * zoomScale) / 2) + 20;
     const svgZoom = this.svg.transition().duration(1500);
     svgZoom.call(this.zoom.transform, d3.zoomIdentity.translate(translateX, translateY).scale(zoomScale));

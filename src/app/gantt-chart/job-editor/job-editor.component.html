@@ -1,7 +1,7 @@
 <div class="h5">Job editor</div>
 <div class="d-flex">
   <p-pickList [source]="availableJobs" [target]="targetJobs" filterBy="name,piecetype,dueDate" [responsive]="true"
-    sourceHeader="All Jobs" targetHeader="Scheduled Jobs" dragdrop="true" [sourceStyle]="{'height':'300px'}"
+    sourceHeader="All Jobs" targetHeader="Scheduled Jobs" dragdrop="true" [sourceStyle]="{'height':'300px'}" [metaKeySelection]="false"
     [targetStyle]="{'height':'300px'}">
     <ng-template let-job pTemplate="item">
       <div class="ui-helper-clearfix">
@@ -14,15 +14,15 @@
 
 <div class="h5">Objective priorities</div>
 <small>Makespan {{makespan}}%</small>
-<p-slider class="m-2" [(ngModel)]="makespan" [min]="0" [max]="100" [style]="{'background-color': '#3cb44b'}"></p-slider>
+<p-slider id="makespan" class="m-2" [(ngModel)]="makespan" [min]="0" [max]="100"></p-slider>
 
 <h2></h2>
 <small>Number of Setups {{setups}}%</small>
-<p-slider class="m-2" [(ngModel)]="setups" [min]="0" [max]="100" [style]="{'background-color': '#ffe119'}"></p-slider>
+<p-slider id="setups" class="m-2" [(ngModel)]="setups" [min]="0" [max]="100"></p-slider>
 
 <h2></h2>
 <small>Setup time {{setupTime}}%</small>
-<p-slider class="m-2" [(ngModel)]="setupTime" [min]="0" [max]="100" [style]="{'background-color': '#4363d8'}"></p-slider>
+<p-slider id="setupTime" class="m-2" [(ngModel)]="setupTime" [min]="0" [max]="100"></p-slider>
 
 <div class="d-flex align-items-center">
   <div>Scheduling description:</div>

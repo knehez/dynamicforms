@@ -9,3 +9,19 @@
 p-picklist {
     width: 100%;
 }
+
+::ng-deep .ui-picklist {
+    font-size: 0.6em;
+}
+
+::ng-deep #makespan .ui-slider-range {
+    background-color: #3cb44b;
+}
+
+::ng-deep #setups .ui-slider-range {
+    background-color: #ffe119;
+}
+
+::ng-deep #setupTime .ui-slider-range {
+    background-color: #4363d8;
+}

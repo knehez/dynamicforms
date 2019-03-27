@@ -9,7 +9,6 @@
 
 .list-group {
     height: auto;
-    font-size: 0.7em;
 }
 
 .list-group-item {
@@ -17,7 +16,11 @@
 }
 
 ::ng-deep .ui-picklist {
-    font-size: 0.6em;
+    font-size: 0.8em;
+}
+
+::ng-deep .ui-table-wrapper {
+    font-size: 0.8em;
 }
 
 .active {
