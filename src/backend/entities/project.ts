@@ -30,6 +30,16 @@ export class Project {
     @Column()
     projectName: string;
 
+    @FormField({
+        className: 'FileInput',
+        header: 'File',
+        required: false,
+        type: 'file',
+        order: 3
+      })
+      @Column('longtext', { nullable: true })
+      fileData: any;
+
     @OneToMany(type => Product, product => product.project)
     products: Product[];
 }

@@ -29,6 +29,7 @@ import { JobEditorComponent } from './gantt-chart/job-editor/job-editor.componen
 import { SliderModule } from 'primeng/slider';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
+import { ModalImgComponent } from './crud-table/modal-img/modal-img.component';
 
 const routes: Routes = [
   {
@@ -52,7 +53,8 @@ const routes: Routes = [
     AdministrationComponent,
     GanttChartComponent,
     EditScheduleComponent,
-    JobEditorComponent
+    JobEditorComponent,
+    ModalImgComponent
   ],
   imports: [
     BrowserModule,
@@ -73,6 +75,8 @@ const routes: Routes = [
     ChartModule,
     RouterModule.forRoot(routes, { enableTracing: !environment.production })
   ],
+  entryComponents: [ModalImgComponent],
+
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

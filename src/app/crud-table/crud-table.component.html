@@ -28,6 +28,11 @@
                 <i *ngIf="dataRow[col.key]" class="pi pi-check text-success"></i>
                 <i *ngIf="!dataRow[col.key]" class="pi pi-times text-danger"></i>
               </div>
+
+              <div *ngSwitchCase="'file'" class="text-center">
+                <img class="w-25" [src]="dataRow[col.key]" (click)="openModalImg(dataRow[col.key])">
+              </div>  
+              
               <div *ngSwitchDefault [ngSwitch]="col.controlType">
                 <!-- textareas will be displayed with small font-->
                 <small *ngSwitchCase="'textarea'">{{truncate(dataRow[col.key])}}</small>

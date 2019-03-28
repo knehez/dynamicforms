@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { GeneralRestService } from './general-rest.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalFormComponent } from './modal-form/modal-form.component';
+import { ModalImgComponent} from './modal-img/modal-img.component';
 import * as moment from 'moment';
 import { AuthenticationService } from '../_services/authentication.service';
 import { haveIntersection } from 'src/utils/array';
@@ -108,6 +109,11 @@ export class CrudTableComponent implements OnInit {
   deleteRow(rowData) {
     this.service.delete(rowData);
     this.loadData();
+  }
+
+  openModalImg(imgDataB64) {
+    const modalRef = this.modalService.open(ModalImgComponent, { size: 'lg' });
+    modalRef.componentInstance.imgDataB64 = imgDataB64;
   }
 
   openModalForm() {

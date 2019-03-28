@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { InputBase } from './form-elements/inputBase';
+import { FileHandlerService } from './fileHandler.service';
 
 @Component({
     selector: 'app-input',
@@ -14,9 +15,15 @@ export class DynamicFormInputComponent {
         return this.form.controls[this.input.key].valid;
     }
 
+    constructor(private fileHandlerService: FileHandlerService) { }
+
     debug(obj) {
         console.dir(obj);
         return obj;
+    }
+
+    public onFileChange(event): void {
+        this.fileHandlerService.onFileChange(event, this.form);
     }
 }
 

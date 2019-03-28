@@ -7,6 +7,7 @@ import 'reflect-metadata';
 import { PROPERTY_METADATA_KEY, CLASS_PERMISSION_METADATA_KEY } from 'src/backend/entities/decorator';
 import { CalendarInput } from './form-elements/calendar';
 import { CheckBoxInput } from './form-elements/checkbox';
+import { FileInput } from './form-elements/fileinput';
 
 export function FormField(updates: any) {
     return (target: any, propertyKey: string | symbol) => {
@@ -59,6 +60,9 @@ export class InputService {
                         break;
                     case 'CalendarInput':
                         controlObject = new CalendarInput(params);
+                        break;
+                    case 'FileInput':
+                        controlObject = new FileInput(params);
                         break;
                     default:
                         throw new Error('dynamicForm: className not found:' + className);

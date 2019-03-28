@@ -7,6 +7,9 @@
         <textarea *ngSwitchCase="'textarea'" class="form-control" [formControlName]="input.key" [id]="input.key" [cols]="input.cols" [ngStyle]="input.style"
             [rows]="input.rows"></textarea>
 
+        <input *ngSwitchCase="'file'" class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.type" [ngStyle]="input.style"
+               (change)="onFileChange($event)"/>
+
         <div *ngSwitchCase="'dropdown'">
             <ng-select *ngIf="input.linkedObject" [items]="input['allValues']" [multiple]="input['multipleSelect']" [closeOnSelect]="false" [ngStyle]="input.style"
                 [searchable]="false" [bindLabel]="input.linkedData['value']" placeholder="Select ..." [formControlName]="input.key">
