@@ -30,6 +30,8 @@ import { SliderModule } from 'primeng/slider';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { ModalImgComponent } from './crud-table/modal-img/modal-img.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 const routes: Routes = [
   {
@@ -65,6 +67,7 @@ const routes: Routes = [
     DynamicFormModule,
     PanelModule,
     DialogModule,
+    ConfirmDialogModule,
     ButtonModule,
     TableModule,
     PickListModule,
@@ -82,7 +85,8 @@ const routes: Routes = [
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptorService,
       multi: true
-    }
+    },
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

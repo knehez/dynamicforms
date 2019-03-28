@@ -6,6 +6,7 @@ import { ModalImgComponent} from './modal-img/modal-img.component';
 import * as moment from 'moment';
 import { AuthenticationService } from '../_services/authentication.service';
 import { haveIntersection } from 'src/utils/array';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-crud-table',
@@ -39,7 +40,8 @@ export class CrudTableComponent implements OnInit {
   constructor(
     private service: GeneralRestService,
     private authenticationService: AuthenticationService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.service.objectName = this.entityName;
@@ -109,6 +111,13 @@ export class CrudTableComponent implements OnInit {
   async deleteRow(rowData) {
     await this.service.delete(rowData);
     this.loadData();
+  }
+
+  async confirmThenDelete (rowData) {
+    this.confirmationService.confirm({
+      message: 'Are you sure to delete this record?',
+      accept: () => this.deleteRow(rowData)
+    });
   }
 
   openModalImg(imgDataB64) {
