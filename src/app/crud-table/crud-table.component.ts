@@ -106,8 +106,8 @@ export class CrudTableComponent implements OnInit {
     this.openModalForm();
   }
 
-  deleteRow(rowData) {
-    this.service.delete(rowData);
+  async deleteRow(rowData) {
+    await this.service.delete(rowData);
     this.loadData();
   }
 
