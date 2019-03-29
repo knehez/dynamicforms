@@ -37,9 +37,16 @@ abstract class BaseCtrl {
 
   // Insert
   insert = async (req, res) => {
-    const entity = this.model.create(req.body);
-    await this.model.save(entity);
-    res.send({ id: entity['id'] });
+    try {
+      const entity = this.model.create(req.body);
+      await this.model.save(entity);
+      res.json({
+        success: true,
+        id: entity['id']
+      });
+    } catch (err) {
+      return this.handleError(res);
+    }
   }
 
   // Get by id
@@ -57,15 +64,36 @@ abstract class BaseCtrl {
 
   // Update by id
   update = async (req, res) => {
-    const entity = await this.model.save(req.body);
-    res.send({ id: entity['id'] });
+    try {
+      const entity = await this.model.save(req.body);
+      res.json({
+        success: true,
+        id: entity['id']
+      });
+    } catch (err) {
+      return this.handleError(res);
+    }
   }
 
   // Delete by id
   delete = async (req, res) => {
-    const entity = await this.model.findOne(req.params.id);
-    await this.model.remove(entity);
-    res.send();
+    try {
+      const entity = await this.model.findOne(req.params.id);
+      await this.model.remove(entity);
+
+      res.json({
+        success: true
+      });
+    } catch (err) {
+      return this.handleError(res);
+    }
+  }
+
+  private handleError (res) {
+    res.status(400).json({
+      success: false,
+      message: 'Database error occured.'
+    });
   }
 }
 

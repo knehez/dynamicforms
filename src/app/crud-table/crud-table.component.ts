@@ -6,13 +6,13 @@ import { ModalImgComponent} from './modal-img/modal-img.component';
 import * as moment from 'moment';
 import { AuthenticationService } from '../_services/authentication.service';
 import { haveIntersection } from 'src/utils/array';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-crud-table',
   templateUrl: './crud-table.component.html',
   styleUrls: ['./crud-table.component.css'],
-  providers: [GeneralRestService]
+  providers: [GeneralRestService, MessageService]
 })
 export class CrudTableComponent implements OnInit {
 
@@ -41,7 +41,8 @@ export class CrudTableComponent implements OnInit {
     private service: GeneralRestService,
     private authenticationService: AuthenticationService,
     private modalService: NgbModal,
-    private confirmationService: ConfirmationService) { }
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService) { }
 
   ngOnInit() {
     this.service.objectName = this.entityName;
@@ -109,8 +110,13 @@ export class CrudTableComponent implements OnInit {
   }
 
   async deleteRow(rowData) {
-    await this.service.delete(rowData);
-    this.loadData();
+    try {
+      await this.service.delete(rowData);
+      this.showToastMessage(true, 'Successful delete', 'Record is deleted successfully.');
+      this.loadData();
+    } catch (err) {
+      this.showToastMessage(false, 'Failed delete', `Failed to delete record: ${err.error.message || err.message}`);
+    }
   }
 
   async confirmThenDelete (rowData) {
@@ -141,24 +147,50 @@ export class CrudTableComponent implements OnInit {
           break;
         case 'delete':
           this.delete();
+
           break;
       }
     }, (err) => ('dismissed'));
   }
 
-  save(payLoad) {
+  async save(payLoad) {
     if (payLoad == null) {
       return;
     }
 
     const models = [...this.models];
+    let response = {};
 
     if (this.isNewModel) {
-      models.push(payLoad);
-      this.service.save(payLoad).then(res => { payLoad.id = res['id']; }, err => { });
+
+      try {
+        models.push(payLoad);
+        response = await this.service.save(payLoad);
+        payLoad.id = response['id'];
+        this.showToastMessage(true, 'Successful save', 'Record saved successfully.');
+      } catch (err) {
+        this.showToastMessage(
+          false,
+          'Failed save',
+          `Failed to save record: ${err.error.message || err.message}`
+        );
+      }
+
     } else {
-      models[this.models.indexOf(this.oneModel)] = payLoad;
-      this.service.update(payLoad).then(res => { payLoad.id = res['id']; }, err => { });
+
+      try {
+        models[this.models.indexOf(this.oneModel)] = payLoad;
+        response = await this.service.update(payLoad);
+        payLoad.id = response['id'];
+        this.showToastMessage(true, 'Successful edit', 'Record edited successfully.');
+      } catch (err) {
+        this.showToastMessage(
+          false,
+          'Failed edit',
+          `Failed to edit record: ${err.error.message || err.message}`
+        );
+      }
+
     }
 
     this.models = models;
@@ -218,6 +250,14 @@ export class CrudTableComponent implements OnInit {
     const allowedRoles = this.formPermissions['create'] || [];
 
     return haveIntersection(userRoles, allowedRoles);
+  }
+
+  showToastMessage (isSuccess: boolean, title: string, message: string) {
+    this.messageService.add({
+      severity: isSuccess ? 'success' : 'error',
+      summary: title,
+      detail: message
+    });
   }
 
   debug(obj) {

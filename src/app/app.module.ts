@@ -32,6 +32,8 @@ import { ChartModule } from 'primeng/chart';
 import { ModalImgComponent } from './crud-table/modal-img/modal-img.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 const routes: Routes = [
   {
@@ -70,6 +72,7 @@ const routes: Routes = [
     ConfirmDialogModule,
     ButtonModule,
     TableModule,
+    ToastModule,
     PickListModule,
     ListboxModule,
     SliderModule,
@@ -86,7 +89,8 @@ const routes: Routes = [
       useClass: AuthHttpInterceptorService,
       multi: true
     },
-    ConfirmationService
+    ConfirmationService,
+    MessageService
   ],
   bootstrap: [AppComponent]
 })
