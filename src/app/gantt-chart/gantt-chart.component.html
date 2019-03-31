@@ -1,5 +1,12 @@
 <div class="d-flex row align-items-center">
-  <div class="m-2">Show Tooltip <input type="checkbox" [(ngModel)]="showTooltip"></div>
+  <div class="m-2">
+    <p-checkbox class="p-2" [(ngModel)]="showTooltip" binary="true"></p-checkbox>
+    <span>Tooltip</span>
+  </div>
+  <div class="m-2">
+    <p-checkbox class="p-2" [(ngModel)]="fixYAxis" binary="true"></p-checkbox>
+    <span>Fix YAxis</span>
+  </div>
   <div class="p-2">Time {{time}}</div>
   <div class="btn-group btn-group-toggle p-2 ml-auto">
     <label class="btn-outline-primary btn-sm" ngbButtonLabel>
@@ -19,7 +26,8 @@
 </div>
 
 <div class="gantt-svg-wrapper"></div>
-<hr/>
+<hr />
 <!--div *ngFor="let entity of entities"-->
-  <app-edit-schedule [entity]="entities[0]" [selectedJob]="entities[0].selectedJob" (rowSelect)="jobSelected($event)"></app-edit-schedule>
+<app-edit-schedule [entity]="entities[0]" [selectedJob]="entities[0].selectedJob" (rowSelect)="jobSelected($event)">
+</app-edit-schedule>
 <!--/div-->

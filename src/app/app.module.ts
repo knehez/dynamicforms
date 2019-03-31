@@ -34,6 +34,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { ModalDiagramComponent } from './gantt-chart/modal-diagram/modal-diagram.component';
+import { CheckboxModule } from 'primeng/checkbox';
 
 const routes: Routes = [
   {
@@ -58,7 +60,8 @@ const routes: Routes = [
     GanttChartComponent,
     EditScheduleComponent,
     JobEditorComponent,
-    ModalImgComponent
+    ModalImgComponent,
+    ModalDiagramComponent
   ],
   imports: [
     BrowserModule,
@@ -79,9 +82,10 @@ const routes: Routes = [
     CardModule,
     NgbModule,
     ChartModule,
+    CheckboxModule,
     RouterModule.forRoot(routes, { enableTracing: !environment.production })
   ],
-  entryComponents: [ModalImgComponent],
+  entryComponents: [ModalImgComponent, ModalDiagramComponent],
 
   providers: [
     {

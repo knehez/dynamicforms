@@ -1,8 +1,8 @@
 <div class="h5">Job editor</div>
 <div class="d-flex">
   <p-pickList [source]="availableJobs" [target]="targetJobs" filterBy="name,piecetype,dueDate" [responsive]="true"
-    sourceHeader="All Jobs" targetHeader="Scheduled Jobs" dragdrop="true" [sourceStyle]="{'height':'300px'}" [metaKeySelection]="false"
-    [targetStyle]="{'height':'300px'}">
+    sourceHeader="All Jobs" targetHeader="Scheduled Jobs" dragdrop="true" [sourceStyle]="{'height':'300px'}"
+    [metaKeySelection]="false" [targetStyle]="{'height':'300px'}">
     <ng-template let-job pTemplate="item">
       <div class="ui-helper-clearfix">
         <div>{{job.name}} - {{job.pieceType}} - [{{job.dueDate | date:'yyyy-MM-dd'}}] - ({{job.numOfPieces}})</div>
@@ -34,5 +34,3 @@
   <button type="button" class="btn btn-sm btn-outline-success m-2" (click)="reschedule()">Optimize scheduling</button>
   <button type="button" class="btn btn-sm btn-outline-success" (click)="save()">Save</button>
 </div>
-
-<p-chart type="line" [data]="data" *ngIf="data"></p-chart>

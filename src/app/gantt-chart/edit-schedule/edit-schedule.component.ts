@@ -40,7 +40,7 @@ export class EditScheduleComponent implements OnInit, OnChanges {
     let i = 0;
     rowData.selectedOperation = [];
     for (const op of rowData.routeOrder) {
-      rowData.selectedOperation[i] = rowData.route.route[i][op];
+      rowData.selectedOperation[i] = rowData.route.operations[i][op];
       i++;
     }
   }
@@ -48,7 +48,7 @@ export class EditScheduleComponent implements OnInit, OnChanges {
   selectOperation(rowData, event, i) {
     rowData.selectedOperation[i] = event;
     // set new operation and save it
-    const newIndex = rowData.route.route[i].indexOf(event);
+    const newIndex = rowData.route.operations[i].indexOf(event);
     rowData.routeOrder[i] = newIndex;
   }
 

@@ -24,7 +24,7 @@
     <tr>
       <td [attr.colspan]="columns.length + 1">
         <div class="ui-g ui-fluid">
-          <div class="list-group align-self-center m-1" *ngFor="let ops of rowData.route.route; let i = index">
+          <div class="list-group align-self-center m-1" *ngFor="let ops of rowData.route.operations; let i = index">
             <li class="list-group-item list-group-item-action" *ngFor="let op of ops"
               [ngClass]="{'active': rowData.selectedOperation[i] == op}" (click)="selectOperation(rowData, op, i)">
               {{op[0] + ' (' + op[1] + ')'}}

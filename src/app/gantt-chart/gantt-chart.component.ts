@@ -32,6 +32,9 @@ export class GanttChartComponent implements OnInit {
   selectedJob;
   lastSelectedJob;
 
+  fixYAxis = false;
+  yAxisElement;
+
   constructor(private schedulerService: SchedulerService) { }
 
   ngOnInit() {
@@ -57,7 +60,6 @@ export class GanttChartComponent implements OnInit {
     }
 
     this.zoom = d3.zoom().on('zoom', () => {
-      this.inner.attr('transform', d3.event.transform);
       if (d3.event.sourceEvent !== undefined) {
         if (d3.event.sourceEvent instanceof WheelEvent) {
           this.transform.translateX = d3.event.transform.x;
@@ -69,6 +71,12 @@ export class GanttChartComponent implements OnInit {
           this.transform.translateY = d3.event.transform.y;
         }
       }
+      if (this.fixYAxis) {
+        this.yAxisElement.attr('transform', 'translate(' + (130 - this.transform.translateX / this.transform.scale) + ' , 0)');
+      } else {
+        this.yAxisElement.attr('transform', 'translate(0, 0)');
+      }
+      this.inner.attr('transform', d3.event.transform);
     });
 
     this.svg.call(this.zoom);
@@ -162,25 +170,6 @@ export class GanttChartComponent implements OnInit {
       .attr('class', 'x axis')
       .attr('transform', 'translate(0,' + height + ')')
       .call(d3.axisBottom(x).tickSize(-height));
-
-    const utilization = new Map<string, number>();
-
-    if (type === 'MACHINE_ORIENTED') {
-      for (const u of entity.utilization) {
-        utilization.set(u[0], u[1]);
-      }
-
-      d3Elem.append('g')
-        .attr('class', 'y axis')
-        .call(d3.axisLeft(yAxis).tickSize(-width)
-          .tickFormat(
-            (d) => d + ' (' + utilization.get(d) + '%)')
-        );
-    } else {
-      d3Elem.append('g')
-        .attr('class', 'y axis')
-        .call(d3.axisLeft(yAxis).tickSize(-width));
-    }
 
     const timeLine = d3Elem.append('line')
       .attr('id', 'timeLineY')
@@ -331,6 +320,25 @@ export class GanttChartComponent implements OnInit {
       .on('mouseover', operationToolTip)
       .on('mouseout', hideOperationToolTip)
       .on('mousemove', moveTimeline);
+
+    const utilization = new Map<string, number>();
+
+    if (type === 'MACHINE_ORIENTED') {
+      for (const u of entity.utilization) {
+        utilization.set(u[0], u[1]);
+      }
+
+      this.yAxisElement = d3Elem.append('g')
+        .attr('class', 'y axis')
+        .call(d3.axisLeft(yAxis).tickSize(-width)
+          .tickFormat(
+            (d) => d + ' (' + utilization.get(d) + '%)')
+        );
+    } else {
+      this.yAxisElement = d3Elem.append('g')
+        .attr('class', 'y axis')
+        .call(d3.axisLeft(yAxis).tickSize(-width));
+    }
 
     return height + margin.bottom;
   }

@@ -14,7 +14,7 @@ export class Project {
         header: 'Id',
         required: true,
         type: 'number',
-        order: 1,
+        order: 2,
         hidden: true
     })
     @PrimaryGeneratedColumn()
@@ -25,17 +25,17 @@ export class Project {
         header: 'Project Name',
         required: true,
         type: 'string',
-        order: 2
+        order: 3
     })
     @Column()
     projectName: string;
 
     @FormField({
         className: 'FileInput',
-        header: 'File',
+        header: '',
         required: false,
         type: 'file',
-        order: 3
+        order: 1
       })
       @Column('longtext', { nullable: true })
       fileData: any;

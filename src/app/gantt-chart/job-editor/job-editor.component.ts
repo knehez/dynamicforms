@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SchedulerService } from '../schedulerService';
 import * as socketIo from 'socket.io-client';
+import { Observable } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDiagramComponent } from '../modal-diagram/modal-diagram.component';
 
 @Component({
   selector: 'app-job-editor',
@@ -23,23 +26,44 @@ export class JobEditorComponent implements OnInit {
   logs = [];
   data;
   result;
-  constructor(private schedulerService: SchedulerService) { }
+
+  // diagram data
+  setupTimeData = [];
+  makespanData = [];
+  setupData = [];
+  index = [];
+  options;
+  modalRef;
+
+  constructor(private schedulerService: SchedulerService, private modalService: NgbModal) { }
 
   async ngOnInit() {
     this.availableJobs = await this.schedulerService.getAllJobs();
-    // this.socket = socketIo({ 'path': '/socketio' });
-    // this.socket.on('log', (data) => { console.log(data); this.logs.push(data); });
+    this.socket = socketIo({ 'path': '/socketio' });
+    this.socket.on('progress', (data) => {
+      this.index.push(data.i + 1);
+      this.makespanData.push(data.makespan);
+      this.setupData.push(data.numberOfSetups);
+      this.setupTimeData.push(data.setupTime);
+      this.createDiagram();
+    });
+    this.socket.on('result', (data) => {
+      this.result = data['resultLog'];
+      this.logs = data['simulationLog'];
+    });
   }
 
-  async reschedule() {
+  reschedule() {
+    this.modalRef = this.modalService.open(ModalDiagramComponent, { size: 'lg' });
+
     this.logs = [];
-
-    const result = await this.schedulerService.optimize(this.targetJobs,
-      [this.makespan / 100, this.setups / 100, this.setupTime / 100], this.iteration, this.population);
-
-    this.result = result['resultLog'];
-    this.logs = result['simulationLog'];
+    this.setupTimeData = [];
+    this.makespanData = [];
+    this.setupData = [];
+    this.index = [];
     this.createDiagram();
+    this.schedulerService.optimize(this.targetJobs,
+      [this.makespan / 100, this.setups / 100, this.setupTime / 100], this.iteration, this.population).subscribe(o => o);
   }
 
   async save() {
@@ -51,33 +75,38 @@ export class JobEditorComponent implements OnInit {
   }
 
   createDiagram() {
-    console.log(this.logs.length);
-    const makespanData = this.logs.map(o => o.makespan);
-    const setupData = this.logs.map(o => o.numberOfSetups);
-    const setupTime = this.logs.map(o => o.setupTime);
-    const index = this.logs.map(o => o.i);
-    this.data = {
-      labels: index,
+    this.modalRef.componentInstance.data = {
+      labels: this.index,
       datasets: [
         {
           label: 'Makespan',
-          data: [...makespanData],
+          data: [...this.makespanData],
           fill: false,
           borderColor: '#3cb44b'
         },
         {
           label: 'Number of Setups',
-          data: [...setupData],
+          data: [...this.setupData],
           fill: false,
           borderColor: '#ffe119'
         },
         {
           label: 'Setup Time',
-          data: [...setupTime],
+          data: [...this.setupTimeData],
           fill: false,
           borderColor: '#4363d8'
         }
       ]
+    };
+
+    this.modalRef.componentInstance.options = {
+      animation: {
+        duration: 0, // general animation time
+      },
+      hover: {
+        animationDuration: 0, // duration of animations when hovering an item
+      },
+      responsiveAnimationDuration: 0, // animation duration after a resize
     };
   }
 }
