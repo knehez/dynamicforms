@@ -23,9 +23,9 @@ export class SchedulerService {
                 { jobs: jobs, weights: weights, iteration: iteration, population: population }).toPromise();
         }
     */
-    optimize(jobs, weights, iteration, population): Observable<any> {
-        return this._http.post(this.actionUrl + 'optimize',
-            { jobs: jobs, weights: weights, iteration: iteration, population: population });
+    async optimize(jobs, weights, iteration, population) {
+        return await this._http.post(this.actionUrl + 'optimize',
+            { jobs: jobs, weights: weights, iteration: iteration, population: population }).toPromise();
     }
 
 
