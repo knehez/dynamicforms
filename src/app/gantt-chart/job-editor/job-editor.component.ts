@@ -63,7 +63,7 @@ export class JobEditorComponent implements OnInit {
     this.index = [];
     this.createDiagram();
     this.schedulerService.optimize(this.targetJobs,
-      [this.makespan / 100, this.setups / 100, this.setupTime / 100], this.iteration, this.population).subscribe(o => o);
+      [this.makespan / 100, this.setups / 100, this.setupTime / 100], this.iteration, this.population);
   }
 
   async save() {
