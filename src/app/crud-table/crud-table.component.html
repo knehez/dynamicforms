@@ -1,14 +1,16 @@
 <div class="d-flex justify-content-between p-2">
   <div>
-    <button class="form-control btn btn-sm btn-outline-success" type="button" aria-label="Search"
+    <button class="btn btn-sm btn-outline-success" type="button" aria-label="Search"
       (click)="backClicked.emit()"><span class="pi pi-arrow-left align-middle"></span></button>
   </div>
+  
   <div class="form-inline">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
       [(ngModel)]="searchFilter">
   </div>
 </div>
-<table class="table table-striped">
+
+<table class="table table-striped table-sm">
   <thead>
     <tr>
       <ng-container *ngFor="let col of formElements">
@@ -20,7 +22,7 @@
   <tbody>
     <tr *ngFor="let dataRow of tableData">
       <ng-container *ngFor="let col of formElements">
-        <td scope="row" *ngIf="!col.hidden" (click)="rowSelect.emit(dataRow)">
+        <td scope="row" class="align-middle" *ngIf="!col.hidden" (click)="rowSelect.emit(dataRow)">
           <div *ngIf="!col.linkedObject">
 
             <div [ngSwitch]="col.controlType">
@@ -78,12 +80,13 @@
     <small *ngIf="searchFilter">(filtered from {{allEntities}} entries)</small>
   </div>
 
-  <button type="button" class="btn btn-outline-primary align-self-start m-2" (click)="showAll()">Show all</button>
-
-  <button type="button" class="btn btn-outline-primary align-self-start m-2" (click)="add()"
+  <button type="button" class="btn btn-outline-primary btn-sm align-self-start m-2" (click)="showAll()">Show all</button>
+  
+  <button type="button" class="btn btn-outline-primary btn-sm align-self-start m-2" (click)="add()"
     [disabled]="!canCreateEntity()">Add</button>
-
-  <ngb-pagination class="m-2" [collectionSize]="currentEntities" [(page)]="page" [pageSize]="itemsPerPage"></ngb-pagination>
+  
+  <ngb-pagination class="m-2 pagination-sm" [collectionSize]="currentEntities" [(page)]="page" [pageSize]="itemsPerPage">
+  </ngb-pagination>
 </div>
 
 <div class="confirmation">
