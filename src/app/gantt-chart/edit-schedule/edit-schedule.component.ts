@@ -34,6 +34,9 @@ export class EditScheduleComponent implements OnInit, OnChanges {
   }
 
   selectJob(rowData) {
+    if (rowData == null) {
+      return;
+    }
     this.selectedJobName = rowData.name;
     this.dataTable.selection = rowData;
 

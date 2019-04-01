@@ -75,6 +75,10 @@ export class JobEditorComponent implements OnInit {
   }
 
   createDiagram() {
+    if (this.modalRef.componentInstance === undefined || this.modalRef.componentRef === undefined) {
+      return;
+    }
+
     this.modalRef.componentInstance.data = {
       labels: this.index,
       datasets: [
