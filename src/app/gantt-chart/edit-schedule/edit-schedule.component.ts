@@ -9,6 +9,7 @@ import { DataTable } from 'primeng/datatable';
 export class EditScheduleComponent implements OnInit, OnChanges {
   @Input() entity;
   @Input() selectedJob;
+  @Input() result;
   @Output() rowSelect = new EventEmitter();
 
   jobs;
@@ -27,6 +28,7 @@ export class EditScheduleComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
+    this.result = this.entity.result;
     this.jobs = this.entity.log.jobs;
     for (const job of this.jobs) {
       job.selectedOperation = [];
@@ -58,7 +60,11 @@ export class EditScheduleComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.entity !== undefined && changes.entity.currentValue !== undefined && !changes.entity.firstChange) {
       this.jobs = changes.entity.currentValue.jobs;
+      this.result = changes.entity.currentValue.result;
       this.selectJob(this.jobs.filter(j => j.name === this.selectedJobName)[0]);
+    }
+    if (changes.result !== undefined && changes.result.currentValue !== undefined && !changes.entity.firstChange) {
+      this.result = changes.entity.currentValue.result;
     }
     if (changes.selectedJob !== undefined && changes.selectedJob.currentValue !== undefined && !changes.selectedJob.firstChange) {
       let i = 0;

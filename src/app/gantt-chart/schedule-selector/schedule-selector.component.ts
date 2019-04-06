@@ -27,6 +27,7 @@ export class ScheduleSelectorComponent implements OnInit {
   goGanttViewer() {
     for (const schedule of this.selectedSchedules) {
       schedule.log = JSON.parse(schedule.log)[0];
+      schedule.result = JSON.parse(schedule.result);
     }
     this.showSchedule.emit(this.selectedSchedules);
   }

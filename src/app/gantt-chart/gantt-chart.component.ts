@@ -88,6 +88,9 @@ export class GanttChartComponent implements OnInit {
     for (const schedule of this.schedules) {
       const result = await this.schedulerService.reSchedule(schedule.log);
       schedule.log = result['resultLog'];
+      schedule.result = result['simulationLog'].pop();
+      delete schedule.result.i;
+      delete schedule.result.fittness;
     }
     this.zoomAndAnimate = false;
     this.ngOnInit();

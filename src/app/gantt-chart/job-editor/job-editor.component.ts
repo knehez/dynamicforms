@@ -22,7 +22,7 @@ export class JobEditorComponent implements OnInit {
   description = 'Test run ' + ' ' + Math.round(Math.random() * 1000);
   availableJobs;
   socket;
-  logs = [];
+  simulationLog = [];
   data;
   result;
 
@@ -50,14 +50,14 @@ export class JobEditorComponent implements OnInit {
     });
     this.socket.on('result', (data) => {
       this.result = data['resultLog'];
-      this.logs = data['simulationLog'];
+      this.simulationLog = data['simulationLog'];
     });
   }
 
   reschedule() {
     this.modalRef = this.modalService.open(ModalDiagramComponent, { size: 'lg' });
 
-    this.logs = [];
+    this.simulationLog = [];
     this.setupTimeData = [];
     this.makespanData = [];
     this.setupData = [];
@@ -68,10 +68,13 @@ export class JobEditorComponent implements OnInit {
   }
 
   async save() {
+    const bestResult = this.simulationLog.pop();
+    delete bestResult.i;
+    delete bestResult.fittness;
     // save scheduling
     await this.schedulerService.saveScheduling({
       description: this.description,
-      date: '' + new Date(), log: JSON.stringify([this.result])
+      date: '' + new Date(), log: JSON.stringify([this.result]), result: JSON.stringify(bestResult)
     });
   }
 
