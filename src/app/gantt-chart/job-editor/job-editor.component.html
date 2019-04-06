@@ -1,17 +1,25 @@
 <div class="h5">Job editor</div>
 <div class="d-flex">
   <p-pickList [source]="availableJobs" [target]="targetJobs" filterBy="name,piecetype,dueDate" [responsive]="true"
-    sourceHeader="All Jobs" targetHeader="Scheduled Jobs" dragdrop="true" [sourceStyle]="{'height':'300px'}"
-    [metaKeySelection]="false" [targetStyle]="{'height':'300px'}">
+    sourceHeader="All Jobs ({{availableJobs? availableJobs.length : 0}})" targetHeader="Scheduled Jobs ({{targetJobs? targetJobs.length : 0}})" dragdrop="true"
+    [sourceStyle]="{'height':'300px'}" [metaKeySelection]="false" [targetStyle]="{'height':'300px'}">
     <ng-template let-job pTemplate="item">
-      <div class="ui-helper-clearfix">
-        <div>{{job.name}} - {{job.pieceType}} - [{{job.dueDate | date:'yyyy-MM-dd'}}] - ({{job.numOfPieces}})</div>
+      <div class="ui-helper-clearfix" #pane>
+        <div style="font-weight: 600;">{{job.name}} - {{job.pieceType}} - [{{job.dueDate | date:'yyyy-MM-dd'}}] -
+          ({{job.numOfPieces}})</div>
+        <div *ngIf="pane.parentElement.parentElement.classList.contains('ui-picklist-target')"
+          style="font-size: 0.8em; border-bottom: 1px solid #ddd;">
+          <input class="m-2" style="width:110px" [(ngModel)]="job.name">
+          <span>Start</span>
+          <input type="number" class="m-2" style="width:50px" [(ngModel)]="job.startTime">
+          <span>Pieces</span>
+          <input type="number" class="m-2" style="width:50px" [(ngModel)]="job.numOfPieces">
+        </div>
       </div>
     </ng-template>
   </p-pickList>
 </div>
-<h2></h2>
-
+<div class="h3">&nbsp;</div>
 <div class="h5">Objective priorities</div>
 <small>Makespan {{makespan}}%</small>
 <p-slider id="makespan" class="m-2" [(ngModel)]="makespan" [min]="0" [max]="100"></p-slider>

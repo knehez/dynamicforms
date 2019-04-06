@@ -36,6 +36,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ModalDiagramComponent } from './gantt-chart/modal-diagram/modal-diagram.component';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ScheduleSelectorComponent } from './gantt-chart/schedule-selector/schedule-selector.component';
 
 const routes: Routes = [
   {
@@ -61,7 +62,8 @@ const routes: Routes = [
     EditScheduleComponent,
     JobEditorComponent,
     ModalImgComponent,
-    ModalDiagramComponent
+    ModalDiagramComponent,
+    ScheduleSelectorComponent
   ],
   imports: [
     BrowserModule,

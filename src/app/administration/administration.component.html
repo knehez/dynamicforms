@@ -84,13 +84,13 @@
   </p-card>
 
   <p-card *ngIf="currentSelection == 'schedule'">
-    <app-crud-table [entityName]="'schedules'" [filter]="''" [formElements]="scheduleFormElements"
-      [formPermissions]="scheduleFormPermissions" [itemsPerPage]="5" (rowSelect)="showScheudule($event)"
-      (backClicked)="goBack()"></app-crud-table>
+    <app-schedule-selector [entityName]="'schedules'" [filter]="''" [formElements]="scheduleFormElements"
+      [formPermissions]="scheduleFormPermissions" [itemsPerPage]="5"
+      (backClicked)="goBack()" (showSchedule)="showScheudule($event)"></app-schedule-selector>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'gantt'">
-    <app-gantt-chart [entities]="ganttEntities"></app-gantt-chart>
+    <app-gantt-chart [schedules]="ganttEntities"></app-gantt-chart>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'jobeditor'">

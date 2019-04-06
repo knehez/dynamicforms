@@ -14,7 +14,7 @@ export class GanttChartComponent implements OnInit {
   zoom;
 
   @Input()
-  entities = [];
+  schedules = [];
 
   transform = {
     translateX: 0,
@@ -54,8 +54,9 @@ export class GanttChartComponent implements OnInit {
 
     let lastHeight = 0;
 
-    for (let i = 0; i < this.entities.length; i++) {
-      lastHeight = this.showGanttChart(this.entities[i], this.inner.append('g').
+    for (let i = 0; i < this.schedules.length; i++) {
+      const schedule = this.schedules[i].log;
+      lastHeight = this.showGanttChart(schedule, this.inner.append('g').
         attr('transform', 'translate(0,' + (lastHeight * (i)) + ')'), this.ganttType);
     }
 
@@ -84,10 +85,10 @@ export class GanttChartComponent implements OnInit {
   }
 
   async reschedule() {
-    this.entities[0].logs = null;
-    const result = await this.schedulerService.reSchedule(this.entities[0]);
-    this.entities[0] = result['resultLog'];
-
+    for (const schedule of this.schedules) {
+      const result = await this.schedulerService.reSchedule(schedule.log);
+      schedule.log = result['resultLog'];
+    }
     this.zoomAndAnimate = false;
     this.ngOnInit();
   }

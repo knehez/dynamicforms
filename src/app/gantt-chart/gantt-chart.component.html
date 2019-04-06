@@ -27,7 +27,7 @@
 
 <div class="gantt-svg-wrapper"></div>
 <hr />
-<!--div *ngFor="let entity of entities"-->
-<app-edit-schedule [entity]="entities[0]" [selectedJob]="entities[0].selectedJob" (rowSelect)="jobSelected($event)">
-</app-edit-schedule>
-<!--/div-->
+<div *ngFor="let schedule of schedules">
+  <app-edit-schedule [entity]="schedule" [selectedJob]="schedule.log.selectedJob" (rowSelect)="jobSelected($event)">
+  </app-edit-schedule>
+</div>

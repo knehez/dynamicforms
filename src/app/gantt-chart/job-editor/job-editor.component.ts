@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SchedulerService } from '../schedulerService';
 import * as socketIo from 'socket.io-client';
-import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalDiagramComponent } from '../modal-diagram/modal-diagram.component';
 
@@ -14,12 +13,12 @@ import { ModalDiagramComponent } from '../modal-diagram/modal-diagram.component'
 export class JobEditorComponent implements OnInit {
   targetJobs = [];
 
-  makespan = 80;
+  makespan = 90;
   setupTime = 50;
   setups = 30;
 
-  population = 100;
-  iteration = 50;
+  population = 50;
+  iteration = 200;
   description = 'Test run ' + ' ' + Math.round(Math.random() * 1000);
   availableJobs;
   socket;
@@ -45,7 +44,9 @@ export class JobEditorComponent implements OnInit {
       this.makespanData.push(data.makespan);
       this.setupData.push(data.numberOfSetups);
       this.setupTimeData.push(data.setupTime);
-      this.createDiagram();
+      if ((data.i + 1) % 10 === 0) {
+        this.createDiagram();
+      }
     });
     this.socket.on('result', (data) => {
       this.result = data['resultLog'];
@@ -75,10 +76,9 @@ export class JobEditorComponent implements OnInit {
   }
 
   createDiagram() {
-    if (this.modalRef.componentInstance === undefined || this.modalRef.componentRef === undefined) {
+    if (this.modalRef === undefined) {
       return;
     }
-
     this.modalRef.componentInstance.data = {
       labels: this.index,
       datasets: [

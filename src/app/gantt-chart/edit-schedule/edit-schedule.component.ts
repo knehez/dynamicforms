@@ -27,7 +27,7 @@ export class EditScheduleComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
-    this.jobs = this.entity.jobs;
+    this.jobs = this.entity.log.jobs;
     for (const job of this.jobs) {
       job.selectedOperation = [];
     }

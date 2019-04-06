@@ -112,7 +112,7 @@ export class AdministrationComponent {
 
   showScheudule(obj) {
     this.currentSelection = 'gantt';
-    this.ganttEntities = JSON.parse(obj.log);
+    this.ganttEntities = obj;
   }
 
   goBack() {

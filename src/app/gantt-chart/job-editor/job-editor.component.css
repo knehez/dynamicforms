@@ -14,6 +14,14 @@ p-picklist {
     font-size: 0.6em;
 }
 
+::ng-deep .ui-picklist.ui-picklist-responsive .ui-picklist-listwrapper {
+    width: 40%;
+}
+
+::ng-deep .ui-picklist.ui-picklist-responsive .ui-picklist-buttons {
+    width: 5%;
+}
+
 ::ng-deep #makespan .ui-slider-range {
     background-color: #3cb44b;
 }
