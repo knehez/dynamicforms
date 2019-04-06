@@ -14,6 +14,7 @@ export class InputBase<T> {
     type: string;
     style: string;
     hidden: boolean;
+    editable: boolean;
     dateFormat: string;
     linkedObject: string;
     cols: number;
@@ -30,6 +31,7 @@ export class InputBase<T> {
         type?: string,
         style?: string;
         hidden?: boolean,
+        editable?: boolean,
         dateFormat?: string;
         cols?: number;
         rows?: number;
@@ -45,6 +47,7 @@ export class InputBase<T> {
         this.type = options.type || 'text';
         this.style = options.style || '';
         this.hidden = options.hidden || false;
+        this.editable = options.editable || true;
         this.dateFormat = options.dateFormat || '';
         this.cols = options.cols === undefined ? 20 : options.cols;
         this.rows = options.rows === undefined ? 3 : options.rows;

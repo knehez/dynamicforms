@@ -3,8 +3,8 @@ import { FormField, Permissions } from './decorator';
 import { RoleName } from './shared/roleName';
 
 @Permissions({
-    read:   '*',
-    update: [ RoleName.Admin, RoleName.Manager ]
+    read: '*',
+    update: [RoleName.Admin, RoleName.Manager]
 })
 @Entity()
 export class Schedule {
@@ -52,4 +52,14 @@ export class Schedule {
     })
     @Column('mediumtext')
     log: string;
+
+    @FormField({
+        className: 'TextboxInput',
+        header: 'Result',
+        type: 'string',
+        editable: false,
+        order: 5
+    })
+    @Column()
+    result: string;
 }

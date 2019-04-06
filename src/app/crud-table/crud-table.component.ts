@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { GeneralRestService } from './general-rest.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalFormComponent } from './modal-form/modal-form.component';
-import { ModalImgComponent} from './modal-img/modal-img.component';
+import { ModalImgComponent } from './modal-img/modal-img.component';
 import * as moment from 'moment';
 import { AuthenticationService } from '../_services/authentication.service';
 import { haveIntersection } from 'src/utils/array';
@@ -36,6 +36,7 @@ export class CrudTableComponent implements OnInit {
   currentEntities: number;
 
   oneModel: any = [];
+  selectedRows: any = [];
 
   constructor(
     private service: GeneralRestService,
@@ -47,6 +48,14 @@ export class CrudTableComponent implements OnInit {
   ngOnInit() {
     this.service.objectName = this.entityName;
     this.loadData();
+  }
+
+  selectRow(row) {
+    if (this.selectedRows.includes(row)) {
+      this.selectedRows.splice(this.selectedRows.indexOf(row), 1);
+    } else {
+      this.selectedRows.push(row);
+    }
   }
 
   async loadData() {
@@ -119,7 +128,7 @@ export class CrudTableComponent implements OnInit {
     }
   }
 
-  async confirmThenDelete (rowData) {
+  async confirmThenDelete(rowData) {
     this.confirmationService.confirm({
       message: 'Are you sure to delete this record?',
       accept: () => this.deleteRow(rowData)
@@ -245,14 +254,14 @@ export class CrudTableComponent implements OnInit {
     }
   }
 
-  canCreateEntity () {
+  canCreateEntity() {
     const userRoles = this.authenticationService.getRoles() || [];
     const allowedRoles = this.formPermissions['create'] || [];
 
     return haveIntersection(userRoles, allowedRoles);
   }
 
-  showToastMessage (isSuccess: boolean, title: string, message: string) {
+  showToastMessage(isSuccess: boolean, title: string, message: string) {
     this.messageService.add({
       severity: isSuccess ? 'success' : 'error',
       summary: title,

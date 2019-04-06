@@ -21,9 +21,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let dataRow of tableData">
+      <tr *ngFor="let dataRow of tableData" [class.highlighted]="selectedRows.includes(dataRow)">
         <ng-container *ngFor="let col of formElements">
-          <td scope="row" class="align-middle" *ngIf="!col.hidden" (click)="rowSelect.emit(dataRow)">
+          <td scope="row" class="align-middle" *ngIf="!col.hidden" (click)="selectRow(dataRow); rowSelect.emit(dataRow)">
             <div *ngIf="!col.linkedObject">
 
               <div [ngSwitch]="col.controlType">
