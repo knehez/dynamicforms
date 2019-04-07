@@ -38,6 +38,8 @@ import { ModalDiagramComponent } from './gantt-chart/modal-diagram/modal-diagram
 import { CheckboxModule } from 'primeng/checkbox';
 import { ScheduleSelectorComponent } from './gantt-chart/schedule-selector/schedule-selector.component';
 
+import { CrudTableLibModule } from 'crud-table-lib';
+
 const routes: Routes = [
   {
     path: '',
@@ -68,6 +70,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    CrudTableLibModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

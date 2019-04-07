@@ -147,6 +147,41 @@
           }
         }
       }
+    },
+    "crud-table-lib": {
+      "root": "projects/crud-table-lib",
+      "sourceRoot": "projects/crud-table-lib/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/crud-table-lib/tsconfig.lib.json",
+            "project": "projects/crud-table-lib/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/crud-table-lib/src/test.ts",
+            "tsConfig": "projects/crud-table-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/crud-table-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/crud-table-lib/tsconfig.lib.json",
+              "projects/crud-table-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "dynamic-forms"
