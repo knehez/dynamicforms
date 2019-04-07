@@ -44,3 +44,5 @@ testem.log
 Thumbs.db
 
 dist-server/
+
+projects/**/node_modules/
