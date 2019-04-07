@@ -33,14 +33,7 @@ export class SchedulerService {
         return await this._http.post('backend/schedules', params).toPromise();
     }
 
-    saveScheduling2(params) {
-        return new Promise((resolve, reject) => {
-            this._http.post('backend/schedules', params)
-                .subscribe(res => {
-                    resolve(res);
-                }, (err) => {
-                    reject(err);
-                });
-        });
+    async updateScheduling(params, id) {
+        return await this._http.put('backend/schedules/' + id, params).toPromise();
     }
 }

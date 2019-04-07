@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges, ViewChild, EventEmitter, Output } from '@angular/core';
 import { DataTable } from 'primeng/datatable';
+import { SchedulerService } from '../schedulerService';
 
 @Component({
   selector: 'app-edit-schedule',
@@ -10,6 +11,7 @@ export class EditScheduleComponent implements OnInit, OnChanges {
   @Input() entity;
   @Input() selectedJob;
   @Input() result;
+  @Input() id;
   @Output() rowSelect = new EventEmitter();
 
   jobs;
@@ -25,11 +27,10 @@ export class EditScheduleComponent implements OnInit, OnChanges {
 
   @ViewChild('dt') dataTable: DataTable;
 
-  constructor() { }
+  constructor(private schedulerService: SchedulerService) { }
 
   ngOnInit() {
-    this.result = this.entity.result;
-    this.jobs = this.entity.log.jobs;
+    this.jobs = this.entity.jobs;
     for (const job of this.jobs) {
       job.selectedOperation = [];
     }
@@ -63,8 +64,8 @@ export class EditScheduleComponent implements OnInit, OnChanges {
       this.result = changes.entity.currentValue.result;
       this.selectJob(this.jobs.filter(j => j.name === this.selectedJobName)[0]);
     }
-    if (changes.result !== undefined && changes.result.currentValue !== undefined && !changes.entity.firstChange) {
-      this.result = changes.entity.currentValue.result;
+    if (changes.result !== undefined && changes.result.currentValue !== undefined && !changes.result.firstChange) {
+      this.result = changes.result.currentValue;
     }
     if (changes.selectedJob !== undefined && changes.selectedJob.currentValue !== undefined && !changes.selectedJob.firstChange) {
       let i = 0;
@@ -76,5 +77,14 @@ export class EditScheduleComponent implements OnInit, OnChanges {
         }
       }
     }
+  }
+
+  async saveSchedule() {
+    // save scheduling
+    await this.schedulerService.updateScheduling({
+      id: this.id,
+      description: this.entity.description,
+      date: this.entity.date, log: JSON.stringify([this.entity]), result: JSON.stringify(this.result)
+    }, this.id);
   }
 }

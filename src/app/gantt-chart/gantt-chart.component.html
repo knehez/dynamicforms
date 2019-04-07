@@ -1,4 +1,4 @@
-<div class="d-flex row align-items-center">
+<div class="d-flex flex-row align-self-center">
   <div class="m-2">
     <p-checkbox class="p-2" [(ngModel)]="showTooltip" binary="true"></p-checkbox>
     <span>Tooltip</span>
@@ -7,13 +7,13 @@
     <p-checkbox class="p-2" [(ngModel)]="fixYAxis" binary="true"></p-checkbox>
     <span>Fix YAxis</span>
   </div>
-  <div class="p-2">Time {{time}}</div>
+  <div class="p-2">Current time: {{time}} [min]</div>
   <div class="btn-group btn-group-toggle p-2 ml-auto">
     <label class="btn-outline-primary btn-sm" ngbButtonLabel>
       <input type="checkbox" ngbButton [(ngModel)]="isSelectTime"> Select time
     </label>
   </div>
-  <button type="button" class="btn btn-sm btn-outline-success" (click)="reschedule()">Re-Schedule jobs</button>
+  <button type="button" class="btn btn-sm btn-outline-success m-2" (click)="reschedule()">Re-Schedule jobs</button>
   <div class="btn-group btn-group-toggle p-2" ngbRadioGroup [(ngModel)]="ganttType">
     <label class="btn-outline-success btn-sm" ngbButtonLabel>
       <input type="radio" ngbButton [value]="'MACHINE_ORIENTED'" (click)="gantTypeChanged('MACHINE_ORIENTED')"> Machine
@@ -28,6 +28,6 @@
 <div class="gantt-svg-wrapper"></div>
 <hr />
 <div *ngFor="let schedule of schedules">
-  <app-edit-schedule [entity]="schedule" [selectedJob]="schedule.log.selectedJob" [result]="schedule.result" (rowSelect)="jobSelected($event)">
+  <app-edit-schedule [id]="schedule.id" [entity]="schedule.log" [selectedJob]="schedule.log.selectedJob" [result]="schedule.result" (rowSelect)="jobSelected($event)">
   </app-edit-schedule>
 </div>
