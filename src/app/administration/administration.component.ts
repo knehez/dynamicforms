@@ -11,6 +11,7 @@ import { AuthenticationService } from '../_services/authentication.service';
 import { Router } from '@angular/router';
 import { haveIntersection } from 'src/utils/array';
 import { Role } from 'src/backend/entities/role';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-administration',
@@ -54,6 +55,7 @@ export class AdministrationComponent {
 
   constructor(
     service: InputService,
+    private messageService: MessageService,
     private authService: AuthenticationService,
     private router: Router) {
 
@@ -136,6 +138,18 @@ export class AdministrationComponent {
     const allowedRoles = permissions['read'];
 
     return haveIntersection(userRoles, allowedRoles);
+  }
+
+  showToastMessage(isSuccess: boolean, title: string, message: string) {
+    this.messageService.add({
+      severity: isSuccess ? 'success' : 'error',
+      summary: title,
+      detail: message
+    });
+  }
+
+  handleResult (result) {
+    this.showToastMessage(result.success, result.title, result.message);
   }
 }
 

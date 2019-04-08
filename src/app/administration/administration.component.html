@@ -47,73 +47,49 @@
     </div>
   </nav>
 
-
-<!-- START OF TEST -->
-
-
-  <h4>CRUD Table Library Test View</h4>
   <p-card *ngIf="currentSelection == 'project'">
-    <lib-crud-table-lib [entityName]="'projects'" [formElements]="projectFormElements"
-      [actualPermissions]="actualPermissions" [formPermissions]="projectFormPermissions" (rowSelect)="projectSelected($event)" [itemsPerPage]="5"
-      [filter]="projectFilter" (backClicked)="goBack()"></lib-crud-table-lib>
+    <lib-crud-table-lib
+      [entityName]="'projects'" [formElements]="projectFormElements" 
+      [actualPermissions]="actualPermissions" [formPermissions]="projectFormPermissions"
+      [itemsPerPage]="5" [filter]="projectFilter" 
+      (rowSelect)="projectSelected($event)" (operationResult)="handleResult($event)" (backClicked)="goBack">
+    </lib-crud-table-lib>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'product'">
-    <lib-crud-table-lib [entityName]="'products'" [formElements]="productFormElements"
-      [actualPermissions]="actualPermissions" [formPermissions]="productFormPermissions" [itemsPerPage]="5" [filter]="productFilter"
-      (cellSelect)="productCellSelected($event)" (backClicked)="goBack()"></lib-crud-table-lib>
+    <lib-crud-table-lib 
+      [entityName]="'products'" [formElements]="productFormElements"
+      [actualPermissions]="actualPermissions" [formPermissions]="productFormPermissions"
+      [itemsPerPage]="5" [filter]="productFilter"
+      (cellSelect)="productCellSelected($event)" (operationResult)="handleResult($event)" (backClicked)="goBack()">
+    </lib-crud-table-lib>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'user'">
-    <lib-crud-table-lib [entityName]="'users'" [formElements]="userFormElements" [formPermissions]="userFormPermissions"
-      [actualPermissions]="actualPermissions" [itemsPerPage]="5" [filter]="userFilter" (cellSelect)="userCellSelected($event)" (backClicked)="goBack()">
+    <lib-crud-table-lib 
+      [entityName]="'users'" [formElements]="userFormElements"
+      [actualPermissions]="actualPermissions" [formPermissions]="userFormPermissions"
+      [itemsPerPage]="5" [filter]="userFilter" 
+      (cellSelect)="userCellSelected($event)" (operationResult)="handleResult($event)" (backClicked)="goBack()">
     </lib-crud-table-lib>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'task'">
-    <lib-crud-table-lib [entityName]="'tasks'" [formElements]="taskFormElements" [formPermissions]="taskFormPermissions"
-      [actualPermissions]="actualPermissions" [filter]="taskFilter" [itemsPerPage]="5" (cellSelect)="taskCellSelected($event)" (backClicked)="goBack()">
+    <lib-crud-table-lib 
+      [entityName]="'tasks'" [formElements]="taskFormElements"
+      [actualPermissions]="actualPermissions" [formPermissions]="taskFormPermissions"
+      [itemsPerPage]="5" [filter]="taskFilter"
+      (cellSelect)="taskCellSelected($event)" (operationResult)="handleResult($event)" (backClicked)="goBack()">
     </lib-crud-table-lib>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'taskitem'">
-    <lib-crud-table-lib [entityName]="'taskitems'" [formElements]="taskItemFormElements"
-      [actualPermissions]="actualPermissions" [formPermissions]="taskItemFormPermissions" [filter]="taskItemFilter" [itemsPerPage]="5" (backClicked)="goBack()">
+    <lib-crud-table-lib 
+      [entityName]="'taskitems'" [formElements]="taskItemFormElements"
+      [actualPermissions]="actualPermissions" [formPermissions]="taskItemFormPermissions"
+      [filter]="taskItemFilter" [itemsPerPage]="5"
+      (operationResult)="handleResult($event)" (backClicked)="goBack()">
     </lib-crud-table-lib>
-  </p-card>
-
-  <h4>CRUD Table Local Implementation</h4>
-
- <!-- END OF TEST -->
-<!--
-  <p-card *ngIf="currentSelection == 'project'">
-    <app-crud-table [entityName]="'projects'" [formElements]="projectFormElements"
-      [formPermissions]="projectFormPermissions" (rowSelect)="projectSelected($event)" [itemsPerPage]="5"
-      [filter]="projectFilter" (backClicked)="goBack()"></app-crud-table>
-  </p-card>
-
-  <p-card *ngIf="currentSelection == 'product'">
-    <app-crud-table [entityName]="'products'" [formElements]="productFormElements"
-      [formPermissions]="productFormPermissions" [itemsPerPage]="5" [filter]="productFilter"
-      (cellSelect)="productCellSelected($event)" (backClicked)="goBack()"></app-crud-table>
-  </p-card>
-
-  <p-card *ngIf="currentSelection == 'user'">
-    <app-crud-table [entityName]="'users'" [formElements]="userFormElements" [formPermissions]="userFormPermissions"
-      [itemsPerPage]="5" [filter]="userFilter" (cellSelect)="userCellSelected($event)" (backClicked)="goBack()">
-    </app-crud-table>
-  </p-card>
-
-  <p-card *ngIf="currentSelection == 'task'">
-    <app-crud-table [entityName]="'tasks'" [formElements]="taskFormElements" [formPermissions]="taskFormPermissions"
-      [filter]="taskFilter" [itemsPerPage]="5" (cellSelect)="taskCellSelected($event)" (backClicked)="goBack()">
-    </app-crud-table>
-  </p-card>
-
-  <p-card *ngIf="currentSelection == 'taskitem'">
-    <app-crud-table [entityName]="'taskitems'" [formElements]="taskItemFormElements"
-      [formPermissions]="taskItemFormPermissions" [filter]="taskItemFilter" [itemsPerPage]="5" (backClicked)="goBack()">
-    </app-crud-table>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'erdiagram'">
@@ -132,6 +108,10 @@
 
   <p-card *ngIf="currentSelection == 'jobeditor'">
     <app-job-editor></app-job-editor>
-  </p-card>-->
+  </p-card>
+
+  <div class="toast-message">
+    <p-toast></p-toast>
+  </div>
 
 </div>

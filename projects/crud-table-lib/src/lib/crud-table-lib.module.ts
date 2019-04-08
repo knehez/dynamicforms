@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { CrudTableLibComponent } from './crud-table-lib.component';
@@ -25,7 +23,6 @@ import { ClickStopPropagationDirective } from './click-stop-propagation.directiv
     FormsModule,
     ReactiveFormsModule,
     DynamicFormModule,
-    ToastModule,
     ConfirmDialogModule
   ],
   exports: [CrudTableLibComponent]

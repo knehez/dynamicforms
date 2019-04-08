@@ -27,6 +27,7 @@ export class CrudTableLibComponent implements OnInit {
   @Output() rowSelect = new EventEmitter();
   @Output() cellSelect = new EventEmitter();
   @Output() backClicked = new EventEmitter();
+  @Output() operationResult = new EventEmitter();
 
   models = [];
 
@@ -44,8 +45,7 @@ export class CrudTableLibComponent implements OnInit {
   constructor(
     private service: GeneralRestService,
     private modalService: NgbModal,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService) { }
+    private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.service.objectName = this.entityName;
@@ -123,10 +123,18 @@ export class CrudTableLibComponent implements OnInit {
   async deleteRow(rowData) {
     try {
       await this.service.delete(rowData);
-      this.showToastMessage(true, 'Successful delete', 'Record is deleted successfully.');
+      this.operationResult.emit({
+        success: true,
+        title: 'Successful delete',
+        message: 'Record is deleted successfully.'
+      });
       this.loadData();
     } catch (err) {
-      this.showToastMessage(false, 'Failed delete', `Failed to delete record: ${err.error.message || err.message}`);
+      this.operationResult.emit({
+        success: false,
+        title: 'Failed delete',
+        message: `Failed to delete record: ${err.error.message || err.message}`
+      });
     }
   }
 
@@ -178,13 +186,17 @@ export class CrudTableLibComponent implements OnInit {
         models.push(payLoad);
         response = await this.service.save(payLoad);
         payLoad.id = response['id'];
-        this.showToastMessage(true, 'Successful save', 'Record saved successfully.');
+        this.operationResult.emit({
+          success: true,
+          title: 'Successful save',
+          message: 'Record saved successfully.'
+        });
       } catch (err) {
-        this.showToastMessage(
-          false,
-          'Failed save',
-          `Failed to save record: ${err.error.message || err.message}`
-        );
+        this.operationResult.emit({
+          success: false,
+          title: 'Failed save',
+          message: `Failed to save record: ${err.error.message || err.message}`
+        });
       }
 
     } else {
@@ -193,13 +205,17 @@ export class CrudTableLibComponent implements OnInit {
         models[this.models.indexOf(this.oneModel)] = payLoad;
         response = await this.service.update(payLoad);
         payLoad.id = response['id'];
-        this.showToastMessage(true, 'Successful edit', 'Record edited successfully.');
+        this.operationResult.emit({
+          success: true,
+          title: 'Successful edit',
+          message: 'Record edited successfully.'
+        });
       } catch (err) {
-        this.showToastMessage(
-          false,
-          'Failed edit',
-          `Failed to edit record: ${err.error.message || err.message}`
-        );
+        this.operationResult.emit({
+          success: false,
+          title: 'Failed edit',
+          message: `Failed to edit record: ${err.error.message || err.message}`
+        });
       }
 
     }
@@ -272,17 +288,8 @@ export class CrudTableLibComponent implements OnInit {
     return this.canUser('delete');
   }
 
-  showToastMessage(isSuccess: boolean, title: string, message: string) {
-    this.messageService.add({
-      severity: isSuccess ? 'success' : 'error',
-      summary: title,
-      detail: message
-    });
-  }
-
   debug(obj) {
     console.dir(obj);
     return obj;
   }
-
 }
