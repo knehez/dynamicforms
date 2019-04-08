@@ -281,22 +281,23 @@ export class GanttChartComponent implements OnInit {
     };
 
     // draw operation text
-    chart.append('text').filter(function (d) {
+    chart.append('text').filter(d => {
       if (d.event === 's' || d.event === 'w') {
         return true;
       }
     })
-      .attr('x', (data, i) => x(data.startTime))
+      .attr('x', (data) => x(data.startTime))
       .attr('dy', textDyPos)
       .attr('dx', 3)
       .attr('y', textYPos)
       .attr('font-size', '6px')
       .attr('fill', 'white')
-      .text(function (d) {
+      .text(d => {
+        const title = type === 'MACHINE_ORIENTED' ? d.job : d.machine;
         if (d.event === 's') {
           return '';
-        } else if (x(d.endTime - d.startTime) > 66) {
-          return type === 'MACHINE_ORIENTED' ? d.job : d.machine;
+        } else if (x(d.endTime - d.startTime) > title.length * 4) {
+          return title;
         }
       })
       .on('click', d => this.selectJob(d, entity))

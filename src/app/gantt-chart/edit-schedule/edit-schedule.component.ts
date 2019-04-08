@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges, ViewChild, EventEmitter, Output } from '@angular/core';
 import { DataTable } from 'primeng/datatable';
 import { SchedulerService } from '../schedulerService';
+import { Entity } from 'typeorm';
 
 @Component({
   selector: 'app-edit-schedule',
@@ -8,12 +9,13 @@ import { SchedulerService } from '../schedulerService';
   styleUrls: ['./edit-schedule.component.css'],
 })
 export class EditScheduleComponent implements OnInit, OnChanges {
-  @Input() entity;
+  @Input() schedule;
+  @Input() scheduleLog;
   @Input() selectedJob;
   @Input() result;
   @Input() id;
   @Output() rowSelect = new EventEmitter();
-
+  averageUtilization;
   jobs;
   selectedJobName;
   jobCols = [
@@ -30,7 +32,7 @@ export class EditScheduleComponent implements OnInit, OnChanges {
   constructor(private schedulerService: SchedulerService) { }
 
   ngOnInit() {
-    this.jobs = this.entity.jobs;
+    this.jobs = this.scheduleLog.jobs;
     for (const job of this.jobs) {
       job.selectedOperation = [];
     }
@@ -83,8 +85,8 @@ export class EditScheduleComponent implements OnInit, OnChanges {
     // save scheduling
     await this.schedulerService.updateScheduling({
       id: this.id,
-      description: this.entity.description,
-      date: this.entity.date, log: JSON.stringify([this.entity]), result: JSON.stringify(this.result)
+      description: this.schedule.description,
+      date: this.schedule.date, log: JSON.stringify([this.scheduleLog]), result: JSON.stringify(this.result)
     }, this.id);
   }
 }
