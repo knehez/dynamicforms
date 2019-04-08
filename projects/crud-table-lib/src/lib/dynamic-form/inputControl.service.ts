@@ -11,8 +11,9 @@ export class InputControlService {
 
     inputs.forEach(input => {
       if (!input.hidden) {
-        group[input.key] = input.required ? new FormControl(input.value || '', Validators.required)
-          : new FormControl(input.value || '');
+        group[input.key] = input.required
+          ? new FormControl({ value: input.value || '', disabled: !input.editable }, Validators.required)
+          : new FormControl({ value: input.value || '', disabled: !input.editable });
       }
     });
     return new FormGroup(group);

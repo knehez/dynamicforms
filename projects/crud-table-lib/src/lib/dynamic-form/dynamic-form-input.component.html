@@ -2,7 +2,7 @@
     <label [attr.for]="input.key">{{input.header}}</label>
 
     <div [ngSwitch]="input.controlType">
-        <input *ngSwitchCase="'textbox'" class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.type" [ngStyle]="input.style" disabled="!input.editable">
+        <input *ngSwitchCase="'textbox'" class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.type" [ngStyle]="input.style">
         
         <textarea *ngSwitchCase="'textarea'" class="form-control" [formControlName]="input.key" [id]="input.key" [cols]="input.cols" [ngStyle]="input.style"
             [rows]="input.rows"></textarea>
