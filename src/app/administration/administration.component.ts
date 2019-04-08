@@ -20,6 +20,9 @@ import { Role } from 'src/backend/entities/role';
 })
 export class AdministrationComponent {
   title = 'crud';
+
+  actualPermissions = [];
+
   userFormElements: any[];
   userFormPermissions: any;
   roleFormElements: any[];
@@ -53,6 +56,8 @@ export class AdministrationComponent {
     service: InputService,
     private authService: AuthenticationService,
     private router: Router) {
+
+    this.actualPermissions = this.authService.getRoles();
 
     this.userFormElements = service.getFormElements(new User);
     this.userFormPermissions = service.getEntityPermissions(new User);

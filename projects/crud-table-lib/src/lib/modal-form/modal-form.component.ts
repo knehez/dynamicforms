@@ -1,9 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
-// TODO: auth-based features
-// import { haveIntersection } from 'src/utils/array';
-// import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 @Component({
   selector: 'lib-modal-form',
@@ -33,20 +30,5 @@ export class ModalFormComponent implements OnInit {
 
   save() {
     this.activeModal.close({ action: 'save', data: this.formComponent.getPayload() });
-  }
-
-  canCreateEntity () {
-    // TODO: return haveIntersection(this.formPermissions['create'], this.authService.getRoles());
-    return true;
-  }
-
-  canUpdateEntity () {
-    // TODO: return haveIntersection(this.formPermissions['update'], this.authService.getRoles());
-    return true;
-  }
-
-  canDeleteEntity () {
-    // TODO: return haveIntersection(this.formPermissions['delete'], this.authService.getRoles());
-    return true;
   }
 }

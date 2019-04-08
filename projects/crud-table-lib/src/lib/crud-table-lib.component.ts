@@ -4,15 +4,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalFormComponent } from './modal-form/modal-form.component';
 import { ModalImgComponent } from './modal-img/modal-img.component';
 
-// TODO:
 import * as moment_ from 'moment';
 const moment = moment_;
 
-// TODO: auth-based features
-// import { AuthenticationService } from '../_services/authentication.service';
-// import { haveIntersection } from 'src/utils/array';
-
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { haveIntersection } from './utils/array';
 
 @Component({
   selector: 'lib-crud-table-lib',
@@ -24,6 +20,7 @@ export class CrudTableLibComponent implements OnInit {
 
   @Input() formElements = [];
   @Input() formPermissions = {};
+  @Input() actualPermissions: [];
   @Input() entityName: string;
   @Input() itemsPerPage: number;
   @Input() filter: any;
@@ -259,15 +256,20 @@ export class CrudTableLibComponent implements OnInit {
     }
   }
 
-  canCreateEntity() {
-    /*
-    const userRoles = this.authenticationService.getRoles() || [];
-    const allowedRoles = this.formPermissions['create'] || [];
+  canUser(operation: 'create' | 'update' | 'delete') {
+    return haveIntersection(this.actualPermissions, this.formPermissions[operation]);
+  }
 
-    return haveIntersection(userRoles, allowedRoles);
-    */
-   // TODO: implementation
-   return true;
+  canCreateEntity() {
+    return this.canUser('create');
+  }
+
+  canUpdateEntity() {
+    return this.canUser('update');
+  }
+
+  canDeleteEntity() {
+    return this.canUser('delete');
   }
 
   showToastMessage(isSuccess: boolean, title: string, message: string) {

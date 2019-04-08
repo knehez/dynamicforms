@@ -10,7 +10,7 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button *ngIf="!isNewModel" type="button" class="btn btn-outline-danger" [disabled]="!canDeleteEntity()" (click)="delete()">Delete</button>
-  <button *ngIf="!isNewModel" type="button" class="btn btn-outline-primary" (click)="save()" [disabled]="!formComponent.getPayload() || !canUpdateEntity()" autofocus>Edit</button>
-  <button *ngIf="isNewModel" type="button" class="btn btn-outline-primary" (click)="save()" [disabled]="!formComponent.getPayload() || !canCreateEntity()" autofocus>Save</button>
+  <button *ngIf="!isNewModel" type="button" class="btn btn-outline-danger" (click)="delete()">Delete</button>
+  <button *ngIf="!isNewModel" type="button" class="btn btn-outline-primary" (click)="save()" [disabled]="!formComponent.getPayload()" autofocus>Edit</button>
+  <button *ngIf="isNewModel" type="button" class="btn btn-outline-primary" (click)="save()" [disabled]="!formComponent.getPayload()" autofocus>Save</button>
 </div>
