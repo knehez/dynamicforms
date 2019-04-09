@@ -89,19 +89,22 @@ export class JobEditorComponent implements OnInit {
           label: 'Makespan',
           data: [...this.makespanData],
           fill: false,
-          borderColor: '#3cb44b'
+          borderColor: '#3cb44b',
+          hidden: false
         },
         {
           label: 'Number of Setups',
           data: [...this.setupData],
           fill: false,
-          borderColor: '#ffe119'
+          borderColor: '#ffe119',
+          hidden: false
         },
         {
           label: 'Setup Time',
           data: [...this.setupTimeData],
           fill: false,
-          borderColor: '#4363d8'
+          borderColor: '#4363d8',
+          hidden: false
         }
       ]
     };

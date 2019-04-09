@@ -6,9 +6,23 @@
 </div>
 <div class="modal-body">
   <div>
-    <p-chart type="line" [data]="data" [options]="options"></p-chart>
+    <p-chart #chart type="line" [data]="data" [options]="options"></p-chart>
   </div>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-dark" ngbAutofocus>Stop</button>
+  <div class="d-flex flex-row align-self-center">
+    <div class="m-2">
+      <p-checkbox class="p-2" (onChange)="showMakespan($event)" binary="true" [(ngModel)]="isShowMakespan"></p-checkbox>
+      <span>Show makespan</span>
+    </div>
+    <div class="m-2">
+      <p-checkbox class="p-2" (onChange)="showSetupTime($event)" binary="true" [(ngModel)]="isShowSetuptime"></p-checkbox>
+      <span>Show setuptime</span>
+    </div>
+    <div class="m-2">
+      <p-checkbox class="p-2" (onChange)="showSetups($event)" binary="true" [(ngModel)]="isShowSetups"></p-checkbox>
+      <span>Show # of setups</span>
+    </div>
+    <button type="button" class="btn btn-outline-dark" (click)="close()" ngbAutofocus>Close</button>
+  </div>
 </div>
