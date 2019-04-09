@@ -69,6 +69,10 @@ export class EditScheduleComponent implements OnInit, OnChanges {
     if (changes.result !== undefined && changes.result.currentValue !== undefined && !changes.result.firstChange) {
       this.result = changes.result.currentValue;
     }
+    if (changes.scheduleLog !== undefined && changes.scheduleLog.currentValue !== undefined && !changes.scheduleLog.firstChange) {
+      this.jobs = changes.scheduleLog.currentValue.jobs;
+      this.selectJob(this.jobs.filter(j => j.name === this.selectedJobName)[0]);
+    }
     if (changes.selectedJob !== undefined && changes.selectedJob.currentValue !== undefined && !changes.selectedJob.firstChange) {
       let i = 0;
       for (i = 0; i < this.jobs.length; i++) {

@@ -55,8 +55,8 @@ export class GanttChartComponent implements OnInit {
     let lastHeight = 0;
 
     for (let i = 0; i < this.schedules.length; i++) {
-      const schedule = this.schedules[i].log;
-      lastHeight = this.showGanttChart(schedule, this.inner.append('g').
+      const schedule = this.schedules[i];
+      lastHeight = this.showGanttChart(schedule.log, this.inner.append('g').
         attr('transform', 'translate(0,' + (lastHeight * (i)) + ')'), this.ganttType);
     }
 
