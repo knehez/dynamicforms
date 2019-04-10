@@ -24,7 +24,7 @@ export class EditScheduleComponent implements OnInit, OnChanges {
     { field: 'numOfPieces', header: 'Num of pieces' },
     { field: 'dueDate', header: 'Due Date' },
     { field: 'timeFinished', header: 'Time Finished' },
-    { field: 'startTime', header: 'Start Time' }
+    { field: 'timeSchedule', header: 'Time Schedule' }
   ];
 
   @ViewChild('dt') dataTable: DataTable;

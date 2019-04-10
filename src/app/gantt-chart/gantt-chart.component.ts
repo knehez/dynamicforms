@@ -196,7 +196,7 @@ export class GanttChartComponent implements OnInit {
         .duration(200)
         .style('opacity', 0.9);
       div
-        .html(d.job + '<br>' + '[ ' + d.startTime + ' - ' + d.endTime + ' ] <br>' + d.machine
+        .html(d.job + '<br>' + '[ ' + d.operationStart + ' - ' + d.operationEnd + ' ] <br>' + d.machine
           + '<br>' + this.getJob(entity, d.job).pieceType + '<br>Num of pieces: ' + this.getJob(entity, d.job).numOfPieces)
         .style('left', d3.event.pageX + 'px')
         .style('top', d3.event.pageY - 50 + 'px');
@@ -244,12 +244,12 @@ export class GanttChartComponent implements OnInit {
       }
     })
       .append('rect')
-      .attr('x', (data) => x(data.startTime))
+      .attr('x', (data) => x(data.operationStart))
       .attr('class', (data) => 'J' + data.job)
       .attr('rx', '2')
       .attr('ry', '2')
       .attr('y', dataYPos)
-      .attr('width', (data) => x(data.endTime - data.startTime))
+      .attr('width', (data) => x(data.operationEnd - data.operationStart))
       .attr('height', dataYHeight)
       .style('fill', function (d) {
         if (d.event === 's') {
@@ -286,7 +286,7 @@ export class GanttChartComponent implements OnInit {
         return true;
       }
     })
-      .attr('x', (data) => x(data.startTime))
+      .attr('x', (data) => x(data.operationStart))
       .attr('dy', textDyPos)
       .attr('dx', 3)
       .attr('y', textYPos)
@@ -296,7 +296,7 @@ export class GanttChartComponent implements OnInit {
         const title = type === 'MACHINE_ORIENTED' ? d.job : d.machine;
         if (d.event === 's') {
           return '';
-        } else if (x(d.endTime - d.startTime) > title.length * 4) {
+        } else if (x(d.operationEnd - d.operationStart) > title.length * 4) {
           return title;
         }
       })
@@ -314,7 +314,7 @@ export class GanttChartComponent implements OnInit {
         return true;
       }
     })
-      .attr('x', (data) => x(data.startTime))
+      .attr('x', (data) => x(data.operationStart))
       .attr('dy', () => yAxis(entity.machines[1]) * 0.6)
       .attr('dx', () => -2)
       .attr('y', (data) => yAxis(data.machine))

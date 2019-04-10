@@ -10,8 +10,8 @@
         <div *ngIf="pane.parentElement.parentElement.classList.contains('ui-picklist-target')"
           style="font-size: 0.8em; border-bottom: 1px solid #ddd;">
           <input class="m-2" style="width:110px" [(ngModel)]="job.name">
-          <span>Start</span>
-          <input type="number" class="m-2" style="width:50px" [(ngModel)]="job.startTime">
+          <span>Time Schedule</span>
+          <input type="number" class="m-2" style="width:50px" [(ngModel)]="job.timeSchedule">
           <span>Pieces</span>
           <input type="number" class="m-2" style="width:50px" [(ngModel)]="job.numOfPieces">
         </div>
