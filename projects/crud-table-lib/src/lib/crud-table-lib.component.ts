@@ -9,16 +9,18 @@ const moment = moment_;
 
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { haveIntersection } from './utils/array';
+import { InputService } from './dynamic-form/input.service';
 
 @Component({
   selector: 'lib-crud-table-lib',
   templateUrl: './crud-table-lib.component.html',
   styleUrls: ['./crud-table-lib.component.css'],
-  providers: [GeneralRestService, MessageService]
+  providers: [GeneralRestService, MessageService, InputService]
 })
 export class CrudTableLibComponent implements OnInit {
 
-  @Input() formElements = [];
+  @Input() entity: any;
+  formElements = [];
   @Input() formPermissions = {};
   @Input() actualPermissions: [];
   @Input() entityName: string;
@@ -44,10 +46,17 @@ export class CrudTableLibComponent implements OnInit {
 
   constructor(
     private service: GeneralRestService,
+    private inputService: InputService,
     private modalService: NgbModal,
     private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
+    this.formElements = this.inputService.getFormElements(this.entity);
+    this.formPermissions = this.inputService.getEntityPermissions(this.entity);
+
+    console.log(this.formElements);
+    console.log(this.formPermissions);
+
     this.service.objectName = this.entityName;
     this.loadData();
   }

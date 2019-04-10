@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { User } from 'src/backend/entities/user';
 import { Task } from 'src/backend/entities/task';
 import { TaskItem } from 'src/backend/entities/taskItem';
-import { InputService } from 'src/app/crud-table/dynamic-form/input.service';
 import { Project } from 'src/backend/entities/project';
 import { Product } from 'src/backend/entities/product';
 import { Schedule } from 'src/backend/entities/schedule';
@@ -16,14 +15,13 @@ import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-administration',
   templateUrl: './administration.component.html',
-  styleUrls: ['./administration.component.css'],
-  providers: [InputService]
+  styleUrls: ['./administration.component.css']
 })
 export class AdministrationComponent {
   title = 'crud';
 
   actualPermissions = [];
-
+/*
   userFormElements: any[];
   userFormPermissions: any;
   roleFormElements: any[];
@@ -37,6 +35,15 @@ export class AdministrationComponent {
   projectFormPermissions: any;
   scheduleFormElements: any[];
   scheduleFormPermissions: any;
+*/
+
+  userEntity: any;
+  roleEntity: any;
+  taskEntity: any;
+  taskItemEntity: any;
+  productEntity: any;
+  projectEntity: any;
+  scheduleEntity: any;
 
   private _opened = false;
   cols: any[];
@@ -54,13 +61,20 @@ export class AdministrationComponent {
   backList = [];
 
   constructor(
-    service: InputService,
     private messageService: MessageService,
     private authService: AuthenticationService,
     private router: Router) {
 
     this.actualPermissions = this.authService.getRoles();
 
+    this.userEntity = new User;
+    this.roleEntity = new Role;
+    this.taskEntity = new Task;
+    this.taskItemEntity = new TaskItem;
+    this.productEntity = new Product;
+    this.projectEntity = new Project;
+    this.scheduleEntity = new Schedule;
+/*
     this.userFormElements = service.getFormElements(new User);
     this.userFormPermissions = service.getEntityPermissions(new User);
 
@@ -80,7 +94,9 @@ export class AdministrationComponent {
 
     this.scheduleFormElements = service.getFormElements(new Schedule);
     this.scheduleFormPermissions = service.getEntityPermissions(new Schedule);
+*/
 
+/*
     this.allEntities.push({ name: 'User', entity: this.userFormElements });
     this.allEntities.push({ name: 'Task', entity: this.taskFormElements });
     this.allEntities.push({ name: 'TaskItem', entity: this.taskItemFormElements });
@@ -88,6 +104,7 @@ export class AdministrationComponent {
     this.allEntities.push({ name: 'Project', entity: this.projectFormElements });
     this.allEntities.push({ name: 'Schedule', entity: this.scheduleFormElements });
     this.allEntities.push({ name: 'Role', entity: this.roleFormElements });
+    */
   }
 
   projectSelected(project: Project) {

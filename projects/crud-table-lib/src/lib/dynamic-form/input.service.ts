@@ -4,7 +4,7 @@ import { TextboxInput } from './form-elements/textBox';
 import { TextareaInput } from './form-elements/textArea';
 import { RadioInput } from './form-elements/radio';
 import 'reflect-metadata';
-import { PROPERTY_METADATA_KEY, CLASS_PERMISSION_METADATA_KEY } from 'src/backend/entities/decorator';
+import { PROPERTY_METADATA_KEY, CLASS_PERMISSION_METADATA_KEY } from '../decorator/decorator';
 import { CalendarInput } from './form-elements/calendar';
 import { CheckBoxInput } from './form-elements/checkbox';
 import { FileInput } from './form-elements/fileinput';
@@ -30,7 +30,9 @@ export function FormField(updates: any) {
     };
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class InputService {
     getFormElements(entity) {
         const metadata = Reflect.getMetadata(PROPERTY_METADATA_KEY, entity);

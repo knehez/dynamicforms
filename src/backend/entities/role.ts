@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { Permissions } from './decorator';
+import { Permissions } from 'crud-table-lib';
 import { RoleName } from './shared/roleName';
 
 @Permissions({

@@ -8,7 +8,7 @@ import ProjectCtrl from './controllers/project.controller';
 import AuthenticationCtrl from './controllers/authentication.controller';
 import ScheduleCtrl from './controllers/schedule.controller';
 import RoleCtrl from './controllers/role.controller';
-import { CLASS_PERMISSION_METADATA_KEY } from './entities/decorator';
+import { CLASS_PERMISSION_METADATA_KEY } from 'crud-table-lib';
 import { User } from './entities/user';
 import { Task } from './entities/task';
 import { TaskItem } from './entities/taskItem';

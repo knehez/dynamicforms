@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
+import { InputService } from './dynamic-form/input.service';
+
 import { CrudTableLibComponent } from './crud-table-lib.component';
 import { ModalImgComponent } from './modal-img/modal-img.component';
 import { DynamicFormModule } from './dynamic-form/dynamic-form.module';
@@ -24,6 +26,9 @@ import { ClickStopPropagationDirective } from './click-stop-propagation.directiv
     ReactiveFormsModule,
     DynamicFormModule,
     ConfirmDialogModule
+  ],
+  providers: [
+    InputService
   ],
   exports: [CrudTableLibComponent]
 })

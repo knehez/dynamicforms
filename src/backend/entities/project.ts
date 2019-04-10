@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { FormField, Permissions } from './decorator';
+import { FormField, Permissions } from 'crud-table-lib';
 import { Product } from './product';
 import { RoleName } from './shared/roleName';
 
