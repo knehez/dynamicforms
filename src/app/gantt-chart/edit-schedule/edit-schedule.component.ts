@@ -23,6 +23,7 @@ export class EditScheduleComponent implements OnInit, OnChanges {
     { field: 'pieceType', header: 'Job Type' },
     { field: 'numOfPieces', header: 'Num of pieces' },
     { field: 'dueDate', header: 'Due Date' },
+    { field: 'timeStarted', header: 'Time Started' },
     { field: 'timeFinished', header: 'Time Finished' },
     { field: 'timeSchedule', header: 'Time Schedule' }
   ];
