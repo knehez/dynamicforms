@@ -15,9 +15,10 @@ This project demonstartes how to generate Angular7+ dynamic reactive forms and C
 ## Installation steps
 
 - clone repository
-- npm install
+- ``npm install``
 - Check ormconfig.json and set your DB connections details
-- Run db migration .\node_modules\\.bin\typeorm migration:run
-- start client: npm run start
-- start backend: npm run gulp backend 
+- Run db migration ``.\node_modules\\.bin\typeorm migration:run``
+- Build crud-table-lib library: ``ng build crud-table-lib``
+- start client: ``npm run start``
+- start backend: ``npm run gulp backend``
 
