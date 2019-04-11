@@ -1,12 +1,13 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges, ViewChild, EventEmitter, Output } from '@angular/core';
 import { DataTable } from 'primeng/datatable';
 import { SchedulerService } from '../schedulerService';
-import { Entity } from 'typeorm';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-edit-schedule',
   templateUrl: './edit-schedule.component.html',
   styleUrls: ['./edit-schedule.component.css'],
+  providers: [DatePipe]
 })
 export class EditScheduleComponent implements OnInit, OnChanges {
   @Input() schedule;
@@ -22,7 +23,7 @@ export class EditScheduleComponent implements OnInit, OnChanges {
     { field: 'name', header: 'Job Name' },
     { field: 'pieceType', header: 'Job Type' },
     { field: 'numOfPieces', header: 'Num of pieces' },
-    { field: 'dueDate', header: 'Due Date' },
+    { field: 'dueDate', header: 'Due Date', pipe: this.datePipe, arg: 'yyyy-MM-dd' },
     { field: 'timeStarted', header: 'Time Started' },
     { field: 'timeFinished', header: 'Time Finished' },
     { field: 'timeSchedule', header: 'Time Schedule' }
@@ -30,7 +31,7 @@ export class EditScheduleComponent implements OnInit, OnChanges {
 
   @ViewChild('dt') dataTable: DataTable;
 
-  constructor(private schedulerService: SchedulerService) { }
+  constructor(private schedulerService: SchedulerService, private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.jobs = this.scheduleLog.jobs;
