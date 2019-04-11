@@ -96,13 +96,11 @@
   <p-card *ngIf="currentSelection == 'erdiagram'">
     <app-typeorm-erd [entities]="allEntities"></app-typeorm-erd>
   </p-card>
-<!-- TODO
+
   <p-card *ngIf="currentSelection == 'schedule'">
-    <app-schedule-selector [entityName]="'schedules'" [filter]="''" [formElements]="scheduleFormElements"
-      [formPermissions]="scheduleFormPermissions" [itemsPerPage]="5"
-      (backClicked)="goBack()" (showSchedule)="showScheudule($event)"></app-schedule-selector>
+    <app-schedule-selector [entity]="scheduleEntity" [entityName]="'schedules'" [filter]="''" [itemsPerPage]="5"
+      (backClicked)="goBack()" (showSchedule)="showSchedule($event)"></app-schedule-selector>
   </p-card>
--->
 
   <p-card *ngIf="currentSelection == 'gantt'">
     <app-gantt-chart [schedules]="ganttEntities"></app-gantt-chart>

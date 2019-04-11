@@ -74,27 +74,6 @@ export class AdministrationComponent {
     this.productEntity = new Product;
     this.projectEntity = new Project;
     this.scheduleEntity = new Schedule;
-/*
-    this.userFormElements = service.getFormElements(new User);
-    this.userFormPermissions = service.getEntityPermissions(new User);
-
-    this.roleFormElements = service.getFormElements(new Role);
-
-    this.taskFormElements = service.getFormElements(new Task);
-    this.taskFormPermissions = service.getEntityPermissions(new Task);
-
-    this.taskItemFormElements = service.getFormElements(new TaskItem);
-    this.taskItemFormPermissions = service.getEntityPermissions(new TaskItem);
-
-    this.productFormElements = service.getFormElements(new Product);
-    this.productFormPermissions = service.getEntityPermissions(new Product);
-
-    this.projectFormElements = service.getFormElements(new Project);
-    this.projectFormPermissions = service.getEntityPermissions(new Project);
-
-    this.scheduleFormElements = service.getFormElements(new Schedule);
-    this.scheduleFormPermissions = service.getEntityPermissions(new Schedule);
-*/
 
 /*
     this.allEntities.push({ name: 'User', entity: this.userFormElements });
@@ -105,6 +84,7 @@ export class AdministrationComponent {
     this.allEntities.push({ name: 'Schedule', entity: this.scheduleFormElements });
     this.allEntities.push({ name: 'Role', entity: this.roleFormElements });
     */
+
   }
 
   projectSelected(project: Project) {
@@ -134,7 +114,7 @@ export class AdministrationComponent {
     this.currentSelection = 'taskitem';
   }
 
-  showScheudule(obj) {
+  showSchedule(obj) {
     this.currentSelection = 'gantt';
     this.ganttEntities = obj;
   }

@@ -21,7 +21,7 @@ export class CrudTableLibComponent implements OnInit {
 
   @Input() entity: any;
   formElements = [];
-  @Input() formPermissions = {};
+  formPermissions = {};
   @Input() actualPermissions: [];
   @Input() entityName: string;
   @Input() itemsPerPage: number;
@@ -53,9 +53,6 @@ export class CrudTableLibComponent implements OnInit {
   ngOnInit() {
     this.formElements = this.inputService.getFormElements(this.entity);
     this.formPermissions = this.inputService.getEntityPermissions(this.entity);
-
-    console.log(this.formElements);
-    console.log(this.formPermissions);
 
     this.service.objectName = this.entityName;
     this.loadData();
