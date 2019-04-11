@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 @Component({
   selector: 'app-schedule-selector',
@@ -6,18 +7,19 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
   styleUrls: ['./schedule-selector.component.css']
 })
 export class ScheduleSelectorComponent implements OnInit {
-  @Input() formElements = [];
-  @Input() formPermissions = {};
+  @Input() entity;
   @Input() entityName: string;
   @Input() itemsPerPage: number;
   @Input() filter: any;
   @Output() showSchedule = new EventEmitter();
 
+  permissions: any;
   selectedSchedules = [];
 
-  constructor() { }
+  constructor(private authService: AuthenticationService) { }
 
   ngOnInit() {
+    this.permissions = this.authService.getRoles();
   }
 
   goJobEditor() {

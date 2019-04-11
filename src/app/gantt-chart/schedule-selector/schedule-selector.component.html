@@ -1,6 +1,9 @@
-<app-crud-table [entityName]="'schedules'" [filter]="''" [formElements]="formElements"
-  [formPermissions]="formPermissions" [itemsPerPage]="5" (rowSelect)="rowSelect($event)"></app-crud-table>
-
+<lib-crud-table-lib 
+  [entity]="entity" [entityName]="'schedules'" [filter]="''" 
+  [actualPermissions]="permissions" [itemsPerPage]="5" 
+  (rowSelect)="rowSelect($event)">
+</lib-crud-table-lib>
+  
 <div class="d-flex justify-content-center">
   <button type="button" class="btn btn-sm btn-outline-success m-2" (click)="goJobEditor()">Show Job Editor</button>
   <button type="button" class="btn btn-sm btn-outline-success m-2" (click)="goGanttViewer()">Show Gantts</button>
