@@ -17,7 +17,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns" let-index="rowIndex">
-    <tr [pSelectableRow]="rowData" (click)="rowSelect.emit({name: rowData.name, jobs: jobs}); selectJob(rowData)"
+    <tr [pSelectableRow]="rowData" (click)="rowSelect.emit({name: rowData.name, jobs: jobs, makespan: result.makespan}); selectJob(rowData)"
       [pReorderableRow]="index">
       <td>
         <a href="#" [pRowToggler]="rowData" (click)="selectJob(rowData)">
@@ -25,7 +25,7 @@
         </a>
       </td>
       <td *ngFor="let col of columns">
-        {{rowData[col.field]}}
+        {{ col.pipe ? col.pipe.transform(rowData[col.field], col.arg) : rowData[col.field] }}
       </td>
       <td>
         <i class="pi pi-window-maximize" pReorderableRowHandle></i>
@@ -44,8 +44,8 @@
           </div>
         </div>
         <div class="align-items-center">
-          <small>Start time: </small>
-          <input type="number" class="m-1" style="width:50px" [(ngModel)]="rowData.startTime">
+          <small>Time schedule: </small>
+          <input type="number" class="m-1" style="width:50px" [(ngModel)]="rowData.timeSchedule">
         </div>
       </td>
     </tr>

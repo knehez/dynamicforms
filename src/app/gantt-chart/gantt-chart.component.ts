@@ -21,6 +21,7 @@ export class GanttChartComponent implements OnInit {
     translateY: 0,
     scale: 1
   };
+  margin = { top: 20, right: 20, bottom: 20, left: 20 };
 
   showTooltip = false;
   time = 0;
@@ -105,6 +106,9 @@ export class GanttChartComponent implements OnInit {
   jobSelected(event) {
     if (event.name !== this.lastSelectedJob) {
       this.selectJob({ job: event.name }, { jobs: event.jobs });
+      const selectedJob = event.jobs.filter(job => job.name === event.name)[0];
+      const xtrans = this.getXAxis(event, event.makespan);
+      this.zoomAndScaleGraph(xtrans(-selectedJob.timeStarted * this.transform.scale), 0);
     }
   }
 
@@ -125,7 +129,7 @@ export class GanttChartComponent implements OnInit {
 
     this.lastSelectedJob = d.job;
 
-    const unSelectedJobs = d3.selectAll('rect:not([class^="J' + d.job + '"])');
+    const unSelectedJobs = d3.selectAll('rect:not([class="J' + d.job + '"])');
     entity.selectedJob = entity.jobs.filter(j => j.name === d.job)[0];
     if (unSelectedJobs.classed('unSelectedJob')) {
       unSelectedJobs.classed('unSelectedJob', false);
@@ -134,10 +138,14 @@ export class GanttChartComponent implements OnInit {
     }
   }
 
-  showGanttChart(entity, d3Elem, type = 'MACHINE_ORIENTED') {
-    const margin = { top: 20, right: 20, bottom: 20, left: 20 },
-      width = entity.makespan - margin.left - margin.right;
+  getXAxis(entity, width) {
+    return d3.scaleLinear()
+      .domain([0, entity.makespan]) // input
+      .range([0, width]);
+  }
 
+  showGanttChart(entity, d3Elem, type = 'MACHINE_ORIENTED') {
+    const width = entity.makespan - this.margin.left - this.margin.right;
     let jobs = entity.jobs.map((j) => j.name);
 
     // a színek miatt fontos, hogy a sorrend ugyanaz legyen
@@ -151,16 +159,14 @@ export class GanttChartComponent implements OnInit {
       ganttHeight = jobs.length;
     }
 
-    const height = (ganttHeight * 20) - margin.top - margin.bottom;
+    const height = (ganttHeight * 20) - this.margin.top - this.margin.bottom;
 
     const parseDate = d3.timeParse('%Y-%m-%d'),
       formatDate = d3.timeFormat('%b %d');
 
-    const x = d3.scaleLinear()
-      .domain([0, entity.makespan]) // input
-      .range([0, width]);
+    const xAxis = this.getXAxis(entity, width);
 
-    entity.jobNames = entity.jobs.map((j) => j.name);
+    entity.jobNames = entity.jobs.map(j => j.name);
 
     const yAxis = d3.scaleBand()
       .domain(type === 'MACHINE_ORIENTED' ? entity.machines : entity.jobNames) // input
@@ -173,7 +179,7 @@ export class GanttChartComponent implements OnInit {
     d3Elem.append('g')
       .attr('class', 'x axis')
       .attr('transform', 'translate(0,' + height + ')')
-      .call(d3.axisBottom(x).tickSize(-height));
+      .call(d3.axisBottom(xAxis).tickSize(-height));
 
     const timeLine = d3Elem.append('line')
       .attr('id', 'timeLineY')
@@ -196,7 +202,7 @@ export class GanttChartComponent implements OnInit {
         .duration(200)
         .style('opacity', 0.9);
       div
-        .html(d.job + '<br>' + '[ ' + d.startTime + ' - ' + d.endTime + ' ] <br>' + d.machine
+        .html(d.job + '<br>' + '[ ' + d.operationStart + ' - ' + d.operationEnd + ' ] <br>' + d.machine
           + '<br>' + this.getJob(entity, d.job).pieceType + '<br>Num of pieces: ' + this.getJob(entity, d.job).numOfPieces)
         .style('left', d3.event.pageX + 'px')
         .style('top', d3.event.pageY - 50 + 'px');
@@ -208,7 +214,7 @@ export class GanttChartComponent implements OnInit {
       }
       timeLine.style('display', null);
       const mouseX = d3.mouse(d3.event.target)[0];
-      this.time = Math.round(x.invert(mouseX) + 0.5);
+      this.time = Math.round(xAxis.invert(mouseX) + 0.5);
       timeLine
         .attr('x1', mouseX).attr('y1', 0)
         .attr('x2', mouseX).attr('y2', height);
@@ -244,12 +250,12 @@ export class GanttChartComponent implements OnInit {
       }
     })
       .append('rect')
-      .attr('x', (data) => x(data.startTime))
+      .attr('x', (data) => xAxis(data.operationStart))
       .attr('class', (data) => 'J' + data.job)
       .attr('rx', '2')
       .attr('ry', '2')
       .attr('y', dataYPos)
-      .attr('width', (data) => x(data.endTime - data.startTime))
+      .attr('width', (data) => xAxis(data.operationEnd - data.operationStart))
       .attr('height', dataYHeight)
       .style('fill', function (d) {
         if (d.event === 's') {
@@ -286,7 +292,7 @@ export class GanttChartComponent implements OnInit {
         return true;
       }
     })
-      .attr('x', (data) => x(data.startTime))
+      .attr('x', (data) => xAxis(data.operationStart))
       .attr('dy', textDyPos)
       .attr('dx', 3)
       .attr('y', textYPos)
@@ -296,7 +302,7 @@ export class GanttChartComponent implements OnInit {
         const title = type === 'MACHINE_ORIENTED' ? d.job : d.machine;
         if (d.event === 's') {
           return '';
-        } else if (x(d.endTime - d.startTime) > title.length * 4) {
+        } else if (xAxis(d.operationEnd - d.operationStart) > title.length * 4) {
           return title;
         }
       })
@@ -314,7 +320,7 @@ export class GanttChartComponent implements OnInit {
         return true;
       }
     })
-      .attr('x', (data) => x(data.startTime))
+      .attr('x', (data) => xAxis(data.operationStart))
       .attr('dy', () => yAxis(entity.machines[1]) * 0.6)
       .attr('dx', () => -2)
       .attr('y', (data) => yAxis(data.machine))
@@ -345,7 +351,7 @@ export class GanttChartComponent implements OnInit {
         .call(d3.axisLeft(yAxis).tickSize(-width));
     }
 
-    return height + margin.bottom;
+    return height + this.margin.bottom;
   }
 
   getJob(entity, jobName) {
@@ -365,15 +371,15 @@ export class GanttChartComponent implements OnInit {
 
   }
 
-  zoomAndScaleGraph() {
+  zoomAndScaleGraph(xPosition = 0, yPosition = 0) {
     // Zoom and scale to fit
     const graphWidth = 600;
     const graphHeight = 400;
     const width = parseInt(this.svg.style('width').replace(/px/, ''), 10);
     const height = parseInt(this.svg.style('height').replace(/px/, ''), 10);
     const zoomScale = Math.min(width / graphWidth, height / graphHeight);
-    const translateX = (width / 2) - ((graphWidth * zoomScale) / 2) + 0;
-    const translateY = (height / 2) - ((graphHeight * zoomScale) / 2) + 20;
+    const translateX = (width / 2) - ((graphWidth * zoomScale) / 2) + xPosition;
+    const translateY = (height / 2) - ((graphHeight * zoomScale) / 2) + 20 + yPosition;
     const svgZoom = this.svg.transition().duration(1500);
     svgZoom.call(this.zoom.transform, d3.zoomIdentity.translate(translateX, translateY).scale(zoomScale));
     this.transform.translateX = translateX;
