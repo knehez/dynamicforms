@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinTable, ManyToMany } from 'typeorm';
-import { FormField, Permissions } from 'crud-table-lib';
+import { FormField, Permissions } from '../../../projects/crud-table-lib/src/public_api';
 import { Task } from './task';
 import { Role } from './role';
 import { RoleName } from './shared/roleName';
