@@ -114,11 +114,11 @@ export class AdministrationComponent {
     this.router.navigate(['/login']);
   }
 
-  canReadEntity (permissions) {
-    const userRoles = this.authService.getRoles();
-    const allowedRoles = permissions['read'];
+  canReadEntity (entity) {
+    const actualRoles = this.authService.getRoles();
+    const allowedRoles = this.inputService.getPermissions(entity)['read'];
 
-    return haveIntersection(userRoles, allowedRoles);
+    return haveIntersection(actualRoles, allowedRoles);
   }
 
   showToastMessage(isSuccess: boolean, title: string, message: string) {

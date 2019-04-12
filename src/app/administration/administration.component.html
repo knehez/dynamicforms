@@ -10,20 +10,19 @@
     <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="currentSelection">
-          <!-- TODO: can read entity -->
-          <label  ngbButtonLabel class="btn-outline-primary btn-sm">
+          <label *ngIf="canReadEntity(projectEntity)" ngbButtonLabel class="btn-outline-primary btn-sm">
             <input ngbButton type="radio" value="project">Project
           </label>
-          <label  ngbButtonLabel class="btn-outline-primary btn-sm">
+          <label *ngIf="canReadEntity(productEntity)" ngbButtonLabel class="btn-outline-primary btn-sm">
             <input ngbButton type="radio" value="product">Product
           </label>
-          <label  ngbButtonLabel class="btn-outline-primary btn-sm">
+          <label *ngIf="canReadEntity(userEntity)" ngbButtonLabel class="btn-outline-primary btn-sm">
             <input ngbButton type="radio" value="user">User
           </label>
-          <label  ngbButtonLabel class="btn-outline-primary btn-sm">
+          <label *ngIf="canReadEntity(taskEntity)" ngbButtonLabel class="btn-outline-primary btn-sm">
             <input ngbButton type="radio" value="task">Task
           </label>
-          <label  ngbButtonLabel class="btn-outline-primary btn-sm">
+          <label *ngIf="canReadEntity(taskItemEntity)" ngbButtonLabel class="btn-outline-primary btn-sm">
             <input ngbButton type="radio" value="taskitem">Task item
           </label>
           <label ngbButtonLabel class="btn-outline-primary btn-sm">
@@ -32,7 +31,7 @@
           <label ngbButtonLabel class="btn-outline-primary btn-sm">
             <input ngbButton type="radio" value="jobeditor">Job Editor
           </label>
-          <label ngbButtonLabel class="btn-outline-primary btn-sm">
+          <label *ngIf="canReadEntity(scheduleEntity)" ngbButtonLabel class="btn-outline-primary btn-sm">
             <input ngbButton type="radio" value="schedule">Schedule
           </label>
           <label ngbButtonLabel class="btn-outline-primary btn-sm">
