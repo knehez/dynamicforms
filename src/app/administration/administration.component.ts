@@ -43,6 +43,7 @@ export class AdministrationComponent {
   projectFilter = {};
   taskItemFilter = {};
   ganttEntities;
+  calendarEvents;
 
   backList = [];
 
@@ -101,6 +102,11 @@ export class AdministrationComponent {
   showSchedule(obj) {
     this.currentSelection = 'gantt';
     this.ganttEntities = obj;
+  }
+
+  showCalendar(obj) {
+    this.currentSelection = 'calendar';
+    this.calendarEvents = obj;
   }
 
   goBack() {

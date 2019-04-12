@@ -34,6 +34,10 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ScheduleSelectorComponent } from './gantt-chart/schedule-selector/schedule-selector.component';
 
 import { CrudTableLibModule } from 'projects/crud-table-lib/src/public_api';
+import { CalendarComponent } from './gantt-chart/calendar/calendar.component';
+import { CalendarModule } from 'primeng/calendar';
+import { FullCalendarModule } from 'primeng/fullcalendar';
+
 
 const routes: Routes = [
   {
@@ -56,7 +60,8 @@ const routes: Routes = [
     EditScheduleComponent,
     JobEditorComponent,
     ModalDiagramComponent,
-    ScheduleSelectorComponent
+    ScheduleSelectorComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -78,6 +83,8 @@ const routes: Routes = [
     NgbModule,
     ChartModule,
     CheckboxModule,
+    CalendarModule,
+    FullCalendarModule,
     RouterModule.forRoot(routes, { enableTracing: !environment.production })
   ],
   entryComponents: [ModalDiagramComponent],

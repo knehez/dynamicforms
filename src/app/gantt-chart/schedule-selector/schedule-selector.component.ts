@@ -12,6 +12,7 @@ export class ScheduleSelectorComponent implements OnInit {
   @Input() itemsPerPage: number;
   @Input() filter: any;
   @Output() showSchedule = new EventEmitter();
+  @Output() showCalendar = new EventEmitter();
 
   permissions: any;
   selectedSchedules = [];
@@ -24,6 +25,26 @@ export class ScheduleSelectorComponent implements OnInit {
 
   goJobEditor() {
 
+  }
+
+  goCalendarView() {
+    const calendarEvents = [];
+    const schedule = JSON.parse(this.selectedSchedules[0].log);
+    const logs = schedule[0].log;
+    const startDate = new Date('2016-01-01T08:00').getTime();
+    for (const logItem of logs) {
+      if (logItem.event === 's' || logItem.event === 'w') {
+        const start = startDate + logItem.operationStart * 1000 * 60;
+        const end = startDate + logItem.operationEnd * 1000 * 60;
+        calendarEvents.push({
+          'title': logItem.machine + ' - ' + logItem.job,
+          'start': new Date(start),
+          'end': new Date(end),
+          // 'color': 'red'
+        });
+      }
+    }
+    this.showCalendar.emit(calendarEvents);
   }
 
   goGanttViewer() {

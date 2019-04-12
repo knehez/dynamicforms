@@ -1,5 +1,6 @@
 <div class="container">
   <nav class="navbar navbar-expand-lg navbar-light m-1" style="border:1px solid #3097D1; border-radius: 5px;">
+    <img class="mr-2" src="assets/timesolware.png">
     <a class="navbar-brand" href="#">Planner</a>
     <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-toggle="collapse"
       data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -36,6 +37,9 @@
           </label>
           <label ngbButtonLabel class="btn-outline-primary btn-sm">
             <input ngbButton type="radio" value="gantt">Gantt Diagram
+          </label>
+          <label *ngIf="canReadEntity(scheduleEntity)" ngbButtonLabel class="btn-outline-primary btn-sm">
+            <input ngbButton type="radio" value="calendar">Calendar
           </label>
         </div>
       </ul>
@@ -107,6 +111,10 @@
 
   <p-card *ngIf="currentSelection == 'jobeditor'">
     <app-job-editor></app-job-editor>
+  </p-card>
+
+  <p-card *ngIf="currentSelection == 'calendar'">
+    <app-calendar [events]="calendarEvents"></app-calendar>
   </p-card>
 
   <div class="toast-message">
