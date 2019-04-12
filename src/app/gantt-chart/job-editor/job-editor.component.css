@@ -33,3 +33,7 @@ p-picklist {
 ::ng-deep #setupTime .ui-slider-range {
     background-color: #4363d8;
 }
+
+::ng-deep .ui-steps .ui-steps-item {
+    width: 33%;
+}

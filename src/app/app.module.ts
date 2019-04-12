@@ -37,6 +37,7 @@ import { CrudTableLibModule } from 'projects/crud-table-lib/src/public_api';
 import { CalendarComponent } from './gantt-chart/calendar/calendar.component';
 import { CalendarModule } from 'primeng/calendar';
 import { FullCalendarModule } from 'primeng/fullcalendar';
+import { StepsModule } from 'primeng/steps';
 
 
 const routes: Routes = [
@@ -85,6 +86,7 @@ const routes: Routes = [
     CheckboxModule,
     CalendarModule,
     FullCalendarModule,
+    StepsModule,
     RouterModule.forRoot(routes, { enableTracing: !environment.production })
   ],
   entryComponents: [ModalDiagramComponent],

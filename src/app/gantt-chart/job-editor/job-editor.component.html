@@ -1,4 +1,4 @@
-<div class="h5">Job editor</div>
+<p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
 <div class="d-flex">
   <p-pickList [source]="availableJobs" [target]="targetJobs" filterBy="name,piecetype,dueDate" [responsive]="true"
     sourceHeader="All Jobs ({{availableJobs? availableJobs.length : 0}})" targetHeader="Scheduled Jobs ({{targetJobs? targetJobs.length : 0}})" dragdrop="true"

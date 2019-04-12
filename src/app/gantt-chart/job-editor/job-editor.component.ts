@@ -3,6 +3,7 @@ import { SchedulerService } from '../schedulerService';
 import * as socketIo from 'socket.io-client';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalDiagramComponent } from '../modal-diagram/modal-diagram.component';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-job-editor',
@@ -11,6 +12,10 @@ import { ModalDiagramComponent } from '../modal-diagram/modal-diagram.component'
   providers: [SchedulerService]
 })
 export class JobEditorComponent implements OnInit {
+  items: MenuItem[];
+
+  activeIndex = 0;
+
   targetJobs = [];
 
   makespan = 90;
@@ -37,6 +42,26 @@ export class JobEditorComponent implements OnInit {
   constructor(private schedulerService: SchedulerService, private modalService: NgbModal) { }
 
   async ngOnInit() {
+    this.items = [{
+      label: 'Edit jobs',
+      command: (event: any) => {
+        this.activeIndex = 0;
+      }
+    },
+    {
+      label: 'Set Objectives',
+      command: (event: any) => {
+        this.activeIndex = 1;
+      }
+    },
+    {
+      label: 'Optimization',
+      command: (event: any) => {
+        this.activeIndex = 2;
+      }
+    }
+    ];
+
     this.availableJobs = await this.schedulerService.getAllJobs();
     this.socket = socketIo({ 'path': '/socketio' });
     this.socket.on('progress', (data) => {
