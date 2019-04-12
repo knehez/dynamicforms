@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { haveIntersection } from 'src/utils/array';
 import { Role } from 'src/backend/entities/role';
 import { MessageService } from 'primeng/api';
+import { InputService } from 'projects/crud-table-lib/src/public_api';
 
 @Component({
   selector: 'app-administration',
@@ -21,21 +22,6 @@ export class AdministrationComponent {
   title = 'crud';
 
   actualPermissions = [];
-/*
-  userFormElements: any[];
-  userFormPermissions: any;
-  roleFormElements: any[];
-  taskFormElements: any[];
-  taskFormPermissions: any;
-  taskItemFormElements: any[];
-  taskItemFormPermissions: any;
-  productFormElements: any[];
-  productFormPermissions: any;
-  projectFormElements: any[];
-  projectFormPermissions: any;
-  scheduleFormElements: any[];
-  scheduleFormPermissions: any;
-*/
 
   userEntity: any;
   roleEntity: any;
@@ -63,6 +49,7 @@ export class AdministrationComponent {
   constructor(
     private messageService: MessageService,
     private authService: AuthenticationService,
+    private inputService: InputService,
     private router: Router) {
 
     this.actualPermissions = this.authService.getRoles();
@@ -75,16 +62,13 @@ export class AdministrationComponent {
     this.projectEntity = new Project;
     this.scheduleEntity = new Schedule;
 
-/*
-    this.allEntities.push({ name: 'User', entity: this.userFormElements });
-    this.allEntities.push({ name: 'Task', entity: this.taskFormElements });
-    this.allEntities.push({ name: 'TaskItem', entity: this.taskItemFormElements });
-    this.allEntities.push({ name: 'Product', entity: this.productFormElements });
-    this.allEntities.push({ name: 'Project', entity: this.projectFormElements });
-    this.allEntities.push({ name: 'Schedule', entity: this.scheduleFormElements });
-    this.allEntities.push({ name: 'Role', entity: this.roleFormElements });
-    */
-
+    this.allEntities.push({ name: 'User', entity: this.inputService.getFormElements(this.userEntity) });
+    this.allEntities.push({ name: 'Task', entity: this.inputService.getFormElements(this.taskEntity) });
+    this.allEntities.push({ name: 'TaskItem', entity: this.inputService.getFormElements(this.taskItemEntity) });
+    this.allEntities.push({ name: 'Product', entity: this.inputService.getFormElements(this.productEntity) });
+    this.allEntities.push({ name: 'Project', entity: this.inputService.getFormElements(this.projectEntity) });
+    this.allEntities.push({ name: 'Schedule', entity: this.inputService.getFormElements(this.scheduleEntity) });
+    this.allEntities.push({ name: 'Role', entity: this.inputService.getFormElements(this.roleEntity) });
   }
 
   projectSelected(project: Project) {
@@ -149,4 +133,3 @@ export class AdministrationComponent {
     this.showToastMessage(result.success, result.title, result.message);
   }
 }
-
