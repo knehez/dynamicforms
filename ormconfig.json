@@ -5,10 +5,10 @@
     "username": "root",
     "password": "root",
     "database": "nodedb",
-    "entities": ["dist-server/backend/entities/*.js"],
+    "entities": ["dist-server/src/backend/entities/*.js"],
     "logging": true,
     "migrationsTableName": "custom_migration_table",
-    "migrations": ["dist-server/backend/migration/*.js"],
+    "migrations": ["dist-server/src/backend/migration/*.js"],
     "timezone": "Z",
     "cli": {
         "entitiesDir": "src/backend/entities",

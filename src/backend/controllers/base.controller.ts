@@ -89,10 +89,10 @@ abstract class BaseCtrl {
     }
   }
 
-  private handleError (res) {
+  handleError (res, message = 'Database error occured.') {
     res.status(400).json({
       success: false,
-      message: 'Database error occured.'
+      message
     });
   }
 }
