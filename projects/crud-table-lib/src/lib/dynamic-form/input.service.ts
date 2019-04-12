@@ -4,31 +4,10 @@ import { TextboxInput } from './form-elements/textBox';
 import { TextareaInput } from './form-elements/textArea';
 import { RadioInput } from './form-elements/radio';
 import 'reflect-metadata';
-import { PROPERTY_METADATA_KEY, CLASS_PERMISSION_METADATA_KEY } from '../decorator/decorator';
+import { PROPERTY_METADATA_KEY, CLASS_PERMISSION_METADATA_KEY } from '../decorator';
 import { CalendarInput } from './form-elements/calendar';
 import { CheckBoxInput } from './form-elements/checkbox';
 import { FileInput } from './form-elements/fileinput';
-
-export function FormField(updates: any) {
-    return (target: any, propertyKey: string | symbol) => {
-        // Pull the existing metadata or create an empty object
-        const allMetadata = Reflect.getMetadata(PROPERTY_METADATA_KEY, target) || {};
-
-        // Ensure allMetadata has propertyKey
-        allMetadata[propertyKey] = allMetadata[propertyKey] || {};
-
-        // Update the metadata with anything from updates
-        for (const key of Reflect.ownKeys(updates)) {
-            allMetadata[propertyKey][key] = updates[key];
-        }
-        // Update the metadata
-        Reflect.defineMetadata(
-            PROPERTY_METADATA_KEY,
-            allMetadata,
-            target,
-        );
-    };
-}
 
 @Injectable({
     providedIn: 'root'

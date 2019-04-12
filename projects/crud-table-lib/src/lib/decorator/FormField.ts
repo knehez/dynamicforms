@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-export const PROPERTY_METADATA_KEY = Symbol('propertyMetadata');
+export const PROPERTY_METADATA_KEY = Symbol('dynamicFormMetadata');
 
 export function FormField(updates: any) {
     return (target: any, propertyKey: string | symbol) => {
