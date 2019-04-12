@@ -30,6 +30,9 @@ import { ClickStopPropagationDirective } from './click-stop-propagation.directiv
   providers: [
     InputService
   ],
+  entryComponents: [
+    ModalImgComponent
+  ],
   exports: [CrudTableLibComponent]
 })
 export class CrudTableLibModule { }
