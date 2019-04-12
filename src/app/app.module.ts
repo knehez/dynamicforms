@@ -32,7 +32,6 @@ import { MessageService } from 'primeng/api';
 import { ModalDiagramComponent } from './gantt-chart/modal-diagram/modal-diagram.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ScheduleSelectorComponent } from './gantt-chart/schedule-selector/schedule-selector.component';
-
 import { CrudTableLibModule } from 'projects/crud-table-lib/src/public_api';
 import { CalendarComponent } from './gantt-chart/calendar/calendar.component';
 import { CalendarModule } from 'primeng/calendar';
