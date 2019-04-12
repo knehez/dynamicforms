@@ -33,7 +33,7 @@ import { ModalDiagramComponent } from './scheduler/modal-diagram/modal-diagram.c
 import { CheckboxModule } from 'primeng/checkbox';
 import { ScheduleSelectorComponent } from './scheduler/schedule-selector/schedule-selector.component';
 
-import { CrudTableLibModule } from 'crud-table-lib';
+import { CrudTableLibModule } from 'projects/crud-table-lib/src/public_api';
 import { CalendarComponent } from './scheduler/calendar/calendar.component';
 import { CalendarModule } from 'primeng/calendar';
 import { FullCalendarModule } from 'primeng/fullcalendar';
