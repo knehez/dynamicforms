@@ -22,7 +22,7 @@ export class CrudTableLibComponent implements OnInit {
   @Input() entity: any;
   formElements = [];
   formPermissions = {};
-  @Input() actualPermissions: [];
+  @Input() permissions: [];
   @Input() entityName: string;
   @Input() itemsPerPage: number;
   @Input() filter: any;
@@ -52,7 +52,7 @@ export class CrudTableLibComponent implements OnInit {
 
   ngOnInit() {
     this.formElements = this.inputService.getFormElements(this.entity);
-    this.formPermissions = this.inputService.getEntityPermissions(this.entity);
+    this.formPermissions = this.inputService.getPermissions(this.entity);
 
     this.service.objectName = this.entityName;
     this.loadData();
@@ -279,7 +279,7 @@ export class CrudTableLibComponent implements OnInit {
   }
 
   canUser(operation: 'create' | 'update' | 'delete') {
-    return haveIntersection(this.actualPermissions, this.formPermissions[operation]);
+    return haveIntersection(this.permissions, this.formPermissions[operation]);
   }
 
   canCreateEntity() {

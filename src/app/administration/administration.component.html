@@ -51,7 +51,7 @@
   <p-card *ngIf="currentSelection == 'project'">
     <lib-crud-table-lib
       [entityName]="'projects'" [entity]="projectEntity" 
-      [actualPermissions]="actualPermissions"
+      [permissions]="actualPermissions"
       [itemsPerPage]="5" [filter]="projectFilter" 
       (rowSelect)="projectSelected($event)" (operationResult)="handleResult($event)" (backClicked)="goBack()">
     </lib-crud-table-lib>
@@ -60,7 +60,7 @@
   <p-card *ngIf="currentSelection == 'product'">
     <lib-crud-table-lib 
       [entityName]="'products'" [entity]="productEntity"
-      [actualPermissions]="actualPermissions"
+      [permissions]="actualPermissions"
       [itemsPerPage]="5" [filter]="productFilter"
       (cellSelect)="productCellSelected($event)" (operationResult)="handleResult($event)" (backClicked)="goBack()">
     </lib-crud-table-lib>
@@ -69,7 +69,7 @@
   <p-card *ngIf="currentSelection == 'user'">
     <lib-crud-table-lib 
       [entityName]="'users'" [entity]="userEntity"
-      [actualPermissions]="actualPermissions"
+      [permissions]="actualPermissions"
       [itemsPerPage]="5" [filter]="userFilter" 
       (cellSelect)="userCellSelected($event)" (operationResult)="handleResult($event)" (backClicked)="goBack()">
     </lib-crud-table-lib>
@@ -78,7 +78,7 @@
   <p-card *ngIf="currentSelection == 'task'">
     <lib-crud-table-lib 
       [entityName]="'tasks'" [entity]="taskEntity"
-      [actualPermissions]="actualPermissions"
+      [permissions]="actualPermissions"
       [itemsPerPage]="5" [filter]="taskFilter"
       (cellSelect)="taskCellSelected($event)" (operationResult)="handleResult($event)" (backClicked)="goBack()">
     </lib-crud-table-lib>
@@ -87,7 +87,7 @@
   <p-card *ngIf="currentSelection == 'taskitem'">
     <lib-crud-table-lib 
       [entityName]="'taskitems'" [entity]="taskItemEntity"
-      [actualPermissions]="actualPermissions"
+      [permissions]="actualPermissions"
       [filter]="taskItemFilter" [itemsPerPage]="5"
       (operationResult)="handleResult($event)" (backClicked)="goBack()">
     </lib-crud-table-lib>

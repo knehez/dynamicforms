@@ -77,7 +77,7 @@ export class InputService {
         return userInputs.sort((a, b) => a.order - b.order);
     }
 
-    getEntityPermissions (entity) {
+    getPermissions (entity) {
         return Reflect.getMetadata(CLASS_PERMISSION_METADATA_KEY, entity.constructor) || {};
     }
 }
