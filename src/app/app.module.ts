@@ -29,7 +29,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { ModalDiagramComponent } from './scheduler/modal-diagram/modal-diagram.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ScheduleSelectorComponent } from './scheduler/schedule-selector/schedule-selector.component';
 
@@ -60,7 +59,6 @@ const routes: Routes = [
     GanttChartComponent,
     EditScheduleComponent,
     JobEditorComponent,
-    ModalDiagramComponent,
     ScheduleSelectorComponent,
     CalendarComponent
   ],
@@ -89,7 +87,6 @@ const routes: Routes = [
     StepsModule,
     RouterModule.forRoot(routes, { enableTracing: !environment.production })
   ],
-  entryComponents: [ModalDiagramComponent],
 
   providers: [
     {

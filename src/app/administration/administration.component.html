@@ -106,7 +106,7 @@
   </p-card>
 
   <p-card *ngIf="currentSelection == 'gantt'">
-    <app-gantt-chart [schedules]="ganttEntities"></app-gantt-chart>
+    <app-gantt-chart *ngIf="ganttEntities" [schedules]="ganttEntities"></app-gantt-chart>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'jobeditor'">

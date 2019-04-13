@@ -1,8 +1,9 @@
 <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
-<div class="d-flex">
+<div *ngIf="activeIndex == 0" class="d-flex">
   <p-pickList [source]="availableJobs" [target]="targetJobs" filterBy="name,piecetype,dueDate" [responsive]="true"
-    sourceHeader="All Jobs ({{availableJobs? availableJobs.length : 0}})" targetHeader="Scheduled Jobs ({{targetJobs? targetJobs.length : 0}})" dragdrop="true"
-    [sourceStyle]="{'height':'300px'}" [metaKeySelection]="false" [targetStyle]="{'height':'300px'}">
+    sourceHeader="All Jobs ({{availableJobs? availableJobs.length : 0}})"
+    targetHeader="Scheduled Jobs ({{targetJobs? targetJobs.length : 0}})" dragdrop="true"
+    [sourceStyle]="{'height':'400px'}" [metaKeySelection]="false" [targetStyle]="{'height':'400px'}">
     <ng-template let-job pTemplate="item">
       <div class="ui-helper-clearfix" #pane>
         <div style="font-weight: 600;">{{job.name}} - {{job.pieceType}} - [{{job.dueDate | date:'yyyy-MM-dd'}}] -
@@ -19,26 +20,55 @@
     </ng-template>
   </p-pickList>
 </div>
-<div class="h3">&nbsp;</div>
-<div class="h5">Objective priorities</div>
-<small>Makespan {{makespan}}%</small>
-<p-slider id="makespan" class="m-2" [(ngModel)]="makespan" [min]="0" [max]="100"></p-slider>
+<div *ngIf="activeIndex == 1">
+  <div class="h5">Objective priorities</div>
+  <small>Makespan {{makespan}}%</small>
+  <p-slider id="makespan" class="m-2" [(ngModel)]="makespan" [min]="0" [max]="100"></p-slider>
 
-<h2></h2>
-<small>Number of Setups {{setups}}%</small>
-<p-slider id="setups" class="m-2" [(ngModel)]="setups" [min]="0" [max]="100"></p-slider>
+  <h2></h2>
+  <small>Number of Setups {{setups}}%</small>
+  <p-slider id="setups" class="m-2" [(ngModel)]="setups" [min]="0" [max]="100"></p-slider>
 
-<h2></h2>
-<small>Setup time {{setupTime}}%</small>
-<p-slider id="setupTime" class="m-2" [(ngModel)]="setupTime" [min]="0" [max]="100"></p-slider>
+  <h2></h2>
+  <small>Setup time {{setupTime}}%</small>
+  <p-slider id="setupTime" class="m-2" [(ngModel)]="setupTime" [min]="0" [max]="100"></p-slider>
 
-<div class="d-flex align-items-center">
-  <div>Scheduling description:</div>
-  <input type="text" class="m-2" style="width:200px" [(ngModel)]="description">
-  <div>Number of enities in the population:</div>
-  <input type="number" class="m-2" style="width:50px" [(ngModel)]="population">
-  <div>Iterations:</div>
-  <input type="number" class="m-2" style="width:50px" [(ngModel)]="iteration">
-  <button type="button" class="btn btn-sm btn-outline-success m-2" (click)="reschedule()">Optimize scheduling</button>
-  <button type="button" class="btn btn-sm btn-outline-success" (click)="save()">Save</button>
+  <div class="d-flex flex-column m-2">
+    <div>Scheduling description</div>
+    <input type="text" style="width:300px" [(ngModel)]="description">
+    <div>Number of enities in the population</div>
+    <input type="number" style="width:50px" [(ngModel)]="population">
+    <div>Number of iterations</div>
+    <input type="number" style="width:50px" [(ngModel)]="iteration">
+  </div>
+</div>
+<div *ngIf="activeIndex == 2">
+  <div>
+    <p-chart #chart type="line" [data]="data" [options]="options"></p-chart>
+  </div>
+  <div class="d-flex flex-row align-self-center">
+    <div class="m-2">
+      <p-checkbox class="p-2" (onChange)="showMakespan($event)" binary="true" [(ngModel)]="isShowMakespan"></p-checkbox>
+      <span>Show makespan</span>
+    </div>
+    <div class="m-2">
+      <p-checkbox class="p-2" (onChange)="showSetupTime($event)" binary="true" [(ngModel)]="isShowSetuptime">
+      </p-checkbox>
+      <span>Show setuptime</span>
+    </div>
+    <div class="m-2">
+      <p-checkbox class="p-2" (onChange)="showSetups($event)" binary="true" [(ngModel)]="isShowSetups"></p-checkbox>
+      <span>Show number of setups</span>
+    </div>
+  </div>
+  <div class="d-flex flex-column">
+    <button type="button" class="btn btn-sm btn-outline-success mb-2 mt-2" (click)="schedule()">Optimize
+      scheduling</button>
+    <button type="button" class="btn btn-sm btn-outline-info" (click)="save()">Save results</button>
+  </div>
+</div>
+<div class="d-flex flex-row m-2 justify-content-center">
+  <button *ngIf="activeIndex != 0" type="button" class="btn btn-sm btn-outline-primary m-2" (click)="activeIndex=0">Edit jobs</button>
+  <button *ngIf="activeIndex != 1" type="button" class="btn btn-sm btn-outline-primary m-2" (click)="activeIndex=1">Set objectives</button>
+  <button *ngIf="activeIndex != 2" type="button" class="btn btn-sm btn-outline-primary m-2" (click)="activeIndex=2">Launch Optimization</button>
 </div>

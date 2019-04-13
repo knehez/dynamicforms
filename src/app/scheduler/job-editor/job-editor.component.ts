@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { SchedulerService } from '../schedulerService';
 import * as socketIo from 'socket.io-client';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalDiagramComponent } from '../modal-diagram/modal-diagram.component';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -37,7 +36,12 @@ export class JobEditorComponent implements OnInit {
   setupData = [];
   index = [];
   options;
-  modalRef;
+
+  @ViewChild('chart')
+  chart;
+  isShowMakespan = true;
+  isShowSetuptime = true;
+  isShowSetups = true;
 
   constructor(private schedulerService: SchedulerService, private modalService: NgbModal) { }
 
@@ -79,9 +83,8 @@ export class JobEditorComponent implements OnInit {
     });
   }
 
-  reschedule() {
-    this.modalRef = this.modalService.open(ModalDiagramComponent, { size: 'lg' });
-
+  schedule() {
+    this.activeIndex = 2;
     this.simulationLog = [];
     this.setupTimeData = [];
     this.makespanData = [];
@@ -104,10 +107,7 @@ export class JobEditorComponent implements OnInit {
   }
 
   createDiagram() {
-    if (this.modalRef === undefined) {
-      return;
-    }
-    this.modalRef.componentInstance.data = {
+    this.data = {
       labels: this.index,
       datasets: [
         {
@@ -134,7 +134,7 @@ export class JobEditorComponent implements OnInit {
       ]
     };
 
-    this.modalRef.componentInstance.options = {
+    this.options = {
       animation: {
         duration: 0, // general animation time
       },
@@ -144,4 +144,20 @@ export class JobEditorComponent implements OnInit {
       responsiveAnimationDuration: 0, // animation duration after a resize
     };
   }
+
+  showSetupTime(event) {
+    this.data.datasets[2].hidden = !event;
+    this.chart.chart.update();
+  }
+
+  showMakespan(event) {
+    this.data.datasets[0].hidden = !event;
+    this.chart.chart.update();
+  }
+
+  showSetups(event) {
+    this.data.datasets[1].hidden = !event;
+    this.chart.chart.update();
+  }
+
 }
