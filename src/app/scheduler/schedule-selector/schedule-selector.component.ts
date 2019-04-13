@@ -13,6 +13,7 @@ export class ScheduleSelectorComponent implements OnInit {
   @Input() filter: any;
   @Output() showSchedule = new EventEmitter();
   @Output() showCalendar = new EventEmitter();
+  @Output() showJobEditor = new EventEmitter();
 
   permissions: any;
   selectedSchedules = [];
@@ -24,7 +25,12 @@ export class ScheduleSelectorComponent implements OnInit {
   }
 
   goJobEditor() {
-
+    for (const schedule of this.selectedSchedules) {
+      schedule.log = JSON.parse(schedule.log)[0];
+      this.showJobEditor.emit(schedule.log.jobs);
+      // process only the first selection form the list
+      return;
+    }
   }
 
   goCalendarView() {

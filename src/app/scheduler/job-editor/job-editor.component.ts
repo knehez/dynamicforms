@@ -15,13 +15,14 @@ export class JobEditorComponent implements OnInit {
 
   activeIndex = 0;
 
-  targetJobs = [];
+  @Input() targetJobs = [];
 
   makespan = 90;
   setupTime = 50;
   setups = 30;
+  lateJobs = 60;
 
-  population = 50;
+  population = 30;
   iteration = 200;
   description = 'Test run ' + ' ' + Math.round(Math.random() * 1000);
   availableJobs;
@@ -34,6 +35,7 @@ export class JobEditorComponent implements OnInit {
   setupTimeData = [];
   makespanData = [];
   setupData = [];
+  lateJobsData = [];
   index = [];
   options;
 
@@ -42,6 +44,7 @@ export class JobEditorComponent implements OnInit {
   isShowMakespan = true;
   isShowSetuptime = true;
   isShowSetups = true;
+  isShowLateJobs = true;
 
   constructor(private schedulerService: SchedulerService, private modalService: NgbModal) { }
 
@@ -53,7 +56,7 @@ export class JobEditorComponent implements OnInit {
       }
     },
     {
-      label: 'Set Objectives',
+      label: 'Set Priorities',
       command: (event: any) => {
         this.activeIndex = 1;
       }
@@ -67,6 +70,7 @@ export class JobEditorComponent implements OnInit {
     ];
 
     this.availableJobs = await this.schedulerService.getAllJobs();
+
     this.socket = socketIo({ 'path': '/socketio' });
     this.socket.on('progress', (data) => {
       this.index.push(data.i + 1);
@@ -77,6 +81,7 @@ export class JobEditorComponent implements OnInit {
         this.createDiagram();
       }
     });
+
     this.socket.on('result', (data) => {
       this.result = data['resultLog'];
       this.simulationLog = data['simulationLog'];

@@ -44,7 +44,7 @@ export class AdministrationComponent {
   taskItemFilter = {};
   ganttEntities;
   calendarEvents;
-
+  targetJobs;
   backList = [];
 
   constructor(
@@ -109,6 +109,11 @@ export class AdministrationComponent {
     this.calendarEvents = obj;
   }
 
+  showJobEditor(obj) {
+    this.currentSelection = 'jobeditor';
+    this.targetJobs = obj;
+  }
+
   goBack() {
     if (this.backList.length !== 0) {
       this.currentSelection = this.backList.pop();
@@ -120,7 +125,7 @@ export class AdministrationComponent {
     this.router.navigate(['/login']);
   }
 
-  canReadEntity (entity) {
+  canReadEntity(entity) {
     const actualRoles = this.authService.getRoles();
     const allowedRoles = this.inputService.getPermissions(entity)['read'];
 
@@ -135,7 +140,7 @@ export class AdministrationComponent {
     });
   }
 
-  handleResult (result) {
+  handleResult(result) {
     this.showToastMessage(result.success, result.title, result.message);
   }
 }

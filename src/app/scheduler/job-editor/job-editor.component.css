@@ -34,6 +34,11 @@ p-picklist {
     background-color: #4363d8;
 }
 
+::ng-deep #lateJobs .ui-slider-range {
+    background-color: #cc43d8;
+}
+
+
 ::ng-deep .ui-steps .ui-steps-item {
     width: 33%;
 }
