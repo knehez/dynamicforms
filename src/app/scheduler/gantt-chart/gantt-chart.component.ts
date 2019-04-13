@@ -34,7 +34,7 @@ export class GanttChartComponent implements OnInit {
   lastSelectedJob;
 
   fixYAxis = false;
-  yAxisElement;
+  yAxisElement = [];
 
   constructor(private schedulerService: SchedulerService) { }
 
@@ -54,6 +54,7 @@ export class GanttChartComponent implements OnInit {
     this.inner = this.svg.append('g');
 
     let lastHeight = 0;
+    this.yAxisElement = [];
 
     for (let i = 0; i < this.schedules.length; i++) {
       const schedule = this.schedules[i];
@@ -74,9 +75,10 @@ export class GanttChartComponent implements OnInit {
         }
       }
       if (this.fixYAxis) {
-        this.yAxisElement.attr('transform', 'translate(' + (130 - this.transform.translateX / this.transform.scale) + ' , 0)');
+        // több diagram esetén mindegyiket el kell tolni
+        this.yAxisElement.map(o => o.attr('transform', 'translate(' + (130 - this.transform.translateX / this.transform.scale) + ' , 0)'));
       } else {
-        this.yAxisElement.attr('transform', 'translate(0, 0)');
+        this.yAxisElement.map(o => o.attr('transform', 'translate(0, 0)'));
       }
       this.inner.attr('transform', d3.event.transform);
     });
@@ -146,10 +148,7 @@ export class GanttChartComponent implements OnInit {
 
   showGanttChart(entity, d3Elem, type = 'MACHINE_ORIENTED') {
     const width = entity.makespan - this.margin.left - this.margin.right;
-    let jobs = entity.jobs.map((j) => j.name);
-
-    // a színek miatt fontos, hogy a sorrend ugyanaz legyen
-    jobs = jobs.sort();
+    const jobs = entity.jobs.map((j) => j.name);
 
     let ganttHeight;
 
@@ -243,6 +242,22 @@ export class GanttChartComponent implements OnInit {
       }
     };
 
+    // my own hash code generator
+    const hashCode = (str) => {
+      let hash = 0;
+      if (str.length === 0) { return hash; }
+      for (let i = 0; i < str.length; i++) {
+          const char = str.charCodeAt(i);
+          hash = ((hash << 5) - hash) + char;
+          hash = hash & hash; // Convert to 32bit integer
+      }
+      return Math.abs(hash);
+    };
+
+    const getCategoryColor = (jobName) => {
+      return d3.schemeCategory10[hashCode(jobName) % 10];
+    };
+
     // draw operations
     chart.filter(function (d) {
       if (d.event === 's' || d.event === 'w') {
@@ -262,7 +277,7 @@ export class GanttChartComponent implements OnInit {
           return 'url(#dashedBackground)';
         }
         if (d.event === 'w') {
-          return d3.schemeCategory10[jobs.indexOf(d.job) % 10];
+          return getCategoryColor(d.job);
         }
       })
       .on('mouseover', operationToolTip)
@@ -339,16 +354,16 @@ export class GanttChartComponent implements OnInit {
         utilization.set(u[0], u[1]);
       }
 
-      this.yAxisElement = d3Elem.append('g')
+      this.yAxisElement.push(d3Elem.append('g')
         .attr('class', 'y axis')
         .call(d3.axisLeft(yAxis).tickSize(-width)
           .tickFormat(
             (d) => d + ' (' + utilization.get(d) + '%)')
-        );
+        ));
     } else {
-      this.yAxisElement = d3Elem.append('g')
+      this.yAxisElement.push(d3Elem.append('g')
         .attr('class', 'y axis')
-        .call(d3.axisLeft(yAxis).tickSize(-width));
+        .call(d3.axisLeft(yAxis).tickSize(-width)));
     }
 
     return height + this.margin.bottom;
