@@ -7,10 +7,10 @@
     <p-checkbox class="p-2" [(ngModel)]="fixYAxis" binary="true"></p-checkbox>
     <span>Fix YAxis</span>
   </div>
-  <div class="p-2">Current time: {{time}} [min]</div>
+  <div class="p-2">Current time: {{currentTime}} [min]</div>
   <div class="btn-group btn-group-toggle p-2 ml-auto">
     <label class="btn-outline-primary btn-sm" ngbButtonLabel>
-      <input type="checkbox" ngbButton [(ngModel)]="isSelectTime"> Select time
+      <input type="checkbox" ngbButton [(ngModel)]="isSetCurrentTime"> Set current time
     </label>
   </div>
   <button type="button" class="btn btn-sm btn-outline-success m-2" (click)="reschedule()">Re-Schedule jobs</button>

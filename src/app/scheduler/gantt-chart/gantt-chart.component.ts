@@ -24,8 +24,8 @@ export class GanttChartComponent implements OnInit {
   margin = { top: 20, right: 20, bottom: 20, left: 20 };
 
   showTooltip = false;
-  time = 0;
-  isSelectTime;
+  currentTime = 0;
+  isSetCurrentTime;
 
   zoomAndAnimate = true;
   ganttType: 'MACHINE_ORIENTED' | 'JOB_ORIENTED' = 'MACHINE_ORIENTED';
@@ -115,8 +115,8 @@ export class GanttChartComponent implements OnInit {
   }
 
   selectJob = (d, entity) => {
-    if (this.isSelectTime) {
-      this.isSelectTime = false;
+    if (this.isSetCurrentTime) {
+      this.isSetCurrentTime = false;
       return;
     }
 
@@ -208,12 +208,12 @@ export class GanttChartComponent implements OnInit {
     };
 
     const moveTimeline = () => {
-      if (!this.isSelectTime) {
+      if (!this.isSetCurrentTime) {
         return;
       }
       timeLine.style('display', null);
       const mouseX = d3.mouse(d3.event.target)[0];
-      this.time = Math.round(xAxis.invert(mouseX) + 0.5);
+      this.currentTime = Math.round(xAxis.invert(mouseX) + 0.5);
       timeLine
         .attr('x1', mouseX).attr('y1', 0)
         .attr('x2', mouseX).attr('y2', height);
