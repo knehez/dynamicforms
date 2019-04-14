@@ -49,6 +49,9 @@ export class JobEditorComponent implements OnInit {
   constructor(private schedulerService: SchedulerService, private modalService: NgbModal) { }
 
   async ngOnInit() {
+    if (!this.targetJobs) {
+      this.targetJobs = [];
+    }
     this.items = [{
       label: 'Edit jobs',
       command: (event: any) => {
