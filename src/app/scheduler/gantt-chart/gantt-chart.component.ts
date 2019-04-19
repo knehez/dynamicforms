@@ -74,6 +74,16 @@ export class GanttChartComponent implements OnInit {
           this.transform.translateY = d3.event.transform.y;
         }
       }
+      /*
+      // limit panning
+      if (this.transform.translateX > 180) {
+        this.transform.translateX = 180;
+        d3.event.transform.x = 180;
+      }
+      if (this.transform.translateY > 20) {
+        this.transform.translateY = 20;
+        d3.event.transform.y = 20;
+      }*/
       if (this.fixYAxis) {
         // több diagram esetén mindegyiket el kell tolni
         this.yAxisElement.map(o => o.attr('transform', 'translate(' + (130 - this.transform.translateX / this.transform.scale) + ' , 0)'));
@@ -247,9 +257,9 @@ export class GanttChartComponent implements OnInit {
       let hash = 0;
       if (str.length === 0) { return hash; }
       for (let i = 0; i < str.length; i++) {
-          const char = str.charCodeAt(i);
-          hash = ((hash << 5) - hash) + char;
-          hash = hash & hash; // Convert to 32bit integer
+        const char = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // Convert to 32bit integer
       }
       return Math.abs(hash);
     };
