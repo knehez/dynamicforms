@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { InputBase } from './form-elements/inputBase';
 import { FileHandlerService } from './fileHandler.service';
+import { TextboxInput } from './form-elements/textBox';
 
 @Component({
     selector: 'lib-input',
@@ -9,8 +10,8 @@ import { FileHandlerService } from './fileHandler.service';
     styleUrls: ['./dynamic-form-input.component.css'],
 })
 export class DynamicFormInputComponent {
-    @Input() input: InputBase<any>;
-    @Input() form: FormGroup;
+    @Input() input: InputBase<any> = new TextboxInput({ key: 'default' });
+    @Input() form: FormGroup = new FormGroup({ default: new FormControl() });
 
     get isValid() {
         return this.form.controls[this.input.key].valid;

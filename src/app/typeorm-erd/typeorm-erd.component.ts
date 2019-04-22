@@ -83,6 +83,10 @@ export class TypeormERDComponent implements OnInit {
   }
 
   updateChart(nodes) {
+    if (!nodes) {
+      return;
+    }
+
     let node;
 
     for (let i = 0, x = nodes.length; i < x; ++i) {

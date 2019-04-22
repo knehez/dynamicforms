@@ -4,7 +4,7 @@ import { TextboxInput } from './form-elements/textBox';
 import { TextareaInput } from './form-elements/textArea';
 import { RadioInput } from './form-elements/radio';
 import 'reflect-metadata';
-import { PROPERTY_METADATA_KEY, CLASS_PERMISSION_METADATA_KEY } from '../decorator';
+import { PROPERTY_METADATA_KEY, CLASS_PERMISSION_METADATA_KEY, TOP_LEVEL_ACCESS_KEY } from '../decorator';
 import { CalendarInput } from './form-elements/calendar';
 import { CheckBoxInput } from './form-elements/checkbox';
 import { FileInput } from './form-elements/fileinput';
@@ -14,8 +14,14 @@ import { FileInput } from './form-elements/fileinput';
 })
 export class InputService {
     getFormElements(entity) {
-        const metadata = Reflect.getMetadata(PROPERTY_METADATA_KEY, entity);
         const userInputs = [];
+
+        if (!entity) {
+            return userInputs;
+        }
+
+        const metadata = Reflect.getMetadata(PROPERTY_METADATA_KEY, entity);
+
         for (const key in metadata) {
             if (metadata.hasOwnProperty(key)) {
                 const params = metadata[key];
@@ -57,6 +63,17 @@ export class InputService {
     }
 
     getPermissions (entity) {
-        return Reflect.getMetadata(CLASS_PERMISSION_METADATA_KEY, entity.constructor) || {};
+        const onlyAdminPermissions = {
+            create: [TOP_LEVEL_ACCESS_KEY],
+            read:   [TOP_LEVEL_ACCESS_KEY],
+            update: [TOP_LEVEL_ACCESS_KEY],
+            delete: [TOP_LEVEL_ACCESS_KEY]
+        };
+
+        if (!entity || !entity.constructor) {
+            return onlyAdminPermissions;
+        }
+
+        return Reflect.getMetadata(CLASS_PERMISSION_METADATA_KEY, entity.constructor) || onlyAdminPermissions;
     }
 }

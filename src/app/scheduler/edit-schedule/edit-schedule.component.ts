@@ -10,10 +10,10 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe]
 })
 export class EditScheduleComponent implements OnInit, OnChanges {
-  @Input() schedule;
-  @Input() scheduleLog;
+  @Input() schedule: any = {};
+  @Input() scheduleLog: any = { jobs: [] };
   @Input() selectedJob;
-  @Input() result;
+  @Input() result: any = {};
   @Input() id;
   @Output() rowSelect = new EventEmitter();
   averageUtilization;
