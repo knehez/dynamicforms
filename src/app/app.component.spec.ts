@@ -4,16 +4,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DynamicFormModule } from './crud-table/dynamic-form/dynamic-form.module';
 import { PanelModule } from 'primeng/panel';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CrudTableComponent } from './crud-table/crud-table.component';
-import { ModalFormComponent } from './crud-table/modal-form/modal-form.component';
+import { CrudTableLibModule } from 'projects/crud-table-lib/src/public_api';
 import { TypeormERDComponent } from './typeorm-erd/typeorm-erd.component';
-import { InputService } from './crud-table/dynamic-form/input.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -24,20 +22,18 @@ describe('AppComponent', () => {
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-        DynamicFormModule,
+        CrudTableLibModule,
         PanelModule,
         DialogModule,
         ButtonModule,
         TableModule,
-        NgbModule
+        NgbModule,
+        RouterTestingModule
       ],
       declarations: [
         AppComponent,
-        CrudTableComponent,
-        ModalFormComponent,
         TypeormERDComponent,
       ],
-      providers: [InputService],
     }).compileComponents();
   }));
 

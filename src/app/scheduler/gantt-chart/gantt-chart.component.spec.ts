@@ -1,6 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GanttChartComponent } from './gantt-chart.component';
+import { CheckboxModule } from 'primeng/checkbox';
+import { FormsModule } from '@angular/forms';
+import { EditScheduleComponent } from '../edit-schedule/edit-schedule.component';
+import { TableModule } from 'primeng/table';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SchedulerService } from '../schedulerService';
 
 describe('GanttChartComponent', () => {
   let component: GanttChartComponent;
@@ -8,7 +14,19 @@ describe('GanttChartComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GanttChartComponent ]
+      declarations: [
+        GanttChartComponent,
+        EditScheduleComponent
+      ],
+      imports: [
+        FormsModule,
+        CheckboxModule,
+        TableModule,
+        HttpClientTestingModule
+      ],
+      providers: [
+        SchedulerService
+      ]
     })
     .compileComponents();
   }));

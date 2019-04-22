@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ModalImgComponent } from './modal-img.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 describe('ModalImgComponent', () => {
   let component: ModalImgComponent;
@@ -8,7 +9,12 @@ describe('ModalImgComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ModalImgComponent ]
+      declarations: [
+        ModalImgComponent
+      ],
+      providers: [
+        NgbActiveModal
+      ]
     })
     .compileComponents();
   }));

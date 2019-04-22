@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CalendarComponent } from './calendar.component';
+import { FullCalendarModule } from 'primeng/fullcalendar';
+import { DialogModule } from 'primeng/dialog';
+import { CalendarModule } from 'primeng/calendar';
 
 describe('CalendarComponent', () => {
   let component: CalendarComponent;
@@ -8,7 +11,12 @@ describe('CalendarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalendarComponent ]
+      declarations: [ CalendarComponent ],
+      imports: [
+        FullCalendarModule,
+        CalendarModule,
+        DialogModule
+      ]
     })
     .compileComponents();
   }));
