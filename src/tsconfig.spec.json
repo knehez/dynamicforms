@@ -16,7 +16,8 @@
   ],
   "include": [
     "**/*.spec.ts",
-    "**/*.d.ts"
+    "**/*.d.ts",
+    "../projects/crud-table-lib/src/**/*.spec.ts"
   ],
   "exclude": [
     "backend/*.ts",
