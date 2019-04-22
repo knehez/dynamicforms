@@ -8,7 +8,7 @@ import ProjectCtrl from './controllers/project.controller';
 import AuthenticationCtrl from './controllers/authentication.controller';
 import ScheduleCtrl from './controllers/schedule.controller';
 import RoleCtrl from './controllers/role.controller';
-import { CLASS_PERMISSION_METADATA_KEY } from '../../projects/crud-table-lib/src/public_api';
+import { CLASS_PERMISSION_METADATA_KEY, ANY_ROLE_ACCESS_KEY } from '../../projects/crud-table-lib/src/public_api';
 import { User } from './entities/user';
 import { Task } from './entities/task';
 import { TaskItem } from './entities/taskItem';
@@ -111,7 +111,8 @@ function getRoleChecker (allowedRoles) {
     const userRoles = req.user.roles || [];
     allowedRoles = allowedRoles || [];
 
-    if (!haveIntersection(userRoles, allowedRoles)) {
+    if (!haveIntersection(userRoles, allowedRoles) &&
+          !allowedRoles.includes(ANY_ROLE_ACCESS_KEY)) {
       return res.status(401).json({
         success: false,
         errcode: errorCodes.noAppropriateRoles,

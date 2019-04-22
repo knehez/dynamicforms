@@ -10,6 +10,7 @@ const moment = moment_;
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { haveIntersection } from './utils/array';
 import { InputService } from './dynamic-form/input.service';
+import { ANY_ROLE_ACCESS_KEY } from './decorator';
 
 @Component({
   selector: 'lib-crud-table-lib',
@@ -279,6 +280,10 @@ export class CrudTableLibComponent implements OnInit {
   }
 
   canUser(operation: 'create' | 'update' | 'delete') {
+    if (this.formPermissions[operation].includes(ANY_ROLE_ACCESS_KEY)) {
+      return true;
+    }
+
     return haveIntersection(this.permissions, this.formPermissions[operation]);
   }
 

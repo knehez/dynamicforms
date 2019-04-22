@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { haveIntersection } from 'src/utils/array';
 import { Role } from 'src/backend/entities/role';
 import { MessageService } from 'primeng/api';
-import { InputService } from 'projects/crud-table-lib/src/public_api';
+import { InputService, ANY_ROLE_ACCESS_KEY } from 'projects/crud-table-lib/src/public_api';
 
 @Component({
   selector: 'app-administration',
@@ -128,6 +128,10 @@ export class AdministrationComponent {
   canReadEntity(entity) {
     const actualRoles = this.authService.getRoles();
     const allowedRoles = this.inputService.getPermissions(entity)['read'];
+
+    if (allowedRoles.includes(ANY_ROLE_ACCESS_KEY)) {
+      return true;
+    }
 
     return haveIntersection(actualRoles, allowedRoles);
   }
