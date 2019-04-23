@@ -268,6 +268,22 @@ export class GanttChartComponent implements OnInit {
       return d3.schemeCategory10[hashCode(jobName) % 10];
     };
 
+    // draw machine availability
+    chart.filter(function (d) {
+      if (d.event === 'machineAvaible') {
+        return true;
+      }
+    })
+      .append('rect')
+      .attr('x', (data) => xAxis(data.start))
+      .attr('rx', '4')
+      .attr('ry', '4')
+      .attr('y', dataYPos)
+      .attr('width', (data) => xAxis(data.end - data.start))
+      .attr('height', dataYHeight)
+      .style('fill', 'rgba(220, 220, 220, 0.4)')
+      .style('opacity', 0.2);
+
     // draw operations
     chart.filter(function (d) {
       if (d.event === 's' || d.event === 'w') {
