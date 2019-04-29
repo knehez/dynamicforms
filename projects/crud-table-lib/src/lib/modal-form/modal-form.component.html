@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h4 class="modal-title" id="modal-basic-title">{{entityName}}</h4>
-  <button type="button" class="close" (click)="close()">
+  <button type="button" class="modal-close-btn close" (click)="close()">
     <span>&times;</span>
   </button>
 </div>
@@ -10,7 +10,7 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button *ngIf="!isNewModel" type="button" class="btn btn-outline-danger" (click)="delete()">Delete</button>
-  <button *ngIf="!isNewModel" type="button" class="btn btn-outline-primary" (click)="save()" [disabled]="!formComponent.getPayload()" autofocus>Edit</button>
-  <button *ngIf="isNewModel" type="button" class="btn btn-outline-primary" (click)="save()" [disabled]="!formComponent.getPayload()" autofocus>Save</button>
+  <button *ngIf="!isNewModel" type="button" class="modal-delete-btn btn btn-outline-danger" (click)="delete()">Delete</button>
+  <button *ngIf="!isNewModel" type="button" class="modal-edit-btn btn btn-outline-primary" (click)="save()" [disabled]="!formComponent.getPayload()" autofocus>Edit</button>
+  <button *ngIf="isNewModel" type="button" class="modal-save-btn btn btn-outline-primary" (click)="save()" [disabled]="!formComponent.getPayload()" autofocus>Save</button>
 </div>
