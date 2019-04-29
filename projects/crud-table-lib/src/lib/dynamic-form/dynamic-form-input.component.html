@@ -1,4 +1,4 @@
-<div class="form-group" [formGroup]="form" *ngIf="!input.hidden">
+<div class="form-group dynamic-form-input" [formGroup]="form" *ngIf="!input.hidden">
     <label [attr.for]="input.key">{{input.header}}</label>
 
     <div [ngSwitch]="input.controlType">

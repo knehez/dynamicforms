@@ -11,6 +11,7 @@ import { FileInput } from './form-elements/fileinput';
 import { DropdownInput } from './form-elements/dropdown';
 import { CheckBoxInput } from './form-elements/checkbox';
 import { RadioInput } from './form-elements/radio';
+import { By } from '@angular/platform-browser';
 
 describe('DynamicFormInputComponent', () => {
   let component: DynamicFormInputComponent;
@@ -47,7 +48,7 @@ describe('DynamicFormInputComponent', () => {
     expect(control).toBeTruthy();
   }
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
 
@@ -83,5 +84,25 @@ describe('DynamicFormInputComponent', () => {
 
   it('should render radio input control when RadioInput is passed', () => {
     testIfControlElementIsExists(RadioInput, 'input[type="radio"]', { key: 'test', options: [{ key: 'test', value: 'test'}] });
+  });
+
+  it('should render not hidden inputs', () => {
+    component.input = new TextareaInput({ key: 'test', hidden: false });
+    component.form = new FormGroup({ test: new FormControl() });
+    fixture.detectChanges();
+
+    const input = fixture.nativeElement.querySelector('.dynamic-form-input');
+
+    expect(input).not.toBeNull();
+  });
+
+  it('should not render hidden inputs', () => {
+    component.input = new TextareaInput({ key: 'test', hidden: true });
+    component.form = new FormGroup({ test: new FormControl() });
+    fixture.detectChanges();
+
+    const input = fixture.nativeElement.querySelector('.dynamic-form-input');
+
+    expect(input).toBeNull();
   });
 });
