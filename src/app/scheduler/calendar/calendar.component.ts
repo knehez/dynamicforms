@@ -11,6 +11,8 @@ export class CalendarComponent implements OnInit {
   options: any;
   selectedEvent;
   displayDialog = false;
+  start;
+  end;
   constructor() { }
 
   ngOnInit() {
@@ -26,8 +28,11 @@ export class CalendarComponent implements OnInit {
       timezone: 'local',
       editable: true,
       textEscape: false,
+      allDaySlot: false,
       eventClick: event => {
         _this.selectedEvent = event.event;
+        _this.start = event.event.start;
+        _this.end = event.event.end;
         _this.displayDialog = true;
         // console.log('coucou' + moment(event.event.start).format('YYYY-MM DD HH:mm:ss'));
         // this.eventOut = event

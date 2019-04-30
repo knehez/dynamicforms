@@ -102,7 +102,7 @@
 
   <p-card *ngIf="currentSelection == 'schedule'">
     <app-schedule-selector [entity]="scheduleEntity" [entityName]="'schedules'" [filter]="''" [itemsPerPage]="5"
-      (backClicked)="goBack()" (showSchedule)="showSchedule($event)" (showJobEditor)="showJobEditor($event)"></app-schedule-selector>
+      (backClicked)="goBack()" (showSchedule)="showSchedule($event)" (showJobEditor)="showJobEditor($event)" (showCalendar)="showCalendar($event)"></app-schedule-selector>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'gantt'">

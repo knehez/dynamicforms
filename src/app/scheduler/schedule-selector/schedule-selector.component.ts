@@ -43,7 +43,8 @@ export class ScheduleSelectorComponent implements OnInit {
         const start = startDate + logItem.operationStart * 1000 * 60;
         const end = startDate + logItem.operationEnd * 1000 * 60;
         calendarEvents.push({
-          'title': logItem.machine + ' - ' + logItem.job,
+          'title': logItem.job,
+          'machine': logItem.machine,
           'start': new Date(start),
           'end': new Date(end),
           // 'color': 'red'

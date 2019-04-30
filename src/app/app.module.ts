@@ -31,6 +31,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ScheduleSelectorComponent } from './scheduler/schedule-selector/schedule-selector.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { CrudTableLibModule } from 'projects/crud-table-lib/src/public_api';
 import { CalendarComponent } from './scheduler/calendar/calendar.component';
@@ -71,6 +72,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     PanelModule,
     DialogModule,
+    DropdownModule,
     ConfirmDialogModule,
     ButtonModule,
     TableModule,

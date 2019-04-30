@@ -11,10 +11,14 @@
         <div *ngIf="pane.parentElement.parentElement.classList.contains('ui-picklist-target')"
           style="font-size: 0.8em; border-bottom: 1px solid #ddd;">
           <input class="m-2" style="width:110px" [(ngModel)]="job.name">
-          <span>Time Schedule</span>
-          <input type="number" class="m-2" style="width:50px" [(ngModel)]="job.timeSchedule">
-          <span>Pieces</span>
+          <p-dropdown [autoWidth]="false" [options]="jobTypes" [(ngModel)]="job.pieceType"></p-dropdown>
+          <!--p-calendar dateFormat="yy-mm-dd" [(ngModel)]="job.dueDate"></p-calendar-->
+          <span>#</span>
           <input type="number" class="m-2" style="width:50px" [(ngModel)]="job.numOfPieces">
+          <div>
+            <span>Time Schedule</span>
+            <input type="number" class="m-2" style="width:50px" [(ngModel)]="job.timeSchedule">
+          </div>
         </div>
       </div>
     </ng-template>

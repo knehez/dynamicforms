@@ -38,6 +38,17 @@ p-picklist {
     background-color: #cc43d8;
 }
 
+::ng-deep .ui-dropdown label.ui-dropdown-label {
+    font-size: 0.6em;
+}
+
+::ng-deep .ui-dropdown-item {
+    font-size: 0.6em;
+}
+
+::ng-deep .ui-calendar.ui-calendar-w-btn .ui-inputtext {
+    font-size: 0.6em;
+}
 
 ::ng-deep .ui-steps .ui-steps-item {
     width: 33%;

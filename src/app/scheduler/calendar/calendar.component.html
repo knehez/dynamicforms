@@ -5,11 +5,11 @@
 
   <div class="d-flex flex-column" *ngIf="selectedEvent">
       <div class="p-2">Start</div>
-      <p-calendar dateFormat="yy-mm-dd" [showIcon]="true" [showTime]="true"></p-calendar>
+      <p-calendar dateFormat="yy-mm-dd" [(ngModel)]="start" [showIcon]="true" [showTime]="true" [style]="{'position': 'fixed', 'overflow': 'visible', 'z-index': '9999'}"></p-calendar>
       <div class="p-2">End</div>
-      <p-calendar dateFormat="yy-mm-dd" [showIcon]="true" [showTime]="true"></p-calendar>
+      <p-calendar dateFormat="yy-mm-dd" [(ngModel)]="end" [showIcon]="true" [showTime]="true" [style]="{'position': 'fixed', 'overflow': 'visible', 'z-index': '9998'}"></p-calendar>
       <div class="p-2">Description</div>
-      <input type="text" pInputText>  
+      <input type="text" [(ngModel)]="selectedEvent.title" pInputText>  
   </div>
   <p-footer>
       <button type="button" pButton icon="pi pi-check" (click)="displayDialog=false" label="Yes"></button>

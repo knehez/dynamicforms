@@ -46,6 +46,8 @@ export class JobEditorComponent implements OnInit {
   isShowSetups = true;
   isShowLateJobs = true;
 
+  jobTypes;
+
   constructor(private schedulerService: SchedulerService, private modalService: NgbModal) { }
 
   async ngOnInit() {
@@ -73,6 +75,15 @@ export class JobEditorComponent implements OnInit {
     ];
 
     this.availableJobs = await this.schedulerService.getAllJobs();
+
+    // select distinct jobTypes
+    this.jobTypes = Array.from(new Set(this.availableJobs.map(s => s.pieceType))).
+      map(o => {
+        return {
+          label: o,
+          value: this.availableJobs.find(s => s.pieceType === o).pieceType
+        };
+      });
 
     this.socket = socketIo({ 'path': '/socketio' });
     this.socket.on('progress', (data) => {
