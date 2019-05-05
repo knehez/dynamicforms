@@ -4,6 +4,8 @@ import { CalendarComponent } from './calendar.component';
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('CalendarComponent', () => {
   let component: CalendarComponent;
@@ -15,7 +17,10 @@ describe('CalendarComponent', () => {
       imports: [
         FullCalendarModule,
         CalendarModule,
-        DialogModule
+        DropdownModule,
+        DialogModule,
+        FormsModule,
+        ReactiveFormsModule
       ]
     })
     .compileComponents();

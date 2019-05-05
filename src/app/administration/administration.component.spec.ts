@@ -30,6 +30,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { SchedulerService } from '../scheduler/schedulerService';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { DropdownModule } from 'primeng/dropdown';
 
 describe('AdministrationComponent', () => {
   let component: AdministrationComponent;
@@ -52,6 +53,7 @@ describe('AdministrationComponent', () => {
         FormsModule,
         CrudTableLibModule,
         CardModule,
+        DropdownModule,
         ToastModule,
         CheckboxModule,
         StepsModule,

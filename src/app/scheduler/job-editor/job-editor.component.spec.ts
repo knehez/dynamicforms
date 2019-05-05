@@ -10,6 +10,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ChartModule } from 'primeng/chart';
 import { SliderModule } from 'primeng/slider';
 import { FormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
 
 describe('JobEditorComponent', () => {
   let component: JobEditorComponent;
@@ -22,6 +23,7 @@ describe('JobEditorComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         StepsModule,
+        DropdownModule,
         PickListModule,
         PanelModule,
         CheckboxModule,

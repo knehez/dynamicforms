@@ -8,7 +8,7 @@ import * as moment from 'moment';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-  @Input() events: any[];
+  @Input() events = [];
   @ViewChild('fullCalendar') fullCalendar;
   options: any;
   machines: any;
@@ -32,8 +32,10 @@ export class CalendarComponent implements OnInit {
         };
       });
 
-    // select the first machine
-    this.selectedMachine = this.machines[0].value;
+    if (Array.isArray(this.machines) && this.machines.length > 0) {
+      // select the first machine
+      this.selectedMachine = this.machines[0].value;
+    }
 
     this.options = {
       // defaultDate: '2016-01-01',
