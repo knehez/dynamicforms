@@ -25,7 +25,19 @@ describe('ModalImgComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should show the given image in modal body', () => {
+    // 1x1 transparent PNG
+    const b64ImageToRender =
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+
+    component.imgDataB64 = b64ImageToRender;
+    fixture.detectChanges();
+    const b64ImageRendered = fixture.nativeElement.querySelector('.modal-body>img').attributes['src'].value;
+
+    expect(b64ImageRendered).toBe(b64ImageToRender);
   });
 });
