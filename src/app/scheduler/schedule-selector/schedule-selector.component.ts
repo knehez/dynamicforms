@@ -37,14 +37,14 @@ export class ScheduleSelectorComponent implements OnInit {
     const calendarEvents = [];
     const schedule = JSON.parse(this.selectedSchedules[0].log);
     const logs = schedule[0].log;
-    const startDate = new Date('2016-01-01T08:00').getTime();
+    const startDate = new Date('2019-05-01T08:00').getTime();
     for (const logItem of logs) {
       if (logItem.event === 's' || logItem.event === 'w') {
         const start = startDate + logItem.operationStart * 1000 * 60;
         const end = startDate + logItem.operationEnd * 1000 * 60;
         calendarEvents.push({
           'title': logItem.job,
-          'machine': logItem.machine,
+          'id': logItem.machine,
           'start': new Date(start),
           'end': new Date(end),
           // 'color': 'red'
