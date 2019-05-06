@@ -38,9 +38,9 @@ export class CalendarComponent implements OnInit {
     }
 
     this.options = {
-      // defaultDate: '2016-01-01',
+      defaultDate: this.events[0].start,
       plugins: [listPlugin],
-      defaultView: 'listWeek',
+      defaultView: 'month',
       header: {
         left: 'prev,next',
         center: 'title',
@@ -56,6 +56,7 @@ export class CalendarComponent implements OnInit {
       editable: true,
       textEscape: false,
       allDaySlot: false,
+      navLinks: true,
       eventClick: event => {
         _this.selectedEvent = event.event;
         _this.start = event.event.start;
