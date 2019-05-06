@@ -22,7 +22,7 @@ export class GanttChartComponent implements OnInit {
     translateY: 0,
     scale: 1
   };
-  margin = { top: 20, right: 20, bottom: 20, left: 20 };
+  margin = { top: 50, right: 20, bottom: 50, left: 20 };
 
   showTooltip = false;
   currentTime;
@@ -190,16 +190,19 @@ export class GanttChartComponent implements OnInit {
       .domain(type === 'MACHINE_ORIENTED' ? entity.machines : entity.jobNames) // input
       .range([0, height]);
 
-    const y = d3.scaleOrdinal()
-      .domain(type === 'MACHINE_ORIENTED' ? entity.machines : entity.jobNames) // input
-      .range([0, height]); // output
-
     d3Elem.append('g')
       .attr('class', 'x axis')
       .attr('transform', 'translate(0,' + height + ')')
       .call(d3.axisBottom(xTimeAxis)
-      .ticks(d3.timeHour)
-      .tickFormat(d3.utcFormat('%H:%M')));
+        .ticks(d3.timeHour)
+        .tickFormat(d3.utcFormat('%H:%M')));
+
+    d3Elem.append('g')
+      .attr('class', 'x axis')
+      .attr('transform', 'translate(0,' + (height + this.margin.bottom / 2) + ')')
+      .call(d3.axisBottom(xTimeAxis)
+        .ticks(d3.timeDay.every(0.5))
+        .tickFormat(d3.utcFormat('%Y-%m-%d')));
 
     const timeLine = d3Elem.append('line')
       .attr('id', 'timeLineY')
