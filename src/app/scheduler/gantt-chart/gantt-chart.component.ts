@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as d3 from 'd3';
 import { SchedulerService } from '../schedulerService';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-gantt-chart',
@@ -24,7 +25,7 @@ export class GanttChartComponent implements OnInit {
   margin = { top: 20, right: 20, bottom: 20, left: 20 };
 
   showTooltip = false;
-  currentTime = 0;
+  currentTime;
   isSetCurrentTime;
 
   zoomAndAnimate = true;
@@ -35,6 +36,8 @@ export class GanttChartComponent implements OnInit {
 
   fixYAxis = false;
   yAxisElement = [];
+
+  baseDate = new Date('2019-05-07').getTime();
 
   constructor(private schedulerService: SchedulerService) { }
 
@@ -156,6 +159,12 @@ export class GanttChartComponent implements OnInit {
       .range([0, width]);
   }
 
+  getXTimeAxis(entity, width) {
+    return d3.scaleTime()
+      .domain([this.baseDate, this.baseDate + (entity.makespan * 1000 * 60)])
+      .range([0, width]);
+  }
+
   showGanttChart(entity, d3Elem, type = 'MACHINE_ORIENTED') {
     const width = entity.makespan - this.margin.left - this.margin.right;
     const jobs = entity.jobs.map((j) => j.name);
@@ -170,12 +179,12 @@ export class GanttChartComponent implements OnInit {
 
     const height = (ganttHeight * 20) - this.margin.top - this.margin.bottom;
 
-    const parseDate = d3.timeParse('%Y-%m-%d'),
-      formatDate = d3.timeFormat('%b %d');
-
-    const xAxis = this.getXAxis(entity, width);
+    const xAxis = this.getXTimeAxis(entity, width);
+    const xTimeAxis = this.getXTimeAxis(entity, width);
 
     entity.jobNames = entity.jobs.map(j => j.name);
+
+    const time = t => this.baseDate + (t * 60 * 1000);
 
     const yAxis = d3.scaleBand()
       .domain(type === 'MACHINE_ORIENTED' ? entity.machines : entity.jobNames) // input
@@ -188,7 +197,9 @@ export class GanttChartComponent implements OnInit {
     d3Elem.append('g')
       .attr('class', 'x axis')
       .attr('transform', 'translate(0,' + height + ')')
-      .call(d3.axisBottom(xAxis).tickSize(-height));
+      .call(d3.axisBottom(xTimeAxis)
+      .ticks(d3.timeHour)
+      .tickFormat(d3.utcFormat('%H:%M')));
 
     const timeLine = d3Elem.append('line')
       .attr('id', 'timeLineY')
@@ -223,7 +234,7 @@ export class GanttChartComponent implements OnInit {
       }
       timeLine.style('display', null);
       const mouseX = d3.mouse(d3.event.target)[0];
-      this.currentTime = Math.round(xAxis.invert(mouseX) + 0.5);
+      this.currentTime = moment.utc(xAxis.invert(mouseX)).format('YYYY-MM-DD HH:mm');
       timeLine
         .attr('x1', mouseX).attr('y1', 0)
         .attr('x2', mouseX).attr('y2', height);
@@ -275,11 +286,11 @@ export class GanttChartComponent implements OnInit {
       }
     })
       .append('rect')
-      .attr('x', (data) => xAxis(data.start))
+      .attr('x', d => xAxis(time(d.start)))
       .attr('rx', '4')
       .attr('ry', '4')
       .attr('y', dataYPos)
-      .attr('width', (data) => xAxis(data.end - data.start))
+      .attr('width', d => xAxis(time(d.end - d.start)))
       .attr('height', dataYHeight)
       .style('fill', 'rgba(220, 220, 220, 0.4)')
       .style('opacity', 0.2);
@@ -291,12 +302,12 @@ export class GanttChartComponent implements OnInit {
       }
     })
       .append('rect')
-      .attr('x', (data) => xAxis(data.operationStart))
-      .attr('class', (data) => 'J' + data.job)
+      .attr('x', d => xAxis(time(d.operationStart)))
+      .attr('class', d => 'J' + d.job)
       .attr('rx', '2')
       .attr('ry', '2')
       .attr('y', dataYPos)
-      .attr('width', (data) => xAxis(data.operationEnd - data.operationStart))
+      .attr('width', d => xAxis(time(d.operationEnd - d.operationStart)))
       .attr('height', dataYHeight)
       .style('fill', function (d) {
         if (d.event === 's') {
@@ -319,11 +330,11 @@ export class GanttChartComponent implements OnInit {
       }
     };
 
-    const textYPos = (data) => {
+    const textYPos = d => {
       if (type === 'MACHINE_ORIENTED') {
-        return yAxis(data.machine);
+        return yAxis(d.machine);
       } else {
-        return yAxis(data.job);
+        return yAxis(d.job);
       }
     };
 
@@ -333,7 +344,7 @@ export class GanttChartComponent implements OnInit {
         return true;
       }
     })
-      .attr('x', (data) => xAxis(data.operationStart))
+      .attr('x', d => xAxis(time(d.operationStart)))
       .attr('dy', textDyPos)
       .attr('dx', 3)
       .attr('y', textYPos)
@@ -343,7 +354,7 @@ export class GanttChartComponent implements OnInit {
         const title = type === 'MACHINE_ORIENTED' ? d.job : d.machine;
         if (d.event === 's') {
           return '';
-        } else if (xAxis(d.operationEnd - d.operationStart) > title.length * 4) {
+        } else if (xAxis(time(d.operationEnd - d.operationStart)) > title.length * 4) {
           return title;
         }
       })
@@ -361,7 +372,7 @@ export class GanttChartComponent implements OnInit {
         return true;
       }
     })
-      .attr('x', (data) => xAxis(data.operationStart))
+      .attr('x', (data) => xAxis(time(data.operationStart)))
       .attr('dy', () => yAxis(entity.machines[1]) * 0.6)
       .attr('dx', () => -2)
       .attr('y', (data) => yAxis(data.machine))
