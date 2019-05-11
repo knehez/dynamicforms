@@ -38,11 +38,11 @@
 
                 <div *ngSwitchDefault [ngSwitch]="col.controlType">
                   <!-- textareas will be displayed with small font-->
-                  <small *ngSwitchCase="'textarea'">{{truncate(dataRow[col.key])}}</small>
+                  <small *ngSwitchCase="'textarea'" class="crud-table-col-content">{{truncate(dataRow[col.key])}}</small>
                   <!-- all other cell values-->
 
                   <div *ngSwitchDefault>
-                    <ngb-highlight *ngIf="col.type != 'password'" [result]="dataRow[col.key]" [term]="searchFilter">
+                    <ngb-highlight class="crud-table-col-content" *ngIf="col.type != 'password'" [result]="dataRow[col.key]" [term]="searchFilter">
                     </ngb-highlight>
                   </div>
                 </div>
@@ -65,11 +65,13 @@
         </ng-container>
         <td align="right">
           <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-outline-primary mr-1 btn-sm" (click)="editRow(dataRow)" 
+            <button type="button" class="btn btn-outline-primary mr-1 btn-sm crud-table-row-edit-btn"
+              (click)="editRow(dataRow)"
               [disabled]="!canUpdateEntity()">
               <span class="pi pi-pencil"></span>
             </button>
-            <button type="button" class="btn btn-outline-danger mr-1 btn-sm" (click)="confirmThenDelete(dataRow)"
+            <button type="button" class="btn btn-outline-danger mr-1 btn-sm crud-table-row-delete-btn"
+              (click)="confirmThenDelete(dataRow)"
               [disabled]="!canDeleteEntity()">
               <span class="pi pi-trash"></span>
             </button>
@@ -86,10 +88,10 @@
     <small *ngIf="searchFilter">(filtered from {{allEntities}} entries)</small>
   </div>
 
-  <button type="button" class="btn btn-outline-primary btn-sm align-self-start m-2" (click)="showAll()">Show
+  <button type="button" id="crud-table-show-all-btn" class="btn btn-outline-primary btn-sm align-self-start m-2" (click)="showAll()">Show
     all</button>
 
-  <button type="button" class="btn btn-outline-primary btn-sm align-self-start m-2" (click)="add()"
+  <button type="button" id="crud-table-add-btn" class="btn btn-outline-primary btn-sm align-self-start m-2" (click)="add()"
     [disabled]="!canCreateEntity()">Add</button>
 
   <ngb-pagination class="m-2 pagination-sm" [collectionSize]="currentEntities" [(page)]="page"

@@ -1,4 +1,4 @@
-export function haveIntersection (array1: [], array2: []) {
+export function haveIntersection (array1: any[], array2: any[]) {
     if (!array1 || array1.length === 0 || !array2 || array2.length === 0) {
         return false;
     }

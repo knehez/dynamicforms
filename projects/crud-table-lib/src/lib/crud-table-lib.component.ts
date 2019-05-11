@@ -23,7 +23,7 @@ export class CrudTableLibComponent implements OnInit {
   @Input() entity: any;
   formElements = [];
   formPermissions = {};
-  @Input() permissions: [];
+  @Input() permissions = [];
   @Input() entityName: string;
   @Input() itemsPerPage: number;
   @Input() filter: any;
@@ -46,7 +46,7 @@ export class CrudTableLibComponent implements OnInit {
   selectedRows: any = [];
 
   constructor(
-    private service: GeneralRestService,
+    public service: GeneralRestService,
     private inputService: InputService,
     private modalService: NgbModal,
     private confirmationService: ConfirmationService) { }
