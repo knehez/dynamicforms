@@ -46,3 +46,4 @@ Thumbs.db
 dist-server/
 
 projects/**/node_modules/
+debug.log
