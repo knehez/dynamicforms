@@ -44,7 +44,7 @@
         </div>
       </ul>
       <div class="float-right">
-        <button class="btn btn-sm btn-outline-primary" (click)="onLogoutClicked()">Logout
+        <button id="logout-button" class="btn btn-sm btn-outline-primary" (click)="onLogoutClicked()">Logout
           <span class="pi pi-sign-out align-middle" aria-hidden="true"></span>
         </button>
       </div>
@@ -52,7 +52,7 @@
   </nav>
 
   <p-card *ngIf="currentSelection == 'project'">
-    <lib-crud-table-lib
+    <lib-crud-table-lib class="crud-table"
       [entityName]="'projects'" [entity]="projectEntity" 
       [permissions]="actualPermissions"
       [itemsPerPage]="5" [filter]="projectFilter" 
@@ -61,7 +61,7 @@
   </p-card>
 
   <p-card *ngIf="currentSelection == 'product'">
-    <lib-crud-table-lib 
+    <lib-crud-table-lib class="crud-table" 
       [entityName]="'products'" [entity]="productEntity"
       [permissions]="actualPermissions"
       [itemsPerPage]="5" [filter]="productFilter"
@@ -70,7 +70,7 @@
   </p-card>
 
   <p-card *ngIf="currentSelection == 'user'">
-    <lib-crud-table-lib 
+    <lib-crud-table-lib class="crud-table" 
       [entityName]="'users'" [entity]="userEntity"
       [permissions]="actualPermissions"
       [itemsPerPage]="5" [filter]="userFilter" 
@@ -79,7 +79,7 @@
   </p-card>
 
   <p-card *ngIf="currentSelection == 'task'">
-    <lib-crud-table-lib 
+    <lib-crud-table-lib class="crud-table" 
       [entityName]="'tasks'" [entity]="taskEntity"
       [permissions]="actualPermissions"
       [itemsPerPage]="5" [filter]="taskFilter"
@@ -88,7 +88,7 @@
   </p-card>
 
   <p-card *ngIf="currentSelection == 'taskitem'">
-    <lib-crud-table-lib 
+    <lib-crud-table-lib class="crud-table" 
       [entityName]="'taskitems'" [entity]="taskItemEntity"
       [permissions]="actualPermissions"
       [filter]="taskItemFilter" [itemsPerPage]="5"

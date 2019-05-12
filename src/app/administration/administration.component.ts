@@ -49,9 +49,9 @@ export class AdministrationComponent {
 
   constructor(
     private messageService: MessageService,
-    private authService: AuthenticationService,
+    public authService: AuthenticationService,
     private inputService: InputService,
-    private router: Router) {
+    public router: Router) {
 
     this.actualPermissions = this.authService.getRoles();
 

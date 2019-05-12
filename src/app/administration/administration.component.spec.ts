@@ -31,6 +31,40 @@ import { FullCalendarModule } from 'primeng/fullcalendar';
 import { SchedulerService } from '../scheduler/schedulerService';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DropdownModule } from 'primeng/dropdown';
+import { By } from '@angular/platform-browser';
+
+const DEFAULT_ACCESS_TOKEN = 'someNiceToken';
+const DEFAULT_ROLES = [ 'admin' ];
+
+class AuthenticationServiceMock {
+
+  store = {
+    accessToken: DEFAULT_ACCESS_TOKEN,
+    roles: DEFAULT_ROLES
+  };
+
+  login (username, password) {
+    this.store = {
+      accessToken: DEFAULT_ACCESS_TOKEN,
+      roles: DEFAULT_ROLES
+    };
+  }
+
+  logout () {
+    this.store = {
+      accessToken: null,
+      roles: null
+    };
+  }
+
+  getToken () {
+    return this.store.accessToken;
+  }
+
+  getRoles () {
+    return this.store.roles;
+  }
+}
 
 describe('AdministrationComponent', () => {
   let component: AdministrationComponent;
@@ -48,7 +82,7 @@ describe('AdministrationComponent', () => {
         EditScheduleComponent
       ],
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([{ path: 'login', component: AdministrationComponent }]),
         NgbModule,
         FormsModule,
         CrudTableLibModule,
@@ -78,6 +112,20 @@ describe('AdministrationComponent', () => {
         ConfirmationService
       ]
     })
+    .overrideComponent(AdministrationComponent, {
+      set: {
+        providers: [
+          {
+            provide: AuthenticationService,
+            useClass: AuthenticationServiceMock
+          },
+          MessageService,
+          InputService,
+          SchedulerService,
+          ConfirmationService
+        ]
+      }
+    })
     .compileComponents();
   }), 15000);
 
@@ -89,5 +137,55 @@ describe('AdministrationComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should call AuthenticationService\'s logout method when Logout button clicked', () => {
+    spyOn(component.authService, 'logout');
+    const btn = fixture.nativeElement.querySelector('#logout-button');
+    btn.click();
+
+    fixture.whenStable().then(() => expect(component.authService.logout).toHaveBeenCalled());
+  });
+
+  it('should navigate to /login route when Logout button clicked', () => {
+    spyOn(component.router, 'navigate').and.stub();
+    const btn = fixture.nativeElement.querySelector('#logout-button');
+    btn.click();
+
+    fixture.whenStable().then(() => expect(component.router.navigate).toHaveBeenCalledWith(['/login']));
+  });
+
+  it('should show success toast message when successful event is emitted from CRUD table', () => {
+    spyOn(MessageService.prototype, 'add');
+
+    const title = 'Successful operation';
+    const message = 'Great success occured.';
+
+    const crudTable = fixture.debugElement.query(By.css('.crud-table'));
+    crudTable.triggerEventHandler('operationResult', { success: true, title, message });
+    fixture.detectChanges();
+
+    expect(MessageService.prototype.add).toHaveBeenCalledWith({
+      severity: 'success',
+      summary: title,
+      detail: message
+    });
+  });
+
+  it('should show error toast message when failed event is emitted from CRUD table', () => {
+    spyOn(MessageService.prototype, 'add');
+
+    const title = 'Failed operation';
+    const message = 'Unexpected failure occured.';
+
+    const crudTable = fixture.debugElement.query(By.css('.crud-table'));
+    crudTable.triggerEventHandler('operationResult', { success: false, title, message });
+    fixture.detectChanges();
+
+    expect(MessageService.prototype.add).toHaveBeenCalledWith({
+      severity: 'error',
+      summary: title,
+      detail: message
+    });
   });
 });
