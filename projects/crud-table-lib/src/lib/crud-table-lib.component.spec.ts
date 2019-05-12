@@ -156,9 +156,8 @@ describe('CrudTableLibComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create component', (done) => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
-    component.service.getAll('').then(res => { console.log(res); done(); });
   });
 
   it('should render search field', () => {
