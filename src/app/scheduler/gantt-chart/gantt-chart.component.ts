@@ -284,7 +284,7 @@ export class GanttChartComponent implements OnInit {
 
     // draw machine availability
     chart.filter(function (d) {
-      if (d.event === 'machineAvailable') {
+      if (d.event === 'machineNotAvailable') {
         return true;
       }
     })
