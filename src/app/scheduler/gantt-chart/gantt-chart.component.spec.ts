@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { GanttChartComponent } from './gantt-chart.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
-import { EditScheduleComponent } from '../edit-schedule/edit-schedule.component';
+import { JobEditorComponent } from '../job-editor/job-editor.component';
 import { TableModule } from 'primeng/table';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SchedulerService } from '../schedulerService';
@@ -16,7 +16,7 @@ describe('GanttChartComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         GanttChartComponent,
-        EditScheduleComponent
+        JobEditorComponent
       ],
       imports: [
         FormsModule,

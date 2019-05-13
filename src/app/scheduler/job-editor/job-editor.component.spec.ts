@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditScheduleComponent } from './edit-schedule.component';
+import { JobEditorComponent } from './job-editor.component';
 import { TableModule } from 'primeng/table';
 import { SchedulerService } from '../schedulerService';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('EditScheduleComponent', () => {
-  let component: EditScheduleComponent;
-  let fixture: ComponentFixture<EditScheduleComponent>;
+describe('JobEditorComponent', () => {
+  let component: JobEditorComponent;
+  let fixture: ComponentFixture<JobEditorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditScheduleComponent ],
+      declarations: [ JobEditorComponent ],
       imports: [
         TableModule,
         FormsModule,
@@ -28,7 +28,7 @@ describe('EditScheduleComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditScheduleComponent);
+    fixture = TestBed.createComponent(JobEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

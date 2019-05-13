@@ -4,12 +4,12 @@ import { SchedulerService } from '../schedulerService';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-edit-schedule',
-  templateUrl: './edit-schedule.component.html',
-  styleUrls: ['./edit-schedule.component.css'],
+  selector: 'app-job-editor',
+  templateUrl: './job-editor.component.html',
+  styleUrls: ['./job-editor.component.css'],
   providers: [DatePipe]
 })
-export class EditScheduleComponent implements OnInit, OnChanges {
+export class JobEditorComponent implements OnInit, OnChanges {
   @Input() schedule: any = {};
   @Input() scheduleLog: any = { jobs: [] };
   @Input() selectedJob;

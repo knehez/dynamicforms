@@ -28,6 +28,6 @@
 <div class="gantt-svg-wrapper"></div>
 <hr />
 <div *ngFor="let schedule of schedules">
-  <app-edit-schedule [id]="schedule.id" [schedule]="schedule" [scheduleLog]="schedule.log" [selectedJob]="schedule.log.selectedJob" [result]="schedule.result" (rowSelect)="jobSelected($event)">
-  </app-edit-schedule>
+  <app-job-editor [id]="schedule.id" [schedule]="schedule" [scheduleLog]="schedule.log" [selectedJob]="schedule.log.selectedJob" [result]="schedule.result" (rowSelect)="jobSelected($event)">
+  </app-job-editor>
 </div>

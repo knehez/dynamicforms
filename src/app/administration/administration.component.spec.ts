@@ -15,7 +15,7 @@ import { PlannerComponent } from '../scheduler/planner/planner.component';
 import { CalendarComponent } from '../scheduler/calendar/calendar.component';
 import { ToastModule } from 'primeng/toast';
 import { CheckboxModule } from 'primeng/checkbox';
-import { EditScheduleComponent } from '../scheduler/edit-schedule/edit-schedule.component';
+import { JobEditorComponent } from '../scheduler/job-editor/job-editor.component';
 import { StepsModule } from 'primeng/steps';
 import { PickListModule } from 'primeng/picklist';
 import { SliderModule } from 'primeng/slider';
@@ -79,7 +79,7 @@ describe('AdministrationComponent', () => {
         GanttChartComponent,
         PlannerComponent,
         CalendarComponent,
-        EditScheduleComponent
+        JobEditorComponent
       ],
       imports: [
         RouterTestingModule.withRoutes([{ path: 'login', component: AdministrationComponent }]),

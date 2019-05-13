@@ -18,7 +18,7 @@ import { AdministrationComponent } from './administration/administration.compone
 import { environment } from 'src/environments/environment';
 import { GanttChartComponent } from './scheduler/gantt-chart/gantt-chart.component';
 import { AuthHttpInterceptorService } from './_services/auth-http-interceptor.service';
-import { EditScheduleComponent } from './scheduler/edit-schedule/edit-schedule.component';
+import { JobEditorComponent } from './scheduler/job-editor/job-editor.component';
 import { PickListModule } from 'primeng/picklist';
 import { ListboxModule } from 'primeng/listbox';
 import { PlannerComponent } from './scheduler/planner/planner.component';
@@ -58,7 +58,7 @@ const routes: Routes = [
     LoginComponent,
     AdministrationComponent,
     GanttChartComponent,
-    EditScheduleComponent,
+    JobEditorComponent,
     PlannerComponent,
     ScheduleSelectorComponent,
     CalendarComponent
