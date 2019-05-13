@@ -11,7 +11,7 @@ import { CardModule } from 'primeng/card';
 import { TypeormERDComponent } from '../typeorm-erd/typeorm-erd.component';
 import { ScheduleSelectorComponent } from '../scheduler/schedule-selector/schedule-selector.component';
 import { GanttChartComponent } from '../scheduler/gantt-chart/gantt-chart.component';
-import { JobEditorComponent } from '../scheduler/job-editor/job-editor.component';
+import { PlannerComponent } from '../scheduler/planner/planner.component';
 import { CalendarComponent } from '../scheduler/calendar/calendar.component';
 import { ToastModule } from 'primeng/toast';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -77,7 +77,7 @@ describe('AdministrationComponent', () => {
         TypeormERDComponent,
         ScheduleSelectorComponent,
         GanttChartComponent,
-        JobEditorComponent,
+        PlannerComponent,
         CalendarComponent,
         EditScheduleComponent
       ],

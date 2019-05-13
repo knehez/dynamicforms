@@ -21,7 +21,7 @@ import { AuthHttpInterceptorService } from './_services/auth-http-interceptor.se
 import { EditScheduleComponent } from './scheduler/edit-schedule/edit-schedule.component';
 import { PickListModule } from 'primeng/picklist';
 import { ListboxModule } from 'primeng/listbox';
-import { JobEditorComponent } from './scheduler/job-editor/job-editor.component';
+import { PlannerComponent } from './scheduler/planner/planner.component';
 import { SliderModule } from 'primeng/slider';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
@@ -59,7 +59,7 @@ const routes: Routes = [
     AdministrationComponent,
     GanttChartComponent,
     EditScheduleComponent,
-    JobEditorComponent,
+    PlannerComponent,
     ScheduleSelectorComponent,
     CalendarComponent
   ],

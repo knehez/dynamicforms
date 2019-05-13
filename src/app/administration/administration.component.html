@@ -30,7 +30,7 @@
             <input ngbButton type="radio" value="erdiagram">ER Diagram
           </label>
           <label ngbButtonLabel class="btn-outline-primary btn-sm">
-            <input ngbButton type="radio" value="jobeditor">Job Editor
+            <input ngbButton type="radio" value="planner">Job Editor
           </label>
           <label *ngIf="canReadEntity(scheduleEntity)" ngbButtonLabel class="btn-outline-primary btn-sm">
             <input ngbButton type="radio" value="schedule">Schedule
@@ -102,15 +102,15 @@
 
   <p-card *ngIf="currentSelection == 'schedule'">
     <app-schedule-selector [entity]="scheduleEntity" [entityName]="'schedules'" [filter]="''" [itemsPerPage]="5"
-      (backClicked)="goBack()" (showSchedule)="showSchedule($event)" (showJobEditor)="showJobEditor($event)" (showCalendar)="showCalendar($event)"></app-schedule-selector>
+      (backClicked)="goBack()" (showSchedule)="showSchedule($event)" (showPlanner)="showPlanner($event)" (showCalendar)="showCalendar($event)"></app-schedule-selector>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'gantt'">
     <app-gantt-chart *ngIf="ganttEntities" [schedules]="ganttEntities"></app-gantt-chart>
   </p-card>
 
-  <p-card *ngIf="currentSelection == 'jobeditor'">
-    <app-job-editor [targetJobs]="targetJobs"></app-job-editor>
+  <p-card *ngIf="currentSelection == 'planner'">
+    <app-planner [targetJobs]="targetJobs"></app-planner>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'calendar'">

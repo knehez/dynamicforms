@@ -109,8 +109,8 @@ export class AdministrationComponent {
     this.calendarEvents = obj;
   }
 
-  showJobEditor(obj) {
-    this.currentSelection = 'jobeditor';
+  showPlanner(obj) {
+    this.currentSelection = 'planner';
     this.targetJobs = obj;
   }
 

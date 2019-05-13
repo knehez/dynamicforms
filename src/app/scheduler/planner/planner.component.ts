@@ -5,12 +5,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MenuItem } from 'primeng/api';
 
 @Component({
-  selector: 'app-job-editor',
-  templateUrl: './job-editor.component.html',
-  styleUrls: ['./job-editor.component.css'],
+  selector: 'app-planner',
+  templateUrl: './planner.component.html',
+  styleUrls: ['./planner.component.css'],
   providers: [SchedulerService]
 })
-export class JobEditorComponent implements OnInit {
+export class PlannerComponent implements OnInit {
   items: MenuItem[];
 
   activeIndex = 0;
