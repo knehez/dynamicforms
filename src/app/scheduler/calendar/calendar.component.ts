@@ -17,12 +17,13 @@ export class CalendarComponent implements OnInit {
   displayDialog = false;
 
   id;
+  title;
+  description;
   start;
   end;
   constructor() { }
 
   ngOnInit() {
-    const _this = this;
     // select distinct machines
     this.machines = Array.from(new Set(this.events.map(s => s.id))).
       map(o => {
@@ -58,26 +59,50 @@ export class CalendarComponent implements OnInit {
       allDaySlot: false,
       navLinks: true,
       eventClick: event => {
-        _this.selectedEvent = event.event;
-        _this.start = event.event.start;
-        _this.end = event.event.end;
-        _this.id = event.event.id;
-        _this.displayDialog = true;
+        this.title = 'Edit Event';
+        this.selectedEvent = event.event;
+        this.description = event.event.title;
+        this.start = event.event.start;
+        this.end = event.event.end;
+        this.id = event.event.id;
+        if (event.event.backgroundColor === 'red') {
+          this.displayDialog = true;
+        }
         // console.log('coucou' + moment(event.event.start).format('YYYY-MM DD HH:mm:ss'));
         // this.eventOut = event
         // this.eventOut.type = 'update'
       },
-      dateClick: function (info) {
-        alert('Clicked on: ' + info.dateStr);
-        alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-        alert('Current view: ' + info.view.type);
-        // change the day's background color just for fun
+      dateClick: info => {
+        this.title = 'Add maintenance';
+        this.description = 'Maintenance';
+        this.start = info.date;
+        this.end = info.date;
+        this.id = this.selectedMachine;
+        this.displayDialog = true;
         // info.dayEl.style.backgroundColor = 'red';
       },
-      eventRender: function eventRender(event, element, view) {
-        return ['all', event.event.id].indexOf(_this.selectedMachine) >= 0;
+      eventRender: (event, element, view) => {
+        return ['all', event.event.id].indexOf(this.selectedMachine) >= 0;
       }
     };
+  }
+
+  saveEvent() {
+    if (this.title === 'Add maintenance') {
+      this.events = [...this.events, {
+        'title': this.description,
+        'id': this.selectedMachine,
+        'start': this.start,
+        'end': this.end,
+        'color': 'red'
+      }];
+    }
+    if (this.title === 'Edit Event') {
+      this.selectedEvent.setProp('title', this.description);
+      this.selectedEvent.setStart(this.start);
+      this.selectedEvent.setEnd(this.end);
+      this.fullCalendar.calendar.updateEvent(this.selectedEvent);
+    }
   }
 
   onMachineChange(event) {

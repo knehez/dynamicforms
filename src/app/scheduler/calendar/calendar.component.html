@@ -1,35 +1,37 @@
 <div class="d-flex mb-2">
   <div class="p-2">Selected Machine: </div>
-  <p-dropdown [autoWidth]="false" [options]="machines" [(ngModel)]="selectedMachine" (onChange)="onMachineChange($event)"></p-dropdown>
+  <p-dropdown [autoWidth]="false" [options]="machines" [(ngModel)]="selectedMachine"
+    (onChange)="onMachineChange($event)"></p-dropdown>
 </div>
 
 <p-fullCalendar #fullCalendar [events]="events" [options]="options"></p-fullCalendar>
 
-<p-dialog header="Event" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+<p-dialog header="{{title}}" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
   [style]="{width: '300px'}">
 
-  <div *ngIf="selectedEvent">
-    <div class="d-flex">
+  <div>
+    <div class="d-flex m-2">
+      <div class="p-2">Machine: </div>
+      <div class="p-2">{{selectedMachine}}</div>
+    </div>
+    <div class="d-flex m-2">
       <div class="p-2">Start</div>
       <p-calendar dateFormat="yy-mm-dd" [(ngModel)]="start" [showIcon]="true" [showTime]="true"
         [style]="{'position': 'fixed', 'overflow': 'visible', 'z-index': '9999'}"></p-calendar>
     </div>
-    <div class="d-flex">
-      <div class="p-2">End</div>
+    <div class="d-flex m-2">
+      <div class="p-2">End&nbsp;&nbsp;</div>
       <p-calendar dateFormat="yy-mm-dd" [(ngModel)]="end" [showIcon]="true" [showTime]="true"
         [style]="{'position': 'fixed', 'overflow': 'visible', 'z-index': '9998'}"></p-calendar>
     </div>
-    <div class="d-flex">
+    <div class="d-flex m-2">
       <div class="p-2">Description</div>
-      <input type="text" [(ngModel)]="selectedEvent.title" pInputText>
-    </div>
-    <div class="d-flex">
-      <div class="p-2">{{selectedEvent.id}}</div>
+      <textarea rows="4" cols="50" [(ngModel)]="description" pInputText></textarea>
     </div>
   </div>
-  <p-footer>
-    <button type="button" pButton icon="pi pi-check" (click)="displayDialog=false" label="Yes"></button>
-    <button type="button" pButton icon="pi pi-close" (click)="displayDialog=false" label="No"
+  <p-footer> 
+    <button type="button" pButton icon="pi pi-check" (click)="displayDialog=false; saveEvent();" label="Save"></button>
+    <button type="button" pButton icon="pi pi-close" (click)="displayDialog=false" label="Cancel"
       class="ui-button-secondary"></button>
   </p-footer>
 </p-dialog>
