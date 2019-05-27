@@ -104,6 +104,8 @@ function getGeneralRoutes(routingInfo: {
   router.post  (`/${entityName}`,     getRoleChecker(permissions.create), ctrl.insert);
   router.put   (`/${entityName}/:id`, getRoleChecker(permissions.update), ctrl.update);
   router.delete(`/${entityName}/:id`, getRoleChecker(permissions.delete), ctrl.delete);
+  router.post  (`/${entityName}/file`, getRoleChecker(permissions.read), ctrl.file);
+
 }
 
 function getRoleChecker (allowedRoles) {

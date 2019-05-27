@@ -6,15 +6,15 @@ import { FormGroup } from '@angular/forms';
     providedIn: 'root'
   })
   export class FileHandlerService {
-    form: FormGroup;
 
     public onFileChange(event, form: FormGroup): void {
-        this.form = form;
         const fileList: FileList = event.target.files;
         if (fileList.length > 0) {
           const reader = new FileReader();
           reader.onload = (e) => {
-            this.form.value['fileData'] = e.currentTarget['result'];
+            form.patchValue({
+              fileData: fileList[0].name + '&&&' + e.currentTarget['result']
+            });
           };
           reader.readAsDataURL(fileList[0]);
         }

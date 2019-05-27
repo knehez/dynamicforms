@@ -38,6 +38,17 @@ export class GeneralRestService {
         });
     }
 
+    file(obj) {
+        return new Promise((resolve, reject) => {
+            this._http.post(`${this.actionUrl}${this.objectName}/file`, obj)
+                .subscribe(res => {
+                    resolve(res);
+                }, (err) => {
+                    reject(err);
+                });
+        });
+    }
+
     update(obj) {
         return new Promise((resolve, reject) => {
             this._http.put(`${this.actionUrl}${this.objectName}/${obj.id}`, obj)

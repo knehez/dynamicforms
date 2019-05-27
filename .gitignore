@@ -47,3 +47,5 @@ dist-server/
 
 projects/**/node_modules/
 debug.log
+images/uploads/*
+images/thumbnails/*

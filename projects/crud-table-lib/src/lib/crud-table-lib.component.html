@@ -33,7 +33,12 @@
                 </div>
 
                 <div *ngSwitchCase="'file'" class="text-center">
-                  <img class="w-25" [src]="dataRow[col.key]" (click)="openModalImg(dataRow[col.key])">
+                  <div *ngIf="base64MimeType(dataRow[col.key]) !== null">
+                    <img class="w-25" *ngIf="base64MimeType(dataRow[col.key])['type'] === 'image'" [src]="dataRow[col.key]" (click)="openModalImg(dataRow['id'])" libClickStopPropagation>
+                    <div *ngIf="base64MimeType(dataRow[col.key])['type'] !== 'image'">
+                      <img class="w-25" src="assets/file.png" (click)="openModalImg(dataRow['id'])" libClickStopPropagation>
+                    </div>
+                  </div>
                 </div>
 
                 <div *ngSwitchDefault [ngSwitch]="col.controlType">

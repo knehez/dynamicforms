@@ -152,9 +152,10 @@ export class CrudTableLibComponent implements OnInit {
     });
   }
 
-  openModalImg(imgDataB64) {
+  async openModalImg(imgDataB64) {
+    const fullData = await this.getFileData(imgDataB64, 'original');
     const modalRef = this.modalService.open(ModalImgComponent, { size: 'lg' });
-    modalRef.componentInstance.imgDataB64 = imgDataB64;
+    modalRef.componentInstance.imgDataB64 = fullData;
   }
 
   openModalForm() {
@@ -297,6 +298,32 @@ export class CrudTableLibComponent implements OnInit {
 
   canDeleteEntity() {
     return this.canUser('delete');
+  }
+
+  base64MimeType(encoded) {
+    let result = null;
+    if (encoded === '' || encoded === undefined) {
+      return result;
+    }
+    if (typeof encoded !== 'string') {
+      return result;
+    }
+    const mime = encoded.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/);
+    if (mime && mime.length) {
+      result = mime[1];
+    }
+    const mimeType = {};
+    if (result !== null) {
+      mimeType['type'] = result.split('/')[0];
+      mimeType['ext'] = result.split('/')[1];
+    }
+    return mimeType;
+  }
+
+  // get base64 endcoded string from backend
+  async getFileData(id, size): Promise<any> {
+    const obj = {'id' : id, 'size' : size};
+    return await this.service.file(obj);
   }
 
   debug(obj) {

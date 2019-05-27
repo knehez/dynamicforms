@@ -37,8 +37,8 @@ export class Project {
         type: 'file',
         order: 1
       })
-      @Column('longtext', { nullable: true })
-      fileData: any;
+    @Column({ nullable: true })
+        fileData: string;
 
     @OneToMany(type => Product, product => product.project)
     products: Product[];

@@ -7,7 +7,7 @@
         <textarea *ngSwitchCase="'textarea'" class="form-control" [formControlName]="input.key" [id]="input.key" [cols]="input.cols" [ngStyle]="input.style"
             [rows]="input.rows"></textarea>
 
-        <input *ngSwitchCase="'file'" class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.type" [ngStyle]="input.style"
+        <input *ngSwitchCase="'file'" class="form-control" [type]="input.type" [ngStyle]="input.style"
                (change)="onFileChange($event)"/>
 
         <div *ngSwitchCase="'dropdown'">

@@ -1,12 +1,16 @@
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">Image</h4>
+  <h4 class="modal-title" id="modal-basic-title">{{name}}</h4>
   <button type="button" class="close" aria-label="Close" (click)="close()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
-    <img [src]="imgDataB64" class="img-fluid">
-</div>
+    <img *ngIf="type === 'image'" [src]="imgDataB64['data']" class="img-fluid">
+    <div *ngIf="type !== 'image'">
+        <img src="assets/file.png">
+        <span  class="border border-dark" (click)="openFile()">{{type}}/{{extension}}</span>
+    </div>
+  </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-outline-dark" (click)="download()">Download</button>
 </div>
