@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/dist-server/backend/app.js"
+            "program": "${workspaceFolder}/dist-server/src/backend/app.js"
         },
         {
             "type": "chrome",

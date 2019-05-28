@@ -67,7 +67,7 @@ export default class ProjectCtrl extends BaseCtrl {
         let fileData: any;
 
         if (req.body[this.baseDirObj['fileDataField']]) {
-          fileData = this.splitField(req.body[this.baseDirObj['fileDataField']]);
+          fileData = req.body[this.baseDirObj['fileDataField']];
           entity[this.baseDirObj['fileDataField']] = fileData['name'];
         }
 
@@ -84,7 +84,7 @@ export default class ProjectCtrl extends BaseCtrl {
         let fileData: any;
 
         if (req.body[this.baseDirObj['fileDataField']]) {
-          fileData = this.splitField(req.body[this.baseDirObj['fileDataField']]);
+          fileData = req.body[this.baseDirObj['fileDataField']];
           req.body[this.baseDirObj['fileDataField']] = fileData['name'];
         }
 
@@ -209,16 +209,4 @@ export default class ProjectCtrl extends BaseCtrl {
         });
     }
   }
-
-    // Split data
-    splitField(data) {
-      let result = {};
-      try {
-          result['name'] = data.split('&&&')[0];
-          result['data'] = data.split('&&&')[1];
-        } catch (err) {
-          result = null;
-        }
-      return result;
-    }
 }

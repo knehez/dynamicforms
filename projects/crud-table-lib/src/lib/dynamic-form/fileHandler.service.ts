@@ -13,7 +13,7 @@ import { FormGroup } from '@angular/forms';
           const reader = new FileReader();
           reader.onload = (e) => {
             form.patchValue({
-              fileData: fileList[0].name + '&&&' + e.currentTarget['result']
+              fileData : {'name': fileList[0].name, data: e.currentTarget['result']}
             });
           };
           reader.readAsDataURL(fileList[0]);
