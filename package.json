@@ -27,7 +27,7 @@
     "@ng-select/ng-select": "^2.15.3",
     "@types/dagre-d3": "^0.4.38",
     "bcrypt": "^3.0.4",
-    "bootstrap": "^4.2.1",
+    "bootstrap": "^4.3.1",
     "chart.js": "^2.8.0",
     "core-js": "^2.5.4",
     "d3": "^5.9.0",

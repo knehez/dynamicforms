@@ -11,13 +11,13 @@
         <div *ngIf="pane.parentElement.parentElement.classList.contains('ui-picklist-target')"
           style="font-size: 0.8em; border-bottom: 1px solid #ddd;">
           <input class="m-2" style="width:110px" [(ngModel)]="job.name">
-          <p-dropdown [autoWidth]="false" [options]="jobTypes" [(ngModel)]="job.pieceType"></p-dropdown>
-          <!--p-calendar dateFormat="yy-mm-dd" [(ngModel)]="job.dueDate"></p-calendar-->
+          <p-dropdown class="smallDropdown" [autoWidth]="false" [options]="jobTypes" [(ngModel)]="job.pieceType"></p-dropdown>
+          <p-calendar dateFormat="yyyy-MM-dd" [(ngModel)]="job.dueDate"></p-calendar>
           <span>#</span>
           <input type="number" class="m-2" style="width:50px" [(ngModel)]="job.numOfPieces">
           <div>
-            <span>Time Schedule</span>
-            <input type="number" class="m-2" style="width:50px" [(ngModel)]="job.timeSchedule">
+            <span>Release Time</span>
+            <input type="number" class="m-2" style="width:50px" [(ngModel)]="job.releaseTime">
           </div>
         </div>
       </div>
@@ -78,6 +78,9 @@
     <button type="button" class="btn btn-sm btn-outline-success mb-2 mt-2" (click)="schedule()">Optimize
       scheduling</button>
     <div class="d-flex flex-row justify-content-end">
+      <div class="m-2 align-self-center">Start</div>
+      <p-calendar dateFormat="yy-mm-dd" [(ngModel)]="scheduleStart" [showIcon]="true" [showTime]="true"
+      [styleClass]="'m-2'"></p-calendar>
       <input type="text" [(ngModel)]="description" class="m-2">
       <button type="button" class="btn btn-sm btn-outline-info m-2" (click)="save()">Save schedule</button>
     </div>

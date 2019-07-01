@@ -2,6 +2,7 @@ import { Component, OnInit, Input, SimpleChanges, OnChanges, ViewChild, EventEmi
 import { DataTable } from 'primeng/datatable';
 import { SchedulerService } from '../schedulerService';
 import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-job-editor',
@@ -16,18 +17,12 @@ export class JobEditorComponent implements OnInit, OnChanges {
   @Input() result: any = {};
   @Input() id;
   @Output() rowSelect = new EventEmitter();
+  @Input() currentTime;
+  @Input() baseStartTime;
   averageUtilization;
   jobs;
   selectedJobName;
-  jobCols = [
-    { field: 'name', header: 'Job Name' },
-    { field: 'pieceType', header: 'Job Type' },
-    { field: 'numOfPieces', header: 'Num of pieces' },
-    { field: 'dueDate', header: 'Due Date', pipe: this.datePipe, arg: 'yyyy-MM-dd' },
-    { field: 'timeStarted', header: 'Time Started' },
-    { field: 'timeFinished', header: 'Time Finished' },
-    { field: 'timeSchedule', header: 'Time Schedule' }
-  ];
+  jobCols;
 
   @ViewChild('dt') dataTable: DataTable;
 
@@ -38,6 +33,23 @@ export class JobEditorComponent implements OnInit, OnChanges {
     for (const job of this.jobs) {
       job.selectedOperation = [];
     }
+
+    this.jobCols = [
+      { field: 'name', header: 'Job Name' },
+      { field: 'pieceType', header: 'Job Type' },
+      { field: 'numOfPieces', header: 'Num of pieces' },
+      { field: 'dueDate', header: 'Due Date', datePipe: this.datePipe, arg: 'yyyy-MM-dd'},
+      {
+        field: 'startTime', header: 'Start Time', minPipe: this.datePipe, arg: 'yyyy-MM-dd HH:mm'
+      },
+      {
+        field: 'finishTime', header: 'Finish Time', minPipe: this.datePipe, arg: 'yyyy-MM-dd HH:mm'
+      },
+      {
+        field: 'releaseTime', header: 'Release Time', minPipe: this.datePipe, arg: 'yyyy-MM-dd HH:mm'
+      }];
+
+    this.currentTime = this.currentTime - this.baseStartTime;
   }
 
   selectJob(rowData) {
@@ -94,5 +106,17 @@ export class JobEditorComponent implements OnInit, OnChanges {
       description: this.schedule.description,
       date: this.schedule.date, log: JSON.stringify([this.scheduleLog]), result: JSON.stringify(this.result)
     }, this.id);
+  }
+
+  setCurrentTime(rowData) {
+    rowData.releaseTime = (this.currentTime - this.baseStartTime) / (1000 * 60);
+  }
+
+  convertToTimeMillis(time) {
+    return moment.parseZone(time).toDate().getTime();
+  }
+
+  convertToTime(time) {
+    return moment.parseZone(time).format('YYYY-MM-DD HH:mm');
   }
 }

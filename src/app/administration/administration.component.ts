@@ -45,6 +45,7 @@ export class AdministrationComponent {
   ganttEntities;
   calendarEvents;
   targetJobs;
+  scheduleStart = new Date();
   backList = [];
 
   constructor(
@@ -111,7 +112,8 @@ export class AdministrationComponent {
 
   showPlanner(obj) {
     this.currentSelection = 'planner';
-    this.targetJobs = obj;
+    this.targetJobs = obj.jobs;
+    this.scheduleStart = obj.scheduleStart;
   }
 
   goBack() {

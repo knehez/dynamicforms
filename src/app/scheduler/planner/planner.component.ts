@@ -16,6 +16,7 @@ export class PlannerComponent implements OnInit {
   activeIndex = 0;
 
   @Input() targetJobs = [];
+  @Input() scheduleStart;
 
   makespan = 90;
   setupTime = 50;
@@ -53,6 +54,9 @@ export class PlannerComponent implements OnInit {
   async ngOnInit() {
     if (!this.targetJobs) {
       this.targetJobs = [];
+    }
+    if (!this.scheduleStart) {
+      this.scheduleStart = new Date();
     }
     this.items = [{
       label: 'Edit jobs',
@@ -111,7 +115,7 @@ export class PlannerComponent implements OnInit {
     this.index = [];
     this.createDiagram();
     this.schedulerService.optimize(this.targetJobs,
-      [this.makespan / 100, this.setups / 100, this.setupTime / 100], this.iteration, this.population);
+      [this.makespan / 100, this.setups / 100, this.setupTime / 100], this.iteration, this.population, this.scheduleStart);
   }
 
   async save() {
@@ -121,7 +125,7 @@ export class PlannerComponent implements OnInit {
     // save scheduling
     await this.schedulerService.saveScheduling({
       description: this.description,
-      date: '' + new Date(), log: JSON.stringify([this.result]), result: JSON.stringify(bestResult)
+      date: '' + this.scheduleStart, log: JSON.stringify([this.result]), result: JSON.stringify(bestResult)
     });
   }
 
@@ -179,4 +183,8 @@ export class PlannerComponent implements OnInit {
     this.chart.chart.update();
   }
 
+  debug(obj) {
+    console.dir(obj);
+    return obj;
+  }
 }

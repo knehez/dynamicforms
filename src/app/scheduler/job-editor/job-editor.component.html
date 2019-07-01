@@ -25,7 +25,8 @@
         </a>
       </td>
       <td *ngFor="let col of columns">
-        {{ col.pipe ? col.pipe.transform(rowData[col.field], col.arg) : rowData[col.field] }}
+        {{ col.minPipe ? col.minPipe.transform(rowData[col.field] * 1000 * 60 + baseStartTime, col.arg) : 
+          col.datePipe ? col.datePipe.transform(rowData[col.field], col.arg) : rowData[col.field] }}
       </td>
       <td>
         <i class="pi pi-window-maximize" pReorderableRowHandle></i>
@@ -44,8 +45,9 @@
           </div>
         </div>
         <div class="align-items-center">
-          <small>Time schedule: </small>
-          <input type="number" class="m-1" style="width:50px" [(ngModel)]="rowData.timeSchedule">
+          <small>Release Time: </small>
+          <input type="text" class="m-1" style="width:100px" value="{{(rowData.releaseTime * 1000 * 60 + this.baseStartTime) | date:'yyyy-MM-dd HH:mm'}}">
+          <button type="button" class="btn btn-sm btn-outline-success m-1" style="font-size:0.6rem; padding:0.15rem 0.25rem;" (click)="setCurrentTime(rowData)">Set current time</button>
         </div>
       </td>
     </tr>

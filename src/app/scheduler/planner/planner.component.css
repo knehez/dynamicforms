@@ -10,10 +10,6 @@ p-picklist {
     width: 100%;
 }
 
-::ng-deep .ui-picklist {
-    font-size: 0.6em;
-}
-
 ::ng-deep .ui-picklist.ui-picklist-responsive .ui-picklist-listwrapper {
     width: 40%;
 }
@@ -38,15 +34,11 @@ p-picklist {
     background-color: #cc43d8;
 }
 
-::ng-deep .ui-dropdown label.ui-dropdown-label {
+::ng-deep .smallDropdown .ui-dropdown label.ui-dropdown-label {
     font-size: 0.6em;
 }
 
-::ng-deep .ui-dropdown-item {
-    font-size: 0.6em;
-}
-
-::ng-deep .ui-calendar.ui-calendar-w-btn .ui-inputtext {
+::ng-deep .smallDropdown .ui-dropdown-item {
     font-size: 0.6em;
 }
 

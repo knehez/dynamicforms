@@ -68,7 +68,7 @@ export class CalendarComponent implements OnInit {
         if (event.event.backgroundColor === 'red') {
           this.displayDialog = true;
         }
-        // console.log('coucou' + moment(event.event.start).format('YYYY-MM DD HH:mm:ss'));
+        // console.log('coucou' + moment(event.event.start).format('YYYY-MM-DD HH:mm:ss'));
         // this.eventOut = event
         // this.eventOut.type = 'update'
       },

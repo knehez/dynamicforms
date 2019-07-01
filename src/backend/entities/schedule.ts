@@ -34,10 +34,10 @@ export class Schedule {
 
     @FormField({
         className: 'CalendarInput',
-        header: 'Due Date',
+        header: 'Start Date',
         required: true,
         type: 'date',
-        dateFormat: 'YYYY-MM-DD',
+        dateFormat: 'YYYY-MM-DD HH:mm',
         order: 3
     })
     @Column({ type: 'datetime', precision: 0 })

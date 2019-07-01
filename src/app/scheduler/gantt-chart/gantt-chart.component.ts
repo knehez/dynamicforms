@@ -37,8 +37,6 @@ export class GanttChartComponent implements OnInit {
   fixYAxis = false;
   yAxisElement = [];
 
-  baseDate = new Date('2019-05-07').getTime();
-
   constructor(private schedulerService: SchedulerService) { }
 
   ngOnInit() {
@@ -61,7 +59,7 @@ export class GanttChartComponent implements OnInit {
 
     for (let i = 0; i < this.schedules.length; i++) {
       const schedule = this.schedules[i];
-      lastHeight = this.showGanttChart(schedule.log, this.inner.append('g').
+      lastHeight = this.showGanttChart(schedule.log, this.convertToMilliseconds(schedule.date), this.inner.append('g').
         attr('transform', 'translate(0,' + (lastHeight * (i)) + ')'), this.ganttType);
     }
 
@@ -102,7 +100,7 @@ export class GanttChartComponent implements OnInit {
 
   async reschedule() {
     for (const schedule of this.schedules) {
-      const result = await this.schedulerService.reSchedule(schedule.log);
+      const result = await this.schedulerService.reSchedule(schedule);
       schedule.log = result['resultLog'];
       schedule.result = result['simulationLog'].pop();
       delete schedule.result.i;
@@ -123,7 +121,7 @@ export class GanttChartComponent implements OnInit {
       this.selectJob({ job: event.name }, { jobs: event.jobs });
       const selectedJob = event.jobs.filter(job => job.name === event.name)[0];
       const xtrans = this.getXAxis(event, event.makespan);
-      this.zoomAndScaleGraph(xtrans(-selectedJob.timeStarted * this.transform.scale), 0);
+      this.zoomAndScaleGraph(xtrans(-selectedJob.startTime * this.transform.scale), 0);
     }
   }
 
@@ -159,13 +157,13 @@ export class GanttChartComponent implements OnInit {
       .range([0, width]);
   }
 
-  getXTimeAxis(entity, width) {
+  getXTimeAxis(entity, scheduleStart, width) {
     return d3.scaleTime()
-      .domain([this.baseDate, this.baseDate + (entity.makespan * 1000 * 60)])
+      .domain([scheduleStart, scheduleStart + (entity.makespan * 1000 * 60)])
       .range([0, width]);
   }
 
-  showGanttChart(entity, d3Elem, type = 'MACHINE_ORIENTED') {
+  showGanttChart(entity, scheduleStart, d3Elem, type = 'MACHINE_ORIENTED') {
     const width = entity.makespan - this.margin.left - this.margin.right;
     const jobs = entity.jobs.map((j) => j.name);
 
@@ -179,12 +177,12 @@ export class GanttChartComponent implements OnInit {
 
     const height = (ganttHeight * 20) - this.margin.top - this.margin.bottom;
 
-    const xAxis = this.getXTimeAxis(entity, width);
-    const xTimeAxis = this.getXTimeAxis(entity, width);
+    const xAxis = this.getXTimeAxis(entity, scheduleStart, width);
+    const xTimeAxis = this.getXTimeAxis(entity, scheduleStart, width);
 
     entity.jobNames = entity.jobs.map(j => j.name);
 
-    const time = t => this.baseDate + (t * 60 * 1000);
+    const time = t => scheduleStart + (t * 60 * 1000);
 
     const yAxis = d3.scaleBand()
       .domain(type === 'MACHINE_ORIENTED' ? entity.machines : entity.jobNames) // input
@@ -195,14 +193,14 @@ export class GanttChartComponent implements OnInit {
       .attr('transform', 'translate(0,' + height + ')')
       .call(d3.axisBottom(xTimeAxis)
         .ticks(d3.timeHour)
-        .tickFormat(d3.utcFormat('%H:%M')));
+        .tickFormat(d3.timeFormat('%H:%M')));
 
     d3Elem.append('g')
       .attr('class', 'x axis')
       .attr('transform', 'translate(0,' + (height + this.margin.bottom / 2) + ')')
       .call(d3.axisBottom(xTimeAxis)
         .ticks(d3.timeDay.every(0.5))
-        .tickFormat(d3.utcFormat('%Y-%m-%d')));
+        .tickFormat(d3.timeFormat('%Y-%m-%d')));
 
     const timeLine = d3Elem.append('line')
       .attr('id', 'timeLineY')
@@ -237,7 +235,7 @@ export class GanttChartComponent implements OnInit {
       }
       timeLine.style('display', null);
       const mouseX = d3.mouse(d3.event.target)[0];
-      this.currentTime = moment.utc(xAxis.invert(mouseX)).format('YYYY-MM-DD HH:mm');
+      this.currentTime = moment(xAxis.invert(mouseX)).seconds(0).toDate().getTime();
       timeLine
         .attr('x1', mouseX).attr('y1', 0)
         .attr('x2', mouseX).attr('y2', height);
@@ -441,4 +439,9 @@ export class GanttChartComponent implements OnInit {
     this.transform.translateY = translateY;
     this.transform.scale = zoomScale;
   }
+
+  convertToMilliseconds(date) {
+    return moment(date).toDate().getTime();
+  }
+
 }

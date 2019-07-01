@@ -110,7 +110,7 @@
   </p-card>
 
   <p-card *ngIf="currentSelection == 'planner'">
-    <app-planner [targetJobs]="targetJobs"></app-planner>
+    <app-planner [targetJobs]="targetJobs" [scheduleStart]="releaseTime"></app-planner>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'calendar'">

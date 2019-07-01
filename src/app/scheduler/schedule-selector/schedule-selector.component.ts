@@ -13,7 +13,7 @@ export class ScheduleSelectorComponent implements OnInit {
   @Input() filter: any;
   @Output() showSchedule = new EventEmitter();
   @Output() showCalendar = new EventEmitter();
-  @Output() showJobEditor = new EventEmitter();
+  @Output() showPlanner = new EventEmitter();
 
   permissions: any;
   selectedSchedules = [];
@@ -24,10 +24,10 @@ export class ScheduleSelectorComponent implements OnInit {
     this.permissions = this.authService.getRoles();
   }
 
-  goJobEditor() {
+  goPlanner() {
     for (const schedule of this.selectedSchedules) {
       schedule.log = JSON.parse(schedule.log)[0];
-      this.showJobEditor.emit(schedule.log.jobs);
+      this.showPlanner.emit({jobs: schedule.log.jobs, scheduleStart: schedule.date});
       // process only the first selection form the list
       return;
     }
@@ -37,7 +37,7 @@ export class ScheduleSelectorComponent implements OnInit {
     const calendarEvents = [];
     const schedule = JSON.parse(this.selectedSchedules[0].log);
     const logs = schedule[0].log;
-    const startDate = new Date('2019-05-01T08:00').getTime();
+    const startDate = new Date(this.selectedSchedules[0].date).getTime();
     for (const logItem of logs) {
       if (logItem.event === 's' || logItem.event === 'w') {
         const start = startDate + logItem.operationStart * 1000 * 60;
@@ -58,6 +58,7 @@ export class ScheduleSelectorComponent implements OnInit {
     for (const schedule of this.selectedSchedules) {
       schedule.log = JSON.parse(schedule.log)[0];
       schedule.result = JSON.parse(schedule.result);
+      schedule.scheduleStart = new Date(schedule.date).getTime();
     }
     this.showSchedule.emit(this.selectedSchedules);
   }

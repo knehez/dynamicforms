@@ -7,7 +7,7 @@
     <p-checkbox class="p-2" [(ngModel)]="fixYAxis" binary="true" ngDefaultControl></p-checkbox>
     <span>Fix YAxis</span>
   </div>
-  <div class="p-2">Current time: {{currentTime}}</div>
+  <div class="p-2">Current time: {{currentTime | date:'yyyy-MM-dd HH:mm'}}</div>
   <div class="btn-group btn-group-toggle p-2 ml-auto">
     <label class="btn-outline-primary btn-sm" ngbButtonLabel>
       <input type="checkbox" ngbButton [(ngModel)]="isSetCurrentTime"> Set current time
@@ -28,6 +28,6 @@
 <div class="gantt-svg-wrapper"></div>
 <hr />
 <div *ngFor="let schedule of schedules">
-  <app-job-editor [id]="schedule.id" [schedule]="schedule" [scheduleLog]="schedule.log" [selectedJob]="schedule.log.selectedJob" [result]="schedule.result" (rowSelect)="jobSelected($event)">
+  <app-job-editor [id]="schedule.id" [schedule]="schedule" [scheduleLog]="schedule.log" [baseStartTime]="convertToMilliseconds(schedule.date)" [currentTime]="currentTime" [selectedJob]="schedule.log.selectedJob" [result]="schedule.result" (rowSelect)="jobSelected($event)">
   </app-job-editor>
 </div>
