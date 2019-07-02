@@ -45,3 +45,16 @@ p-picklist {
 ::ng-deep .ui-steps .ui-steps-item {
     width: 33%;
 }
+
+::ng-deep .ui-calendar .ui-inputtext {
+    font-size: 0.9em;
+    width: 65px;
+}
+
+::ng-deep .ui-calendar button {
+    font-size: 0.9em;
+}
+
+::ng-deep .ui-picklist .ui-button {
+    display: inherit;
+}

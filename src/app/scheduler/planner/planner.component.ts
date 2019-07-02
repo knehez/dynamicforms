@@ -1,8 +1,16 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Pipe, PipeTransform } from '@angular/core';
 import { SchedulerService } from '../schedulerService';
 import * as socketIo from 'socket.io-client';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MenuItem } from 'primeng/api';
+import * as moment from 'moment';
+
+@Pipe({ name: 'toDate' })
+export class ToDate implements PipeTransform {
+  transform(value: string): Date {
+    return new Date(value);
+  }
+}
 
 @Component({
   selector: 'app-planner',
@@ -181,6 +189,14 @@ export class PlannerComponent implements OnInit {
   showSetups(event) {
     this.data.datasets[1].hidden = !event;
     this.chart.chart.update();
+  }
+
+  convertToTimeMillis(time) {
+    return moment.parseZone(time).toDate().getTime();
+  }
+
+  convertToTime(ms) {
+    return moment.parseZone(ms).toDate();
   }
 
   debug(obj) {

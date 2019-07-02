@@ -8,18 +8,25 @@
       <div class="ui-helper-clearfix" #pane>
         <div style="font-weight: 600;">{{job.name}} - {{job.pieceType}} - [{{job.dueDate | date:'yyyy-MM-dd'}}] -
           ({{job.numOfPieces}})</div>
-        <div *ngIf="pane.parentElement.parentElement.classList.contains('ui-picklist-target')"
-          style="font-size: 0.8em; border-bottom: 1px solid #ddd;">
-          <input class="m-2" style="width:110px" [(ngModel)]="job.name">
-          <p-dropdown class="smallDropdown" [autoWidth]="false" [options]="jobTypes" [(ngModel)]="job.pieceType"></p-dropdown>
-          <p-calendar dateFormat="yyyy-MM-dd" [(ngModel)]="job.dueDate"></p-calendar>
-          <span>#</span>
-          <input type="number" class="m-2" style="width:50px" [(ngModel)]="job.numOfPieces">
-          <div>
-            <span>Release Time</span>
-            <input type="number" class="m-2" style="width:50px" [(ngModel)]="job.releaseTime">
+        <ng-container *ngIf="pane.parentElement.parentElement.classList.contains('ui-picklist-target')">
+          <div style=" font-size: 0.8em; border-bottom: 1px solid #ddd;">
+            <div class="d-flex flex-row align-items-center">
+              <input class="m-2" style="width:110px" [(ngModel)]="job.name">
+              <p-dropdown class="smallDropdown m-2" [autoWidth]="false" [options]="jobTypes" [(ngModel)]="job.pieceType">
+              </p-dropdown>
+              <p-calendar class="m-2" dateFormat="yy-mm-dd" [ngModel]="job.dueDate | toDate" readonlyInput="true"
+                (ngModelChange)="job.dueDate=convertToTimeMillis($event)" showIcon="true" [touchUI]="true"
+                libClickStopPropagation></p-calendar>
+              <input type="number" class="m-2" style="width:50px" [(ngModel)]="job.numOfPieces">
+            </div>
+            <div class="d-flex flex-row align-items-center">
+              <span class="m-2">Release Time</span>
+              <p-calendar dateFormat="yy-mm-dd" [ngModel]="job.releaseTime | toDate" readonlyInput="true"
+                (ngModelChange)="job.releaseTime=convertToTimeMillis($event)" showIcon="true" [touchUI]="true"
+                libClickStopPropagation></p-calendar>
+            </div>
           </div>
-        </div>
+        </ng-container>
       </div>
     </ng-template>
   </p-pickList>
@@ -80,7 +87,7 @@
     <div class="d-flex flex-row justify-content-end">
       <div class="m-2 align-self-center">Start</div>
       <p-calendar dateFormat="yy-mm-dd" [(ngModel)]="scheduleStart" [showIcon]="true" [showTime]="true"
-      [styleClass]="'m-2'"></p-calendar>
+        [styleClass]="'m-2'"></p-calendar>
       <input type="text" [(ngModel)]="description" class="m-2">
       <button type="button" class="btn btn-sm btn-outline-info m-2" (click)="save()">Save schedule</button>
     </div>

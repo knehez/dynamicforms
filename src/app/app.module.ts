@@ -21,7 +21,7 @@ import { AuthHttpInterceptorService } from './_services/auth-http-interceptor.se
 import { JobEditorComponent } from './scheduler/job-editor/job-editor.component';
 import { PickListModule } from 'primeng/picklist';
 import { ListboxModule } from 'primeng/listbox';
-import { PlannerComponent } from './scheduler/planner/planner.component';
+import { PlannerComponent, ToDate } from './scheduler/planner/planner.component';
 import { SliderModule } from 'primeng/slider';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
@@ -38,7 +38,6 @@ import { CalendarComponent } from './scheduler/calendar/calendar.component';
 import { CalendarModule } from 'primeng/calendar';
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { StepsModule } from 'primeng/steps';
-
 
 const routes: Routes = [
   {
@@ -61,7 +60,8 @@ const routes: Routes = [
     JobEditorComponent,
     PlannerComponent,
     ScheduleSelectorComponent,
-    CalendarComponent
+    CalendarComponent,
+    ToDate
   ],
   imports: [
     BrowserModule,
