@@ -24,6 +24,10 @@ export default class AuthenticationCtrl extends BaseCtrl {
             }
         });
 
+        if (!user) {
+            return this.handleError(res, 'Bad credentials given.');
+        }
+
         const roles = await getRepository(Role)
             .createQueryBuilder()
             .innerJoin('user_roles_role', 'user_roles_role')
