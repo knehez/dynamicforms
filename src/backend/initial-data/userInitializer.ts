@@ -6,8 +6,7 @@ import { Initializer } from './initializer';
 export default class UserInitializer extends Initializer {
     repository = getRepository(User);
 
-    constructor () {
-        super();
+    async initialize () {
 
         const user = new User();
 
@@ -22,6 +21,7 @@ export default class UserInitializer extends Initializer {
                 user.roles = roles;
 
                 this.entities.push(user);
+                super.initialize();
             })
             .catch(err => {
                 throw err;
