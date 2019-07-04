@@ -35,11 +35,11 @@ p-picklist {
 }
 
 ::ng-deep .smallDropdown .ui-dropdown label.ui-dropdown-label {
-    font-size: 0.6em;
+    font-size: 0.7em;
 }
 
 ::ng-deep .smallDropdown .ui-dropdown-item {
-    font-size: 0.6em;
+    font-size: 0.7em;
 }
 
 ::ng-deep .ui-steps .ui-steps-item {

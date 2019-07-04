@@ -15,18 +15,20 @@
               <p-dropdown class="smallDropdown m-2" [autoWidth]="false" [options]="jobTypes"
                 [(ngModel)]="job.pieceType">
               </p-dropdown>
-              <p-calendar class="m-2" dateFormat="yy-mm-dd" [ngModel]="job.dueDate | date:'yyyy-MM-dd'"
-                readonlyInput="true" (ngModelChange)="job.dueDate=convertToTimeMillis($event)" showIcon="true"
-                [touchUI]="true" libClickStopPropagation></p-calendar>
-              <input type="number" class="m-2" style="width:50px" [(ngModel)]="job.numOfPieces">
+              <input type="number" class="m-2" style="width:30px" [(ngModel)]="job.numOfPieces">
             </div>
-            <div class="flex-row">
+            <div class="flex-row flex-wrap">
+              <span class="m-2">Due Date</span>
+              <p-calendar class="m-2" dateFormat="yy-mm-dd" [ngModel]="job.dueDate | date:'yyyy-MM-dd'" [touchUI]="true"
+                readonlyInput="true" (ngModelChange)="job.dueDate=convertToTimeMillis($event)" showIcon="true"
+                (click)="$event.stopPropagation()">
+              </p-calendar>
               <span class="m-2">Release Time</span>
               <p-calendar dateFormat="yy-mm-dd" class="calendar-with-time"
                 [ngModel]="job.releaseTime | ToRelativeDate: this.scheduleStart: 1000*60" readonlyInput="true"
-                [showTime]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1970:2030"
+                [showTime]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1970:2030" [touchUI]="true"
                 (ngModelChange)="job.releaseTime=convertToRelativeTimeMinutes($event, 1000 * 60)" showIcon="true"
-                [touchUI]="true" libClickStopPropagation></p-calendar>
+                (click)="$event.stopPropagation()"></p-calendar>
             </div>
           </div>
         </ng-container>

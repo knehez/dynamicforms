@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges, ViewChild, EventEmitter, Output } from '@angular/core';
-import { DataTable } from 'primeng/datatable';
+import { Table } from 'primeng/table';
 import { SchedulerService } from '../schedulerService';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
@@ -24,7 +24,7 @@ export class JobEditorComponent implements OnInit, OnChanges {
   selectedJobName;
   jobCols;
 
-  @ViewChild('dt') dataTable: DataTable;
+  @ViewChild('dt') dataTable: Table;
 
   constructor(private schedulerService: SchedulerService, private datePipe: DatePipe) { }
 
