@@ -5,10 +5,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MenuItem } from 'primeng/api';
 import * as moment from 'moment';
 
-@Pipe({ name: 'toDate' })
-export class ToDate implements PipeTransform {
-  transform(value: string): Date {
-    return new Date(value);
+@Pipe({ name: 'ToRelativeDate' })
+export class ToRelativeDate implements PipeTransform {
+  transform(value: number, startTime: Date, minutes: number): Date {
+    return new Date(value * minutes  + startTime.getTime());
   }
 }
 
@@ -191,12 +191,12 @@ export class PlannerComponent implements OnInit {
     this.chart.chart.update();
   }
 
-  convertToTimeMillis(time) {
-    return moment.parseZone(time).toDate().getTime();
+  convertToRelativeTimeMinutes(time: Date, minutes = 1) {
+    return (time.getTime() - this.scheduleStart) / minutes;
   }
 
-  convertToTime(ms) {
-    return moment.parseZone(ms).toDate();
+  convertToTimeMillis(time) {
+    return moment.parseZone(time).toDate().getTime();
   }
 
   debug(obj) {

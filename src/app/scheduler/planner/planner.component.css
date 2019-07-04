@@ -48,7 +48,7 @@ p-picklist {
 
 ::ng-deep .ui-calendar .ui-inputtext {
     font-size: 0.9em;
-    width: 65px;
+    width: 75px;
 }
 
 ::ng-deep .ui-calendar button {

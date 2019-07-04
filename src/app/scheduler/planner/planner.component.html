@@ -10,20 +10,22 @@
           ({{job.numOfPieces}})</div>
         <ng-container *ngIf="pane.parentElement.parentElement.classList.contains('ui-picklist-target')">
           <div style=" font-size: 0.8em; border-bottom: 1px solid #ddd;">
-            <div class="d-flex flex-row align-items-center">
+            <div class="d-flex flex-row flex-wrap align-items-center">
               <input class="m-2" style="width:110px" [(ngModel)]="job.name">
-              <p-dropdown class="smallDropdown m-2" [autoWidth]="false" [options]="jobTypes" [(ngModel)]="job.pieceType">
+              <p-dropdown class="smallDropdown m-2" [autoWidth]="false" [options]="jobTypes"
+                [(ngModel)]="job.pieceType">
               </p-dropdown>
-              <p-calendar class="m-2" dateFormat="yy-mm-dd" [ngModel]="job.dueDate | toDate" readonlyInput="true"
+              <p-calendar class="m-2" dateFormat="yy-mm-dd"
+                [ngModel]="job.dueDate | date:'yyyy-MM-dd'" readonlyInput="true"
                 (ngModelChange)="job.dueDate=convertToTimeMillis($event)" showIcon="true" [touchUI]="true"
                 libClickStopPropagation></p-calendar>
               <input type="number" class="m-2" style="width:50px" [(ngModel)]="job.numOfPieces">
-            </div>
-            <div class="d-flex flex-row align-items-center">
               <span class="m-2">Release Time</span>
-              <p-calendar dateFormat="yy-mm-dd" [ngModel]="job.releaseTime | toDate" readonlyInput="true"
-                (ngModelChange)="job.releaseTime=convertToTimeMillis($event)" showIcon="true" [touchUI]="true"
-                libClickStopPropagation></p-calendar>
+              <p-calendar dateFormat="yy-mm-dd"
+                [ngModel]="job.releaseTime | ToRelativeDate: this.scheduleStart: 1000*60" readonlyInput="true"
+                [showTime]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1970:2030"
+                (ngModelChange)="job.releaseTime=convertToRelativeTimeMinutes($event, 1000 * 60)" showIcon="true"
+                [touchUI]="true" libClickStopPropagation></p-calendar>
             </div>
           </div>
         </ng-container>

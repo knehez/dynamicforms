@@ -47,7 +47,7 @@
         <div class="align-items-center">
           <small>Release Time: </small>
           <input type="text" class="m-1" style="width:100px" value="{{(rowData.releaseTime * 1000 * 60 + this.baseStartTime) | date:'yyyy-MM-dd HH:mm'}}">
-          <button type="button" class="btn btn-sm btn-outline-success m-1" style="font-size:0.6rem; padding:0.15rem 0.25rem;" (click)="setCurrentTime(rowData)">Set current time</button>
+          <button type="button" class="btn btn-sm btn-outline-success m-1" style="font-size:0.6rem; padding:0.15rem 0.25rem;" (click)="setReleaseTime(rowData)">Set release time</button>
         </div>
       </td>
     </tr>

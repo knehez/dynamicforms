@@ -1,3 +1,7 @@
 ::ng-deep .fc-content {
     font-size: 0.8em;
 }
+
+::ng-deep .ui-calendar .ui-inputtext {
+    width: 115px;
+}

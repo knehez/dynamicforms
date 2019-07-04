@@ -108,7 +108,7 @@ export class JobEditorComponent implements OnInit, OnChanges {
     }, this.id);
   }
 
-  setCurrentTime(rowData) {
+  setReleaseTime(rowData) {
     rowData.releaseTime = (this.currentTime - this.baseStartTime) / (1000 * 60);
   }
 
