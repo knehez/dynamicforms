@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import listPlugin from '@fullcalendar/list';
+import dayGridPlugin from '@fullcalendar/daygrid';
 import * as moment from 'moment';
 
 @Component({
@@ -40,12 +41,12 @@ export class CalendarComponent implements OnInit {
 
     this.options = {
       defaultDate: this.events[0].start,
-      plugins: [listPlugin],
-      defaultView: 'month',
+      plugins: [listPlugin, dayGridPlugin],
+      defaultView: 'dayGridMonth',
       header: {
         left: 'prev,next',
         center: 'title',
-        right: 'month, agendaWeek, agendaDay, listDay, listWeek, listMonth'
+        right: 'dayGridMonth, agendaWeek, agendaDay, listDay, listWeek, listMonth'
       },
       views: {
         listDay: { buttonText: 'list day' },
