@@ -65,6 +65,8 @@ export class PlannerComponent implements OnInit {
     }
     if (!this.scheduleStart) {
       this.scheduleStart = new Date();
+    } else {
+      this.scheduleStart = new Date(this.scheduleStart);
     }
     this.items = [{
       label: 'Edit jobs',
