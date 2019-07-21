@@ -27,7 +27,7 @@ export class DynamicFormComponent implements OnInit {
 
         // add hidden, non modified data, because these were hidden on the form
         this.inputs.forEach(element => {
-            if (element.hidden) {
+            if (element.hidden || !element.required) {
                 this.form.value[element.key] = element.value;
             }
         });

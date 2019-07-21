@@ -58,6 +58,7 @@ export class Schedule {
         header: 'Result',
         type: 'string',
         editable: false,
+        required: false,
         order: 5
     })
     @Column()

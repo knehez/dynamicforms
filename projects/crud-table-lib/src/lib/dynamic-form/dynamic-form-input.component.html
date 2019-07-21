@@ -34,5 +34,5 @@
         </div>
     </div>
 
-    <small class="text-danger" *ngIf="!isValid">{{input.header}} is required</small>
+    <small class="text-danger" *ngIf="!input.required? false : !isValid">{{input.header}} is required</small>
 </div>
