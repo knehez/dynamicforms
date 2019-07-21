@@ -16,20 +16,20 @@
     </div>
     <div class="d-flex m-2">
       <div class="p-2">Start</div>
-      <p-calendar dateFormat="yy-mm-dd" [(ngModel)]="start" [showIcon]="true" [showTime]="true"
-        [style]="{'position': 'fixed', 'overflow': 'visible', 'z-index': '9999'}"></p-calendar>
+      <p-calendar dateFormat="yy-mm-dd" [(ngModel)]="start" [showIcon]="true" [showTime]="true" (click)="startCalendarSwapZIndex()"
+        [style]="{'position': 'fixed', 'overflow': 'visible', 'z-index': startZIndex}" ></p-calendar> 
     </div>
     <div class="d-flex m-2">
       <div class="p-2">End&nbsp;&nbsp;</div>
-      <p-calendar dateFormat="yy-mm-dd" [(ngModel)]="end" [showIcon]="true" [showTime]="true"
-        [style]="{'position': 'fixed', 'overflow': 'visible', 'z-index': '9998'}"></p-calendar>
+      <p-calendar dateFormat="yy-mm-dd" [(ngModel)]="end" [showIcon]="true" [showTime]="true" (click)="endCalendarSwapZIndex()"
+        [style]="{'position': 'fixed', 'overflow': 'visible', 'z-index': endZIndex}" ></p-calendar>
     </div>
     <div class="d-flex m-2">
       <div class="p-2">Description</div>
       <textarea rows="4" cols="50" [(ngModel)]="description" pInputText></textarea>
     </div>
   </div>
-  <p-footer> 
+  <p-footer>
     <button type="button" pButton icon="pi pi-check" (click)="displayDialog=false; saveEvent();" label="Save"></button>
     <button type="button" pButton icon="pi pi-close" (click)="displayDialog=false" label="Cancel"
       class="ui-button-secondary"></button>

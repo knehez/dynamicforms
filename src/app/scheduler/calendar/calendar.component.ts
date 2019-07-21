@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import listPlugin from '@fullcalendar/list';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 import * as moment from 'moment';
 
 @Component({
@@ -22,6 +24,11 @@ export class CalendarComponent implements OnInit {
   description;
   start;
   end;
+
+  // p-calendar dialog z-indexes
+  startZIndex = 1000;
+  endZIndex = 999;
+
   constructor() { }
 
   ngOnInit() {
@@ -41,12 +48,12 @@ export class CalendarComponent implements OnInit {
 
     this.options = {
       defaultDate: this.events[0].start,
-      plugins: [listPlugin, dayGridPlugin],
+      plugins: [listPlugin, dayGridPlugin, timeGridPlugin, interactionPlugin],
       defaultView: 'dayGridMonth',
       header: {
         left: 'prev,next',
         center: 'title',
-        right: 'dayGridMonth, agendaWeek, agendaDay, listDay, listWeek, listMonth'
+        right: 'dayGridMonth, timeGridWeek, timeGridDay, listDay, listWeek, listMonth'
       },
       views: {
         listDay: { buttonText: 'list day' },
@@ -74,7 +81,7 @@ export class CalendarComponent implements OnInit {
         // this.eventOut.type = 'update'
       },
       dateClick: info => {
-        this.title = 'Add maintenance';
+        this.title = 'Add Maintenance Intervall';
         this.description = 'Maintenance';
         this.start = info.date;
         this.end = info.date;
@@ -111,4 +118,15 @@ export class CalendarComponent implements OnInit {
     console.log(event.value);
     this.fullCalendar.calendar.rerenderEvents();
   }
+
+  endCalendarSwapZIndex() {
+    this.startZIndex = 999;
+    this.endZIndex = 1000;
+  }
+
+  startCalendarSwapZIndex() {
+    this.startZIndex = 1000;
+    this.endZIndex = 999;
+  }
+
 }
