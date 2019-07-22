@@ -17,7 +17,11 @@ This project demonstartes how to generate Angular7+ dynamic reactive forms and C
 - clone repository
 - ``npm install``
 - Check ormconfig.json and set your DB connections details
-- Run db migration ``.\node_modules\.bin\typeorm migration:run``
+- Run db migration ``npm run migration``
 - start client: ``npm run start``
 - start backend: ``npm run gulp backend``
 
+## Database migration scripts
+- Generate new migration: ``npm run generate-migration -- -n <migration_name>``
+- Run migrations: ``npm run migration``
+- Revert the last migration: ``npm run revert-migration``

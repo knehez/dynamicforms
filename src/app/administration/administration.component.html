@@ -26,9 +26,9 @@
           <label *ngIf="canReadEntity(taskItemEntity)" ngbButtonLabel class="btn-outline-primary btn-sm">
             <input ngbButton type="radio" value="taskitem">Task item
           </label>
-          <!--label ngbButtonLabel class="btn-outline-primary btn-sm">
-            <input ngbButton type="radio" value="erdiagram">ER Diagram
-          </label-->
+          <label ngbButtonLabel class="btn-outline-primary btn-sm">
+            <input ngbButton type="radio" value="modelSetup">Model Setup
+          </label>
           <label ngbButtonLabel class="btn-outline-primary btn-sm">
             <input ngbButton type="radio" value="planner">Planner
           </label>
@@ -94,6 +94,10 @@
       [filter]="taskItemFilter" [itemsPerPage]="5"
       (operationResult)="handleResult($event)" (backClicked)="goBack()">
     </lib-crud-table-lib>
+  </p-card>
+  
+  <p-card *ngIf="currentSelection == 'modelSetup'">
+    <app-model-setup></app-model-setup>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'erdiagram'">

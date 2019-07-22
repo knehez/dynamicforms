@@ -31,10 +31,9 @@ export class AdministrationComponent {
   projectEntity: any;
   scheduleEntity: any;
 
-  private _opened = false;
   cols: any[];
   isNavbarCollapsed = true;
-  currentSelection = 'user';
+  currentSelection = 'modelSetup';
   allEntities: any[] = [];
 
   productFilter = {};

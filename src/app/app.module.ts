@@ -38,6 +38,7 @@ import { CalendarComponent } from './scheduler/calendar/calendar.component';
 import { CalendarModule } from 'primeng/calendar';
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { StepsModule } from 'primeng/steps';
+import { ModelSetupComponent } from './scheduler/model-setup/model-setup.component';
 
 const routes: Routes = [
   {
@@ -61,7 +62,8 @@ const routes: Routes = [
     PlannerComponent,
     ScheduleSelectorComponent,
     CalendarComponent,
-    ToRelativeDate
+    ToRelativeDate,
+    ModelSetupComponent
   ],
   imports: [
     BrowserModule,

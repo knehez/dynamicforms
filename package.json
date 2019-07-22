@@ -9,7 +9,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "gulp": "gulp",
-    "migration:run": "typeorm migration:run"
+    "migration": "npm run gulp clean-backend compile-backend && typeorm migration:run",
+    "generate-migration": "npm run gulp clean-backend compile-backend && typeorm migration:generate",
+    "revert-migration": "npm run gulp clean-backend compile-backend && typeorm migration:revert"    
   },
   "private": true,
   "dependencies": {

@@ -1,0 +1,24 @@
+<p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
+<div *ngIf="activeIndex == 0">
+  <p-panel header="Time shifts">
+    <div class="form-inline d-flex flex-row mb-3">
+      <div class="p-2">Name:</div>
+      <input type="text" class="p-2" [(ngModel)]="shiftName">
+      <div class="p-2">Start Time</div>
+      <p-calendar class="p-2" [(ngModel)]="shiftStartTime" [timeOnly]="true" [showIcon]="true" [readonlyInput]="true"
+        [utc]="false"></p-calendar>
+      <div class="p-2">End Time</div>
+      <p-calendar class="p-2" [(ngModel)]="shiftEndTime" [timeOnly]="true" [showIcon]="true" [readonlyInput]="true"
+        [utc]="false"></p-calendar>
+      <button type="button" class="btn btn-outline-primary btn-sm p-2">Save</button>
+    </div>
+    <lib-crud-table-lib class="crud-table" [entityName]="'timeshifts'" [permissions]="actualPermissions" [entity]="timeShiftEntity"
+      [itemsPerPage]="5" [filter]="timeShiftFilter">
+    </lib-crud-table-lib>
+  </p-panel>
+</div>
+<div *ngIf="activeIndex == 1">
+  <p-panel header="Machines">
+    
+  </p-panel>
+</div>

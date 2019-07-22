@@ -8,7 +8,7 @@ export abstract class Initializer {
         const entityCount = await this.repository.createQueryBuilder().getCount();
 
         if (entityCount === 0) {
-            this.repository.save(this.entities);
+            await this.repository.save(this.entities);
         }
     }
 }

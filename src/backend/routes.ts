@@ -18,10 +18,28 @@ import { Schedule } from './entities/schedule';
 import { Role } from './entities/role';
 import errorCodes from '../utils/error.codes';
 import { haveIntersection } from '../utils/array';
+import { Machine } from './entities/machine';
+import MachineCtrl from './controllers/machine.controller';
+import { TimeShift } from './entities/timeshift';
+import TimeShiftCtrl from './controllers/timeshift.controller';
 
 export default function setRoutes(app) {
 
   const router = express.Router();
+
+  getGeneralRoutes({
+    router,
+    entityName: 'machines',
+    entity: new Machine,
+    ctrl: new MachineCtrl
+  });
+
+  getGeneralRoutes({
+    router,
+    entityName: 'timeshifts',
+    entity: new TimeShift,
+    ctrl: new TimeShiftCtrl
+  });
 
   // Users
   getGeneralRoutes({
