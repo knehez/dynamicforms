@@ -22,10 +22,19 @@ import { Machine } from './entities/machine';
 import MachineCtrl from './controllers/machine.controller';
 import { TimeShift } from './entities/timeshift';
 import TimeShiftCtrl from './controllers/timeshift.controller';
+import { Route } from './entities/route';
+import RouteCtrl from './controllers/route.controller';
 
 export default function setRoutes(app) {
 
   const router = express.Router();
+
+  getGeneralRoutes({
+    router,
+    entityName: 'routes',
+    entity: new Route,
+    ctrl: new RouteCtrl
+  });
 
   getGeneralRoutes({
     router,

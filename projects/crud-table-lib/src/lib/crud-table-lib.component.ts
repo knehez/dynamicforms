@@ -31,7 +31,11 @@ export class CrudTableLibComponent implements OnInit {
   @Output() cellSelect = new EventEmitter();
   @Output() backClicked = new EventEmitter();
   @Output() operationResult = new EventEmitter();
+  @Input() showAllItems: EventEmitter<void>;
 
+  @Input() showAdd = true;
+  @Input() showEdit = true;
+  @Input() showBack = true;
   models = [];
 
   page = 1;
@@ -57,6 +61,9 @@ export class CrudTableLibComponent implements OnInit {
 
     this.service.objectName = this.entityName;
     this.loadData();
+    if (this.showAllItems) {
+      this.showAllItems.subscribe(() => { this.showAll(); });
+    }
   }
 
   selectRow(row) {
@@ -322,7 +329,7 @@ export class CrudTableLibComponent implements OnInit {
 
   // get base64 endcoded string from backend
   async getFileData(id, size): Promise<any> {
-    const obj = {'id' : id, 'size' : size};
+    const obj = { 'id': id, 'size': size };
     return await this.service.file(obj);
   }
 

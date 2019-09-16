@@ -1,5 +1,3 @@
-import { User } from '../entities/user';
-import { Role } from '../entities/role';
 import { getRepository } from 'typeorm';
 import { Initializer } from './initializer';
 import { TimeShift } from '../entities/timeshift';

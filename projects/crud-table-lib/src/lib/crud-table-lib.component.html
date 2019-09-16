@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between p-2">
-  <div>
+  <div *ngIf="showBack">
     <button class="btn btn-sm btn-outline-success" type="button" aria-label="Search" (click)="backClicked.emit()"><span
         class="pi pi-arrow-left align-middle"></span></button>
   </div>
@@ -70,7 +70,7 @@
         </ng-container>
         <td align="right">
           <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-outline-primary mr-1 btn-sm crud-table-row-edit-btn"
+            <button type="button" class="btn btn-outline-primary mr-1 btn-sm crud-table-row-edit-btn" *ngIf="showEdit"
               (click)="editRow(dataRow)"
               [disabled]="!canUpdateEntity()">
               <span class="pi pi-pencil"></span>
@@ -96,7 +96,7 @@
   <button type="button" id="crud-table-show-all-btn" class="btn btn-outline-primary btn-sm align-self-start m-2" (click)="showAll()">Show
     all</button>
 
-  <button type="button" id="crud-table-add-btn" class="btn btn-outline-primary btn-sm align-self-start m-2" (click)="add()"
+  <button type="button" id="crud-table-add-btn" class="btn btn-outline-primary btn-sm align-self-start m-2" (click)="add()" *ngIf="showAdd"
     [disabled]="!canCreateEntity()">Add</button>
 
   <ngb-pagination class="m-2 pagination-sm" [collectionSize]="currentEntities" [(page)]="page"

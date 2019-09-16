@@ -2,7 +2,7 @@
 <div *ngIf="activeIndex == 0">
   <p-panel header="Time shifts">
     <div class="form-inline d-flex flex-row mb-3">
-      <div class="p-2">Name:</div>
+      <div class="p-2">Name</div>
       <input type="text" class="p-2" [(ngModel)]="shiftName">
       <div class="p-2">Start Time</div>
       <p-calendar class="p-2" [(ngModel)]="shiftStartTime" [timeOnly]="true" [showIcon]="true" [readonlyInput]="true"
@@ -10,15 +10,24 @@
       <div class="p-2">End Time</div>
       <p-calendar class="p-2" [(ngModel)]="shiftEndTime" [timeOnly]="true" [showIcon]="true" [readonlyInput]="true"
         [utc]="false"></p-calendar>
-      <button type="button" class="btn btn-outline-primary btn-sm p-2">Save</button>
+      <button type="button" class="btn btn-outline-primary btn-sm p-2" (click)="addNewTimeShift()">Save</button>
     </div>
     <lib-crud-table-lib class="crud-table" [entityName]="'timeshifts'" [permissions]="actualPermissions" [entity]="timeShiftEntity"
-      [itemsPerPage]="5" [filter]="timeShiftFilter">
+      [itemsPerPage]="5" [filter]="timeShiftFilter" [showAdd]="false" [showEdit]="false" [showBack]="false" [showAllItems]="showAllTimeShifts">
     </lib-crud-table-lib>
   </p-panel>
 </div>
 <div *ngIf="activeIndex == 1">
   <p-panel header="Machines">
-    
+    <lib-crud-table-lib class="crud-table" [entityName]="'machines'" [permissions]="actualPermissions" [entity]="machineEntity"
+      [itemsPerPage]="5" [filter]="machineFilter">
+    </lib-crud-table-lib>    
+  </p-panel>
+</div>
+<div *ngIf="activeIndex == 2">
+  <p-panel header="Routes / Operations">
+    <lib-crud-table-lib class="crud-table" [entityName]="'routes'" [permissions]="actualPermissions" [entity]="routeEntity"
+      [itemsPerPage]="5" [filter]="routeFilter">
+    </lib-crud-table-lib>    
   </p-panel>
 </div>
