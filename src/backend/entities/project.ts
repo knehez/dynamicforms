@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { FormField, Permissions } from '../../../projects/crud-table-lib/src/public_api';
+import { FormField, Permissions } from 'ngx-crud-forms';
 import { Product } from './product';
 import { RoleName } from './shared/roleName';
 

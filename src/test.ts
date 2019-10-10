@@ -16,7 +16,5 @@ getTestBed().initTestEnvironment(
 );
 // Then we find all the tests.
 const context = require.context('./', true, /\.spec\.ts$/);
-const projectsContext = require.context('../projects/crud-table-lib/src/', true, /\.spec\.ts$/);
 // And load the modules.
 context.keys().map(context);
-projectsContext.keys().map(projectsContext);

@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { Permissions } from '../../../projects/crud-table-lib/src/public_api';
+import { Permissions } from 'ngx-crud-forms';
 import { RoleName } from './shared/roleName';
 
 @Permissions({

@@ -38,7 +38,7 @@ gulp.task('watch-backend', function (done) {
 
 gulp.task('backend', gulp.series('clean-backend', 'compile-backend', 'watch-backend', function () {
     stream = nodemon({
-        script: 'dist-server/src/backend/app.js',
+        script: 'dist-server/backend/app.js',
         watch: 'dist-server/',
         delay: 1000, // milliseconds
     })

@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { haveIntersection } from 'src/utils/array';
 import { Role } from 'src/backend/entities/role';
 import { MessageService } from 'primeng/api';
-import { InputService, ANY_ROLE_ACCESS_KEY } from 'projects/crud-table-lib/src/public_api';
+import { InputService, ANY_ROLE_ACCESS_KEY } from 'ngx-crud-forms';
 
 @Component({
   selector: 'app-administration',

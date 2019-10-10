@@ -12,22 +12,22 @@
         [utc]="false"></p-calendar>
       <button type="button" class="btn btn-outline-primary btn-sm p-2" (click)="addNewTimeShift()">Save</button>
     </div>
-    <lib-crud-table-lib class="crud-table" [entityName]="'timeshifts'" [permissions]="actualPermissions" [entity]="timeShiftEntity"
+    <lib-crud-table class="crud-table" [entityName]="'timeshifts'" [permissions]="actualPermissions" [entity]="timeShiftEntity"
       [itemsPerPage]="5" [filter]="timeShiftFilter" [showAdd]="false" [showEdit]="false" [showBack]="false" [showAllItems]="showAllTimeShifts">
-    </lib-crud-table-lib>
+    </lib-crud-table>
   </p-panel>
 </div>
 <div *ngIf="activeIndex == 1">
   <p-panel header="Machines">
-    <lib-crud-table-lib class="crud-table" [entityName]="'machines'" [permissions]="actualPermissions" [entity]="machineEntity"
+    <lib-crud-table class="crud-table" [entityName]="'machines'" [permissions]="actualPermissions" [entity]="machineEntity"
       [itemsPerPage]="5" [filter]="machineFilter">
-    </lib-crud-table-lib>    
+    </lib-crud-table>    
   </p-panel>
 </div>
 <div *ngIf="activeIndex == 2">
   <p-panel header="Routes / Operations">
-    <lib-crud-table-lib class="crud-table" [entityName]="'routes'" [permissions]="actualPermissions" [entity]="routeEntity"
+    <lib-crud-table class="crud-table" [entityName]="'routes'" [permissions]="actualPermissions" [entity]="routeEntity"
       [itemsPerPage]="5" [filter]="routeFilter">
-    </lib-crud-table-lib>    
+    </lib-crud-table>    
   </p-panel>
 </div>

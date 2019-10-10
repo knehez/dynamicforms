@@ -9,7 +9,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CrudTableLibModule } from 'projects/crud-table-lib/src/public_api';
+import { CrudTableLibModule } from 'ngx-crud-forms';
 import { TypeormERDComponent } from './typeorm-erd/typeorm-erd.component';
 import { RouterTestingModule } from '@angular/router/testing';
 

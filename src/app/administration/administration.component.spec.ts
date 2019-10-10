@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AdministrationComponent } from './administration.component';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { AuthenticationService } from '../_services/authentication.service';
-import { InputService, CrudTableLibModule } from 'projects/crud-table-lib/src/public_api';
+import { InputService, CrudTableLibModule } from 'ngx-crud-forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';

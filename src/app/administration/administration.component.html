@@ -52,48 +52,48 @@
   </nav>
 
   <p-card *ngIf="currentSelection == 'project'">
-    <lib-crud-table-lib class="crud-table"
+    <lib-crud-table class="crud-table"
       [entityName]="'projects'" [entity]="projectEntity" 
       [permissions]="actualPermissions"
       [itemsPerPage]="5" [filter]="projectFilter" 
       (rowSelect)="projectSelected($event)" (operationResult)="handleResult($event)" (backClicked)="goBack()">
-    </lib-crud-table-lib>
+    </lib-crud-table>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'product'">
-    <lib-crud-table-lib class="crud-table" 
+    <lib-crud-table class="crud-table" 
       [entityName]="'products'" [entity]="productEntity"
       [permissions]="actualPermissions"
       [itemsPerPage]="5" [filter]="productFilter"
       (cellSelect)="productCellSelected($event)" (operationResult)="handleResult($event)" (backClicked)="goBack()">
-    </lib-crud-table-lib>
+    </lib-crud-table>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'user'">
-    <lib-crud-table-lib class="crud-table" 
+    <lib-crud-table class="crud-table" 
       [entityName]="'users'" [entity]="userEntity"
       [permissions]="actualPermissions"
       [itemsPerPage]="5" [filter]="userFilter" 
       (cellSelect)="userCellSelected($event)" (operationResult)="handleResult($event)" (backClicked)="goBack()">
-    </lib-crud-table-lib>
+    </lib-crud-table>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'task'">
-    <lib-crud-table-lib class="crud-table" 
+    <lib-crud-table class="crud-table" 
       [entityName]="'tasks'" [entity]="taskEntity"
       [permissions]="actualPermissions"
       [itemsPerPage]="5" [filter]="taskFilter"
       (cellSelect)="taskCellSelected($event)" (operationResult)="handleResult($event)" (backClicked)="goBack()">
-    </lib-crud-table-lib>
+    </lib-crud-table>
   </p-card>
 
   <p-card *ngIf="currentSelection == 'taskitem'">
-    <lib-crud-table-lib class="crud-table" 
+    <lib-crud-table class="crud-table" 
       [entityName]="'taskitems'" [entity]="taskItemEntity"
       [permissions]="actualPermissions"
       [filter]="taskItemFilter" [itemsPerPage]="5"
       (operationResult)="handleResult($event)" (backClicked)="goBack()">
-    </lib-crud-table-lib>
+    </lib-crud-table>
   </p-card>
   
   <p-card *ngIf="currentSelection == 'modelSetup'">

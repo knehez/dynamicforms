@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
-import { FormField, Permissions } from '../../../projects/crud-table-lib/src/public_api';
+import { FormField, Permissions } from 'ngx-crud-forms';
 import { TimeShift } from './timeshift';
 import { RoleName } from './shared/roleName';
 
