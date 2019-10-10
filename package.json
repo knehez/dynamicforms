@@ -11,7 +11,7 @@
     "gulp": "gulp",
     "migration": "npm run gulp clean-backend compile-backend && typeorm migration:run",
     "generate-migration": "npm run gulp clean-backend compile-backend && typeorm migration:generate",
-    "revert-migration": "npm run gulp clean-backend compile-backend && typeorm migration:revert"    
+    "revert-migration": "npm run gulp clean-backend compile-backend && typeorm migration:revert"
   },
   "private": true,
   "dependencies": {
@@ -51,6 +51,7 @@
     "moment": "^2.24.0",
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
+    "ngx-crud-forms": "^1.0.0",
     "primeicons": "^1.0.0",
     "primeng": "^8.0.0",
     "reflect-metadata": "^0.1.13",
