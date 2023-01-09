@@ -42,7 +42,7 @@
     "dotenv": "^6.2.0",
     "express-jwt": "^5.3.1",
     "express-unless": "^0.5.0",
-    "fullcalendar": "^4.0.0-alpha.2",
+    "fullcalendar": "^6.0.2",
     "gulp": "^4.0.0",
     "gulp-nodemon": "^2.4.2",
     "jimp": "^0.6.1",
