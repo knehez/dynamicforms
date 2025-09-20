@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CalendarComponent } from './calendar.component';
-import { FullCalendarModule } from 'primeng/fullcalendar';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
@@ -14,7 +14,6 @@ describe('CalendarComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CalendarComponent ],
-      imports: [
         FullCalendarModule,
         CalendarModule,
         DropdownModule,
@@ -36,3 +35,4 @@ describe('CalendarComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

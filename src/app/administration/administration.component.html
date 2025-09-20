@@ -10,37 +10,66 @@
 
     <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="currentSelection">
-          <label *ngIf="canReadEntity(projectEntity)" ngbButtonLabel class="btn-outline-primary btn-sm">
-            <input ngbButton type="radio" value="project">Project
-          </label>
-          <label *ngIf="canReadEntity(productEntity)" ngbButtonLabel class="btn-outline-primary btn-sm">
-            <input ngbButton type="radio" value="product">Product
-          </label>
-          <label *ngIf="canReadEntity(userEntity)" ngbButtonLabel class="btn-outline-primary btn-sm">
-            <input ngbButton type="radio" value="user">User Admin
-          </label>
-          <!--label *ngIf="canReadEntity(taskEntity)" ngbButtonLabel class="btn-outline-primary btn-sm">
-            <input ngbButton type="radio" value="task">Task
-          </label>
-          <label *ngIf="canReadEntity(taskItemEntity)" ngbButtonLabel class="btn-outline-primary btn-sm">
-            <input ngbButton type="radio" value="taskitem">Task item
-          </label-->
-          <label ngbButtonLabel class="btn-outline-primary btn-sm">
-            <input ngbButton type="radio" value="modelSetup">Model Setup
-          </label>
-          <label ngbButtonLabel class="btn-outline-primary btn-sm">
-            <input ngbButton type="radio" value="planner">Planner
-          </label>
-          <label *ngIf="canReadEntity(scheduleEntity)" ngbButtonLabel class="btn-outline-primary btn-sm">
-            <input ngbButton type="radio" value="schedule">Schedule
-          </label>
-          <label ngbButtonLabel class="btn-outline-primary btn-sm">
-            <input ngbButton type="radio" value="gantt">Gantt Diagram
-          </label>
-          <label *ngIf="canReadEntity(scheduleEntity)" ngbButtonLabel class="btn-outline-primary btn-sm">
-            <input ngbButton type="radio" value="calendar">Calendar
-          </label>
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary"
+                  *ngIf="canReadEntity(projectEntity)"
+                  [class.active]="currentSelection === 'project'"
+                  (click)="selectSection('project')">
+            Project
+          </button>
+          <button type="button" class="btn btn-outline-primary"
+                  *ngIf="canReadEntity(productEntity)"
+                  [class.active]="currentSelection === 'product'"
+                  (click)="selectSection('product')">
+            Product
+          </button>
+          <button type="button" class="btn btn-outline-primary"
+                  *ngIf="canReadEntity(userEntity)"
+                  [class.active]="currentSelection === 'user'"
+                  (click)="selectSection('user')">
+            User Admin
+          </button>
+          <!--
+          <button type="button" class="btn btn-outline-primary"
+                  *ngIf="canReadEntity(taskEntity)"
+                  [class.active]="currentSelection === 'task'"
+                  (click)="selectSection('task')">
+            Task
+          </button>
+          <button type="button" class="btn btn-outline-primary"
+                  *ngIf="canReadEntity(taskItemEntity)"
+                  [class.active]="currentSelection === 'taskitem'"
+                  (click)="selectSection('taskitem')">
+            Task item
+          </button>
+          -->
+          <button type="button" class="btn btn-outline-primary"
+                  [class.active]="currentSelection === 'modelSetup'"
+                  (click)="selectSection('modelSetup')">
+            Model Setup
+          </button>
+          <button type="button" class="btn btn-outline-primary"
+                  [class.active]="currentSelection === 'planner'"
+                  (click)="selectSection('planner')">
+            Planner
+          </button>
+          <button type="button" class="btn btn-outline-primary"
+                  *ngIf="canReadEntity(scheduleEntity)"
+                  [class.active]="currentSelection === 'schedule'"
+                  (click)="selectSection('schedule')">
+            Schedule
+          </button>
+          <button type="button" class="btn btn-outline-primary"
+                  [class.active]="currentSelection === 'gantt'"
+                  (click)="selectSection('gantt')">
+            Gantt Diagram
+          </button>
+          <button type="button" class="btn btn-outline-primary"
+                  *ngIf="canReadEntity(scheduleEntity)"
+                  [class.active]="currentSelection === 'calendar'"
+                  (click)="selectSection('calendar')">
+            Calendar
+          </button>
         </div>
       </ul>
       <div class="float-right">

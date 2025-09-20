@@ -36,7 +36,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CrudTableLibModule } from 'ngx-crud-forms';
 import { CalendarComponent } from './scheduler/calendar/calendar.component';
 import { CalendarModule } from 'primeng/calendar';
-import { FullCalendarModule } from 'primeng/fullcalendar';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { StepsModule } from 'primeng/steps';
 import { ModelSetupComponent } from './scheduler/model-setup/model-setup.component';
 
@@ -84,6 +84,7 @@ const routes: Routes = [
     SliderModule,
     CardModule,
     NgbModule,
+
     ChartModule,
     CheckboxModule,
     CalendarModule,
@@ -104,3 +105,5 @@ const routes: Routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+

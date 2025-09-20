@@ -4,7 +4,7 @@
     (onChange)="onMachineChange($event)"></p-dropdown>
 </div>
 
-<p-fullCalendar #fullCalendar [events]="events" [options]="options"></p-fullCalendar>
+<full-calendar #fullCalendar [options]="options" [events]="events"></full-calendar>
 
 <p-dialog header="{{title}}" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
   [style]="{width: '300px'}">

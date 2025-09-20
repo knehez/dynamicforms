@@ -10,7 +10,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "importHelpers": true,
-    "target": "es2015",
+    "target": "es2020",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "typeRoots": [

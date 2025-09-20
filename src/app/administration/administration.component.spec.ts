@@ -27,7 +27,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
-import { FullCalendarModule } from 'primeng/fullcalendar';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { SchedulerService } from '../scheduler/schedulerService';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DropdownModule } from 'primeng/dropdown';
@@ -81,7 +81,7 @@ describe('AdministrationComponent', () => {
         CalendarComponent,
         JobEditorComponent
       ],
-      imports: [
+      imports: [\n
         RouterTestingModule.withRoutes([{ path: 'login', component: AdministrationComponent }]),
         NgbModule,
         FormsModule,
@@ -189,3 +189,4 @@ describe('AdministrationComponent', () => {
     });
   });
 });
+

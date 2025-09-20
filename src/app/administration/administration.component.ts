@@ -48,6 +48,10 @@ export class AdministrationComponent {
   scheduleStart = new Date();
   backList = [];
 
+  selectSection(selection: string) {
+    this.currentSelection = selection;
+  }
+
   constructor(
     private messageService: MessageService,
     public authService: AuthenticationService,

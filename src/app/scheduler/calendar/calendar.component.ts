@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import listPlugin from '@fullcalendar/list';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { FullCalendarComponent } from '@fullcalendar/angular';
+import { CalendarOptions, EventApi, EventClickArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import * as moment from 'moment';
+import listPlugin from '@fullcalendar/list';
+import timeGridPlugin from '@fullcalendar/timegrid';
 
 @Component({
   selector: 'app-calendar',
@@ -11,19 +12,20 @@ import * as moment from 'moment';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-  @Input() events = [];
-  @ViewChild('fullCalendar') fullCalendar;
-  options: any;
-  machines: any;
-  selectedEvent;
-  selectedMachine;
+  @Input() events: any[] = [];
+  @ViewChild('fullCalendar') fullCalendar?: FullCalendarComponent;
+
+  options: CalendarOptions;
+  machines: any[] = [];
+  selectedEvent?: EventApi;
+  selectedMachine: any;
   displayDialog = false;
 
-  id;
-  title;
-  description;
-  start;
-  end;
+  id: any;
+  title = '';
+  description = '';
+  start: Date;
+  end: Date;
 
   // p-calendar dialog z-indexes
   startZIndex = 1000;
@@ -31,29 +33,23 @@ export class CalendarComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    // select distinct machines
-    this.machines = Array.from(new Set(this.events.map(s => s.id))).
-      map(o => {
-        return {
-          label: o,
-          value: this.events.find(s => s.id === o).id
-        };
-      });
+  ngOnInit(): void {
+    this.machines = Array.from(new Set(this.events.map((s) => s.id))).map((o) => ({
+      label: o,
+      value: this.events.find((s) => s.id === o).id
+    }));
 
-    if (Array.isArray(this.machines) && this.machines.length > 0) {
-      // select the first machine
+    if (this.machines.length > 0) {
       this.selectedMachine = this.machines[0].value;
     }
 
     this.options = {
-      defaultDate: this.events[0].start,
-      plugins: [listPlugin, dayGridPlugin, timeGridPlugin, interactionPlugin],
-      defaultView: 'dayGridMonth',
-      header: {
+      initialDate: this.events[0]?.start,
+      initialView: 'dayGridMonth',
+      headerToolbar: {
         left: 'prev,next',
         center: 'title',
-        right: 'dayGridMonth, timeGridWeek, timeGridDay, listDay, listWeek, listMonth'
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listDay,listWeek,listMonth'
       },
       views: {
         listDay: { buttonText: 'list day' },
@@ -61,72 +57,77 @@ export class CalendarComponent implements OnInit {
         listMonth: { buttonText: 'list month' }
       },
       locale: 'hu',
-      timezone: 'local',
+      timeZone: 'local',
       editable: true,
-      textEscape: false,
       allDaySlot: false,
       navLinks: true,
-      eventClick: event => {
+      plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
+      eventClick: (arg: EventClickArg) => {
         this.title = 'Edit Event';
-        this.selectedEvent = event.event;
-        this.description = event.event.title;
-        this.start = event.event.start;
-        this.end = event.event.end;
-        this.id = event.event.id;
-        if (event.event.backgroundColor === 'red') {
+        this.selectedEvent = arg.event;
+        this.description = arg.event.title;
+        this.start = arg.event.start;
+        this.end = arg.event.end;
+        this.id = arg.event.id;
+        if (arg.event.backgroundColor === 'red') {
           this.displayDialog = true;
         }
-        // console.log('coucou' + moment(event.event.start).format('YYYY-MM-DD HH:mm:ss'));
-        // this.eventOut = event
-        // this.eventOut.type = 'update'
       },
-      dateClick: info => {
+      dateClick: (info: any) => {
         this.title = 'Add Maintenance Intervall';
         this.description = 'Maintenance';
         this.start = info.date;
         this.end = info.date;
         this.id = this.selectedMachine;
         this.displayDialog = true;
-        // info.dayEl.style.backgroundColor = 'red';
       },
-      eventRender: (event, element, view) => {
-        return ['all', event.event.id].indexOf(this.selectedMachine) >= 0;
+      eventDidMount: (info: any) => {
+        const shouldDisplay = ['all', this.selectedMachine].indexOf(info.event.id) >= 0;
+        info.el.style.display = shouldDisplay ? '' : 'none';
       }
-    };
+    } as CalendarOptions;
   }
 
-  saveEvent() {
-    if (this.title === 'Add maintenance') {
-      this.events = [...this.events, {
-        'title': this.description,
-        'id': this.selectedMachine,
-        'start': this.start,
-        'end': this.end,
-        'color': 'red'
-      }];
+  saveEvent(): void {
+    if (this.title === 'Add Maintenance Intervall') {
+      this.events = [
+        ...this.events,
+        {
+          title: this.description,
+          id: this.selectedMachine,
+          start: this.start,
+          end: this.end,
+          color: 'red'
+        }
+      ];
+      this.refreshCalendar();
     }
-    if (this.title === 'Edit Event') {
+
+    if (this.title === 'Edit Event' && this.selectedEvent) {
       this.selectedEvent.setProp('title', this.description);
       this.selectedEvent.setStart(this.start);
       this.selectedEvent.setEnd(this.end);
-      this.fullCalendar.calendar.updateEvent(this.selectedEvent);
+      this.refreshCalendar();
     }
   }
 
-  onMachineChange(event) {
+  onMachineChange(event: any): void {
     console.log('event :' + event);
     console.log(event.value);
-    this.fullCalendar.calendar.rerenderEvents();
+    this.refreshCalendar();
   }
 
-  endCalendarSwapZIndex() {
+  endCalendarSwapZIndex(): void {
     this.startZIndex = 999;
     this.endZIndex = 1000;
   }
 
-  startCalendarSwapZIndex() {
+  startCalendarSwapZIndex(): void {
     this.startZIndex = 1000;
     this.endZIndex = 999;
   }
 
+  private refreshCalendar(): void {
+    this.fullCalendar?.getApi().render();
+  }
 }
