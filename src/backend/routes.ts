@@ -8,7 +8,7 @@ import ProjectCtrl from './controllers/project.controller';
 import AuthenticationCtrl from './controllers/authentication.controller';
 import ScheduleCtrl from './controllers/schedule.controller';
 import RoleCtrl from './controllers/role.controller';
-import { CLASS_PERMISSION_METADATA_KEY, ANY_ROLE_ACCESS_KEY } from 'ngx-crud-forms';
+import { CLASS_PERMISSION_METADATA_KEY, ANY_ROLE_ACCESS_KEY } from 'ngx-crud-forms/src/decorator';
 import { User } from './entities/user';
 import { Task } from './entities/task';
 import { TaskItem } from './entities/taskItem';

@@ -1,4 +1,4 @@
-import * as jwt from 'express-jwt';
+import jwt from 'express-jwt';
 import { environment } from '../environments/environment';
 import errorCodes from '../utils/error.codes';
 

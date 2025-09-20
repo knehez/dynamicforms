@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { FormField, Permissions } from 'ngx-crud-forms';
+import { FormField, Permissions } from 'ngx-crud-forms/src/decorator';
 import { RoleName } from './shared/roleName';
 
 @Permissions({
@@ -37,6 +37,6 @@ export class Product {
         required: true,
         order: 3
     })
-    @ManyToOne('Project', (project) => project.products, { eager: true })
+    @ManyToOne('Project', (project: import('./project').Project) => project.products, { eager: true })
     project!: import('./project').Project;
 }

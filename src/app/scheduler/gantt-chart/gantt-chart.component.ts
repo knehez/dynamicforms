@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as d3 from 'd3';
 import { SchedulerService } from '../schedulerService';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Component({
   selector: 'app-gantt-chart',

@@ -12,7 +12,7 @@
           <div style=" font-size: 0.8em; border-bottom: 1px solid #ddd;">
             <div class="d-flex flex-row flex-wrap align-items-center">
               <input class="m-2" style="width:110px" [(ngModel)]="job.name">
-              <p-dropdown class="smallDropdown m-2" [autoWidth]="false" [options]="jobTypes"
+              <p-dropdown class="smallDropdown m-2"  [options]="jobTypes"
                 [(ngModel)]="job.pieceType">
               </p-dropdown>
               <input type="number" class="m-2" style="width:30px" [(ngModel)]="job.numOfPieces">

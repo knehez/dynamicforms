@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AdministrationComponent } from './administration.component';
 import { MessageService, ConfirmationService } from 'primeng/api';
@@ -70,7 +70,7 @@ describe('AdministrationComponent', () => {
   let component: AdministrationComponent;
   let fixture: ComponentFixture<AdministrationComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         AdministrationComponent,

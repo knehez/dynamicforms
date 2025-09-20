@@ -2,7 +2,7 @@ import { getRepository } from 'typeorm';
 import BaseCtrl from './base.controller';
 import { Project } from '../entities/project';
 import * as fs from 'fs';
-import * as Jimp from 'jimp';
+import Jimp from 'jimp';
 import * as mime from 'mime-types';
 
 export default class ProjectCtrl extends BaseCtrl {

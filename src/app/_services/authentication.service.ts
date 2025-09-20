@@ -9,7 +9,7 @@ export class AuthenticationService {
   constructor(private http: HttpClient) { }
 
   login (username: string, password: string) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.http.post('/backend/login', { username, password })
         .subscribe(data => {
           if (data['success'] && data['accessToken'] && data['roles']) {

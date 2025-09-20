@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { JobEditorComponent } from './job-editor.component';
 import { TableModule } from 'primeng/table';
@@ -11,7 +11,7 @@ describe('JobEditorComponent', () => {
   let component: JobEditorComponent;
   let fixture: ComponentFixture<JobEditorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ JobEditorComponent ],
       imports: [

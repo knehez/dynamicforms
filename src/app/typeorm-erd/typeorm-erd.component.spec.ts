@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TypeormERDComponent } from './typeorm-erd.component';
 
@@ -6,7 +6,7 @@ describe('TypeormERDComponent', () => {
   let component: TypeormERDComponent;
   let fixture: ComponentFixture<TypeormERDComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ TypeormERDComponent ]
     })

@@ -1,6 +1,6 @@
 <div class="d-flex mb-2">
   <div class="p-2">Selected Machine: </div>
-  <p-dropdown [autoWidth]="false" [options]="machines" [(ngModel)]="selectedMachine"
+  <p-dropdown [options]="machines" [(ngModel)]="selectedMachine"
     (onChange)="onMachineChange($event)"></p-dropdown>
 </div>
 

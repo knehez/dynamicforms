@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { FormField, Permissions } from 'ngx-crud-forms';
+import { FormField, Permissions } from 'ngx-crud-forms/src/decorator';
 import { RoleName } from './shared/roleName';
 
 @Permissions({
@@ -39,6 +39,6 @@ export class Project {
     @Column({ nullable: true })
         fileData: string;
 
-    @OneToMany('Product', (product) => product.project)
+    @OneToMany('Product', (product: import('./product').Product) => product.project)
     products!: Array<import('./product').Product>;
 }
