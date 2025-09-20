@@ -127,7 +127,7 @@ export default class ProjectCtrl extends BaseCtrl {
           let data = '';
 
           try {
-            data = fs.readFileSync(completePath, { encoding: 'Base64'});
+            data = fs.readFileSync(completePath, { encoding: 'base64'});
           } catch (err) {
             console.log(err);
           }
