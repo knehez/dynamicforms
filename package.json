@@ -52,7 +52,7 @@
     "moment": "^2.24.0",
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
-    "ngx-crud-forms": "^4.2.0",
+    "ngx-crud-forms": "^6.0.0",
     "primeicons": "^6.0.1",
     "primeng": "^14.2.3",
     "rxjs": "~6.6.7",

@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { FormField, Permissions } from 'ngx-crud-forms/src/decorator';
+import { FormField, Permissions } from '../utils/ngx-crud-forms-decorators';
 import { TaskItem } from './taskItem';
 import { RoleName } from './shared/roleName';
 
