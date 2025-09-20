@@ -13,6 +13,9 @@ export class GanttChartComponent implements OnInit {
   svg;
   inner;
   zoom;
+  private isMousePanning = false;
+  private dragAxis: 'horizontal' | 'vertical' | null = null;
+  private readonly axisLockThreshold = 3;
 
   @Input()
   schedules = [];
@@ -63,36 +66,70 @@ export class GanttChartComponent implements OnInit {
         attr('transform', 'translate(0,' + (lastHeight * (i)) + ')'), this.ganttType);
     }
 
-    this.zoom = d3.zoom().on('zoom', () => {
-      if (d3.event.sourceEvent !== undefined) {
-        if (d3.event.sourceEvent instanceof WheelEvent) {
-          this.transform.translateX = d3.event.transform.x;
-          this.transform.translateY = d3.event.transform.y;
-          this.transform.scale = d3.event.transform.k;
+    this.zoom = d3.zoom()
+      .on('start', () => {
+        const source = d3.event.sourceEvent;
+        if (source instanceof MouseEvent && source.buttons === 1) {
+          this.isMousePanning = true;
+          this.dragAxis = null;
+        } else {
+          this.isMousePanning = false;
         }
-        if (d3.event.sourceEvent instanceof MouseEvent) {
-          this.transform.translateX = d3.event.transform.x;
-          this.transform.translateY = d3.event.transform.y;
+      })
+      .on('zoom', () => {
+        const source = d3.event.sourceEvent;
+        const eventTransform = d3.event.transform;
+        let nextX = eventTransform.x;
+        let nextY = eventTransform.y;
+        const nextScale = eventTransform.k;
+
+        if (!source) {
+          this.isMousePanning = false;
+          this.dragAxis = null;
+        } else if (source instanceof WheelEvent) {
+          this.isMousePanning = false;
+          this.dragAxis = null;
+        } else if (source instanceof MouseEvent && source.buttons === 1) {
+          if (!this.dragAxis) {
+            const deltaX = Math.abs(eventTransform.x - this.transform.translateX);
+            const deltaY = Math.abs(eventTransform.y - this.transform.translateY);
+            if (deltaX > this.axisLockThreshold || deltaY > this.axisLockThreshold) {
+              this.dragAxis = deltaX >= deltaY ? 'horizontal' : 'vertical';
+            }
+          }
+          if (this.dragAxis === 'horizontal') {
+            nextY = this.transform.translateY;
+          } else if (this.dragAxis === 'vertical') {
+            nextX = this.transform.translateX;
+          }
+        } else {
+          this.isMousePanning = false;
+          this.dragAxis = null;
         }
-      }
-      /*
-      // limit panning
-      if (this.transform.translateX > 180) {
-        this.transform.translateX = 180;
-        d3.event.transform.x = 180;
-      }
-      if (this.transform.translateY > 20) {
-        this.transform.translateY = 20;
-        d3.event.transform.y = 20;
-      }*/
-      if (this.fixYAxis) {
-        // több diagram esetén mindegyiket el kell tolni
-        this.yAxisElement.map(o => o.attr('transform', 'translate(' + (130 - this.transform.translateX / this.transform.scale) + ' , 0)'));
-      } else {
-        this.yAxisElement.map(o => o.attr('transform', 'translate(0, 0)'));
-      }
-      this.inner.attr('transform', d3.event.transform);
-    });
+
+        this.transform.translateX = nextX;
+        this.transform.translateY = nextY;
+        this.transform.scale = nextScale;
+
+        const constrainedTransform = d3.zoomIdentity.translate(this.transform.translateX, this.transform.translateY)
+          .scale(this.transform.scale);
+        const svgNode = this.svg.node();
+        if (svgNode) {
+          svgNode.__zoom = constrainedTransform;
+        }
+
+        if (this.fixYAxis) {
+          this.yAxisElement.map(o => o.attr('transform',
+                                            'translate(' + (130 - this.transform.translateX / this.transform.scale) + ' , 0)'));
+        } else {
+          this.yAxisElement.map(o => o.attr('transform', 'translate(0, 0)'));
+        }
+        this.inner.attr('transform', constrainedTransform);
+      })
+      .on('end', () => {
+        this.isMousePanning = false;
+        this.dragAxis = null;
+      });
 
     this.svg.call(this.zoom);
     this.renderGraph(this.zoomAndAnimate);
