@@ -1,6 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { FormField, Permissions } from 'ngx-crud-forms';
-import { Task } from './task';
 import { RoleName } from './shared/roleName';
 
 @Permissions({
@@ -41,6 +40,6 @@ export class TaskItem {
     @Column({ type: 'datetime', precision: 0 })
     dueDate: Date;
 
-    @ManyToOne(type => Task, task => task.taskItems)
-    task: Task;
+    @ManyToOne('Task', (task) => task.taskItems)
+    task!: import('./task').Task;
 }
