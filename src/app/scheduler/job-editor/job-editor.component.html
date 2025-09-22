@@ -1,58 +1,131 @@
-<div class="d-flex flex-row">
-  <div class="p-2" style="font-weight: bold;">{{schedule.description}}</div>
-  <div class="p-2">Makespan: {{result.makespan}}</div>
-  <div class="p-2">Setup time: {{result.setupTime}}</div>
-  <div class="p-2"># of setups: {{result.numberOfSetups}}</div>
+<!-- Schedule Information Header -->
+<div class="card mb-3">
+  <div class="card-header bg-primary text-white">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h6 class="mb-0">
+          <i class="pi pi-calendar mr-2"></i>{{schedule.description}}
+        </h6>
+      </div>
+      <div class="col-md-6">
+        <div class="d-flex justify-content-end">
+          <span class="badge badge-light mr-2">
+            <i class="pi pi-clock mr-1"></i>Makespan: {{result.makespan}}
+          </span>
+          <span class="badge badge-light mr-2">
+            <i class="pi pi-cog mr-1"></i>Setup: {{result.setupTime}}
+          </span>
+          <span class="badge badge-light">
+            <i class="pi pi-refresh mr-1"></i>Setups: {{result.numberOfSetups}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<p-table id="jobEditorTable" #dt [columns]="jobCols" [value]="jobs" dataKey="name" selectionMode="single"
-  [(selection)]="selectedJob" [paginator]="true" [rows]="5">
-  <ng-template pTemplate="header" let-columns>
-    <tr>
-      <th style="width: 3em"></th>
-      <th *ngFor="let col of columns">
-        {{col.header}}
-      </th>
-      <th style="width:3em"></th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns" let-index="rowIndex">
-    <tr [pSelectableRow]="rowData" (click)="rowSelect.emit({name: rowData.name, jobs: jobs, makespan: result.makespan}); selectJob(rowData)"
-      [pReorderableRow]="index">
-      <td>
-        <a href="#" [pRowToggler]="rowData" (click)="selectJob(rowData)">
-          <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
-        </a>
-      </td>
-      <td *ngFor="let col of columns">
-        {{ col.minPipe ? col.minPipe.transform(rowData[col.field] * 1000 * 60 + baseStartTime, col.arg) : 
-          col.datePipe ? col.datePipe.transform(rowData[col.field], col.arg) : rowData[col.field] }}
-      </td>
-      <td>
-        <i class="pi pi-window-maximize" pReorderableRowHandle></i>
-      </td>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
-    <tr>
-      <td [attr.colspan]="columns.length + 1">
-        <div class="ui-g ui-fluid">
-          <div class="list-group align-self-center m-1" *ngFor="let ops of rowData.route.operations; let i = index">
-            <li class="list-group-item list-group-item-action" *ngFor="let op of ops"
-              [ngClass]="{'active': rowData.selectedOperation[i] == op}" (click)="selectOperation(rowData, op, i)">
-              {{op[0] + ' (' + op[1] + ')'}}
-            </li>
-          </div>
-        </div>
-        <div class="align-items-center">
-          <small>Release Time: </small>
-          <input type="text" class="m-1" style="width:100px" value="{{(rowData.releaseTime * 1000 * 60 + this.baseStartTime) | date:'yyyy-MM-dd HH:mm'}}">
-          <button type="button" class="btn btn-sm btn-outline-success m-1" style="font-size:0.6rem; padding:0.15rem 0.25rem;" (click)="setReleaseTime(rowData)">Set release time</button>
-        </div>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
-<div class="d-flex align-items-center justify-content-end">
-  <button type="button" class="btn btn-sm btn-outline-success m-2" (click)="saveSchedule()">Save Schedule</button>
+<!-- Jobs Table -->
+<div class="card">
+  <div class="card-body p-0">
+    <p-table id="jobEditorTable" #dt [columns]="jobCols" [value]="jobs" dataKey="name" 
+             selectionMode="single" [(selection)]="selectedJob" [paginator]="true" [rows]="5"
+             styleClass="p-datatable-sm p-datatable-striped">
+      
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th style="width: 40px;" class="text-center">
+            <i class="pi pi-angle-down"></i>
+          </th>
+          <th *ngFor="let col of columns" class="font-weight-bold">
+            {{col.header}}
+          </th>
+          <th style="width: 40px;" class="text-center">
+            <i class="pi pi-bars"></i>
+          </th>
+        </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns" let-index="rowIndex">
+        <tr [pSelectableRow]="rowData" 
+            (click)="rowSelect.emit({name: rowData.name, jobs: jobs, makespan: result.makespan}); selectJob(rowData)"
+            [pReorderableRow]="index" 
+            class="cursor-pointer">
+          <td class="text-center">
+            <button type="button" class="btn btn-sm btn-link p-0" [pRowToggler]="rowData" (click)="selectJob(rowData)">
+              <i [ngClass]="expanded ? 'pi pi-chevron-down text-primary' : 'pi pi-chevron-right text-muted'"></i>
+            </button>
+          </td>
+          <td *ngFor="let col of columns">
+            <span [ngClass]="{'badge badge-info': col.field === 'name', 'text-muted': col.field !== 'name'}">
+              {{ col.minPipe ? col.minPipe.transform(rowData[col.field] * 1000 * 60 + baseStartTime, col.arg) : 
+                 col.datePipe ? col.datePipe.transform(rowData[col.field], col.arg) : rowData[col.field] }}
+            </span>
+          </td>
+          <td class="text-center">
+            <i class="pi pi-grip-vertical text-muted cursor-move" pReorderableRowHandle></i>
+          </td>
+        </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+        <tr class="bg-light">
+          <td [attr.colspan]="columns.length + 2" class="p-3">
+            <!-- Operations Selection -->
+            <div class="row mb-3">
+              <div class="col-12">
+                <h6 class="text-primary mb-2">
+                  <i class="pi pi-wrench mr-2"></i>Operations
+                </h6>
+                <div class="d-flex flex-wrap" *ngFor="let ops of rowData.route.operations; let i = index">
+                  <div class="btn-group btn-group-sm mr-2 mb-2" role="group">
+                    <button type="button" 
+                            class="btn" 
+                            [ngClass]="rowData.selectedOperation[i] == op ? 'btn-primary' : 'btn-outline-secondary'"
+                            *ngFor="let op of ops"
+                            (click)="selectOperation(rowData, op, i)">
+                      {{op[0]}} <small class="text-muted">({{op[1]}})</small>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Release Time Setting -->
+            <div class="row">
+              <div class="col-12">
+                <h6 class="text-primary mb-2">
+                  <i class="pi pi-clock mr-2"></i>Release Time
+                </h6>
+                <div class="input-group input-group-sm" style="max-width: 300px;">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="pi pi-calendar"></i>
+                    </span>
+                  </div>
+                  <input type="text" 
+                         class="form-control" 
+                         readonly
+                         [value]="(rowData.releaseTime * 1000 * 60 + this.baseStartTime) | date:'yyyy-MM-dd HH:mm'">
+                  <div class="input-group-append">
+                    <button type="button" 
+                            class="btn btn-outline-primary" 
+                            (click)="setReleaseTime(rowData)">
+                      <i class="pi pi-check mr-1"></i>Set
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<!-- Actions Footer -->
+<div class="mt-3 d-flex justify-content-end">
+  <button type="button" class="btn btn-success" (click)="saveSchedule()">
+    <i class="pi pi-save mr-2"></i>Save Schedule
+  </button>
 </div>

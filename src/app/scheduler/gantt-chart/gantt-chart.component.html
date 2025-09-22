@@ -1,31 +1,50 @@
-<div class="d-flex flex-row align-items-center">
-  <div class="m-2">
-    <p-checkbox class="p-2" [(ngModel)]="showTooltip" binary="true" ngDefaultControl></p-checkbox>
-    <span>Tooltip</span>
-  </div>
-  <div class="m-2">
-    <p-checkbox class="p-2" [(ngModel)]="fixYAxis" binary="true" ngDefaultControl></p-checkbox>
-    <span>Fix YAxis</span>
-  </div>
-  <div class="p-2 d-flex">
-    <span>Current time: {{currentTime | date:'yyyy-MM-dd HH:mm'}}</span>
-  </div>
-  <div class="btn-group p-2 ml-auto" data-toggle="buttons">
-    <label class="btn btn-outline-primary btn-sm" [class.active]="isSetCurrentTime">
-      <input type="checkbox" [(ngModel)]="isSetCurrentTime"> Set current time
-    </label>
-  </div>
-  <div class="p-2 d-flex">
-    <button type="button" class="btn btn-outline-success btn-sm" (click)="reschedule()">Re-Schedule jobs</button>
-  </div>
-  <div class="btn-group p-2" data-toggle="buttons">
-    <label class="btn btn-outline-success btn-sm" [class.active]="ganttType === 'MACHINE_ORIENTED'">
-      <input type="radio" [(ngModel)]="ganttType" value="MACHINE_ORIENTED" (click)="gantTypeChanged('MACHINE_ORIENTED')" style="display: none;"> Machine
-      Oriented
-    </label>
-    <label class="btn btn-outline-success btn-sm" [class.active]="ganttType === 'JOB_ORIENTED'">
-      <input type="radio" [(ngModel)]="ganttType" value="JOB_ORIENTED" (click)="gantTypeChanged('JOB_ORIENTED')" style="display: none;"> Job Oriented
-    </label>
+<!-- Gantt Chart Controls -->
+<div class="card mb-3">
+  <div class="card-body py-2">
+    <div class="row align-items-center">
+      <!-- Display Options -->
+      <div class="col-md-3 d-flex">
+        <div class="form-check form-check-inline">
+          <p-checkbox class="form-check-input" [(ngModel)]="showTooltip" binary="true" ngDefaultControl></p-checkbox>
+          <label class="form-check-label ml-2">Tooltip</label>
+        </div>
+        <div class="form-check form-check-inline ml-3">
+          <p-checkbox class="form-check-input" [(ngModel)]="fixYAxis" binary="true" ngDefaultControl></p-checkbox>
+          <label class="form-check-label ml-2">Fix Y-Axis</label>
+        </div>
+      </div>
+
+      <!-- Current Time Info -->
+      <div class="col-md-3 d-flex">
+        <span class="badge badge-info mr-2">{{currentTime | date:'yyyy-MM-dd HH:mm'}}</span>
+        <div class="btn-group btn-group-sm" data-toggle="buttons">
+          <label class="btn btn-outline-primary" [class.active]="isSetCurrentTime">
+            <input type="checkbox" [(ngModel)]="isSetCurrentTime" style="display: none;"> Set Current Time
+          </label>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="col-md-3 d-flex">
+        <button type="button" class="btn btn-outline-success btn-sm" (click)="reschedule()">
+          <i class="pi pi-refresh mr-1"></i>Re-Schedule Jobs
+        </button>
+      </div>
+
+      <!-- View Mode -->
+      <div class="col-md-3 d-flex">
+        <div class="btn-group btn-group-sm" data-toggle="buttons" role="group">
+          <label class="btn btn-outline-success" [class.active]="ganttType === 'MACHINE_ORIENTED'">
+            <input type="radio" [(ngModel)]="ganttType" value="MACHINE_ORIENTED" (click)="gantTypeChanged('MACHINE_ORIENTED')" style="display: none;">
+            <i class="pi pi-cog mr-1"></i>Machine
+          </label>
+          <label class="btn btn-outline-success" [class.active]="ganttType === 'JOB_ORIENTED'">
+            <input type="radio" [(ngModel)]="ganttType" value="JOB_ORIENTED" (click)="gantTypeChanged('JOB_ORIENTED')" style="display: none;">
+            <i class="pi pi-briefcase mr-1"></i>Job
+          </label>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
