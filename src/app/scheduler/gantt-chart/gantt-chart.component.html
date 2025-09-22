@@ -1,4 +1,4 @@
-<div class="d-flex flex-row align-self-center">
+<div class="d-flex flex-row align-items-center">
   <div class="m-2">
     <p-checkbox class="p-2" [(ngModel)]="showTooltip" binary="true" ngDefaultControl></p-checkbox>
     <span>Tooltip</span>
@@ -7,20 +7,24 @@
     <p-checkbox class="p-2" [(ngModel)]="fixYAxis" binary="true" ngDefaultControl></p-checkbox>
     <span>Fix YAxis</span>
   </div>
-  <div class="p-2">Current time: {{currentTime | date:'yyyy-MM-dd HH:mm'}}</div>
-  <div class="btn-group btn-group-toggle p-2 ml-auto">
-    <label class="btn-outline-primary btn-sm" ngbButtonLabel>
-      <input type="checkbox" ngbButton [(ngModel)]="isSetCurrentTime"> Set current time
+  <div class="p-2 d-flex">
+    <span>Current time: {{currentTime | date:'yyyy-MM-dd HH:mm'}}</span>
+  </div>
+  <div class="btn-group p-2 ml-auto" data-toggle="buttons">
+    <label class="btn btn-outline-primary btn-sm" [class.active]="isSetCurrentTime">
+      <input type="checkbox" [(ngModel)]="isSetCurrentTime"> Set current time
     </label>
   </div>
-  <button type="button" class="btn btn-sm btn-outline-success m-2" (click)="reschedule()">Re-Schedule jobs</button>
-  <div class="btn-group btn-group-toggle p-2" ngbRadioGroup [(ngModel)]="ganttType" ngDefaultControl>
-    <label class="btn-outline-success btn-sm" ngbButtonLabel>
-      <input type="radio" ngbButton [value]="'MACHINE_ORIENTED'" (click)="gantTypeChanged('MACHINE_ORIENTED')"> Machine
+  <div class="p-2 d-flex">
+    <button type="button" class="btn btn-outline-success btn-sm" (click)="reschedule()">Re-Schedule jobs</button>
+  </div>
+  <div class="btn-group p-2" data-toggle="buttons">
+    <label class="btn btn-outline-success btn-sm" [class.active]="ganttType === 'MACHINE_ORIENTED'">
+      <input type="radio" [(ngModel)]="ganttType" value="MACHINE_ORIENTED" (click)="gantTypeChanged('MACHINE_ORIENTED')" style="display: none;"> Machine
       Oriented
     </label>
-    <label class="btn-outline-success btn-sm" ngbButtonLabel>
-      <input type="radio" ngbButton value="'JOB_ORIENTED'" (click)="gantTypeChanged('JOB_ORIENTED')"> Job Oriented
+    <label class="btn btn-outline-success btn-sm" [class.active]="ganttType === 'JOB_ORIENTED'">
+      <input type="radio" [(ngModel)]="ganttType" value="JOB_ORIENTED" (click)="gantTypeChanged('JOB_ORIENTED')" style="display: none;"> Job Oriented
     </label>
   </div>
 </div>

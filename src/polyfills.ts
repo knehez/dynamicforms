@@ -71,6 +71,10 @@ import 'zone.js';  // Included with Angular CLI.
 
 import '@angular/localize/init';
 
+// Make moment available globally for ngx-crud-forms
+import * as moment from 'moment';
+(window as any).moment = moment;
+
 
 /***************************************************************************************************
  * APPLICATION IMPORTS

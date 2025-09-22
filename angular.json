@@ -31,6 +31,7 @@
               "src/styles.css"
             ],
             "scripts": [
+              "node_modules/moment/min/moment.min.js",
               "node_modules/graphlib/dist/graphlib.js",
               "node_modules/dagre/dist/dagre.js",
               "node_modules/chart.js/dist/chart.js"
@@ -103,6 +104,7 @@
               "src/styles.css"
             ],
             "scripts": [
+              "node_modules/moment/min/moment.min.js",
               "node_modules/graphlib/dist/graphlib.js",
               "node_modules/dagre/dist/dagre.js"
             ],
