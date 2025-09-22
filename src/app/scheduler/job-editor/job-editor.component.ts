@@ -26,8 +26,10 @@ export class JobEditorComponent implements OnInit, OnChanges {
 
   @ViewChild('dt') dataTable: Table;
 
-  constructor(private schedulerService: SchedulerService, private datePipe: DatePipe) { }
+  // D3 color scheme for consistency with Gantt chart
+  private d3Colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
 
+  constructor(private schedulerService: SchedulerService, private datePipe: DatePipe) { }
   ngOnInit() {
     this.jobs = this.scheduleLog.jobs;
     for (const job of this.jobs) {
@@ -50,6 +52,23 @@ export class JobEditorComponent implements OnInit, OnChanges {
       }];
 
     this.currentTime = this.currentTime - this.baseStartTime;
+  }
+
+  // Hash code generator for consistent color assignment (same as Gantt chart)
+  private hashCode(str: string): number {
+    let hash = 0;
+    if (str.length === 0) { return hash; }
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32bit integer
+    }
+    return Math.abs(hash);
+  }
+
+  // Get job color (same logic as Gantt chart)
+  getJobColor(jobName: string): string {
+    return this.d3Colors[this.hashCode(jobName) % 10];
   }
 
   selectJob(rowData) {
