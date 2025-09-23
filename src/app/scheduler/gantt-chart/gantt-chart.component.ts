@@ -37,7 +37,7 @@ export class GanttChartComponent implements OnInit {
   selectedJob;
   lastSelectedJob;
 
-  fixYAxis = false;
+  fixYAxis = true;
   yAxisElement = [];
 
   constructor(private schedulerService: SchedulerService) { }
@@ -45,7 +45,23 @@ export class GanttChartComponent implements OnInit {
   ngOnInit() {
     this.lastSelectedJob = '';
     d3.select('svg').remove();
-    this.svg = d3.select('.gantt-svg-wrapper').append('svg').attr('width', '100%').attr('height', '500');
+    this.svg = d3.select('.gantt-svg-wrapper').append('svg')
+      .attr('width', '100%')
+      .attr('height', '500');
+
+    // Add background rectangle for click detection
+    this.svg.append('rect')
+      .attr('width', '100%')
+      .attr('height', '100%')
+      .style('fill', 'transparent')
+      .style('pointer-events', 'all')
+      .on('click', () => {
+        // Clear selection when clicking on empty background
+        if (this.lastSelectedJob) {
+          this.clearSelection();
+        }
+      });
+
     const defs = this.svg.append('defs').append('pattern').attr('id', 'dashedBackground')
       .attr('width', '4').attr('height', '4').attr('patternUnits', 'userSpaceOnUse');
 
@@ -185,6 +201,22 @@ export class GanttChartComponent implements OnInit {
       unSelectedJobs.classed('unSelectedJob', false);
     } else {
       unSelectedJobs.classed('unSelectedJob', true);
+    }
+  }
+
+  clearSelection() {
+    // Reset all job selections
+    this.lastSelectedJob = null;
+
+    // Remove gray overlay from all jobs
+    const allJobs = d3.selectAll('rect[class*="J"]');
+    allJobs.classed('unSelectedJob', false);
+
+    // Clear selected job from all entities
+    for (const schedule of this.schedules) {
+      if (schedule.log.selectedJob) {
+        schedule.log.selectedJob = null;
+      }
     }
   }
 
@@ -357,7 +389,10 @@ export class GanttChartComponent implements OnInit {
       })
       .on('mouseover', operationToolTip)
       .on('mouseout', hideOperationToolTip)
-      .on('click', d => this.selectJob(d, entity))
+      .on('click', (d) => {
+        d3.event.stopPropagation(); // Prevent background click
+        this.selectJob(d, entity);
+      })
       .on('mousemove', moveTimeline);
 
     const textDyPos = () => {

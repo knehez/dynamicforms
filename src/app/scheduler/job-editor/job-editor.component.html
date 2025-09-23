@@ -33,9 +33,6 @@
       
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th style="width: 40px;" class="text-center">
-            <i class="pi pi-angle-down"></i>
-          </th>
           <th *ngFor="let col of columns" class="font-weight-bold">
             {{col.header}}
           </th>
@@ -45,16 +42,11 @@
         </tr>
       </ng-template>
       
-      <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns" let-index="rowIndex">
+      <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
         <tr [pSelectableRow]="rowData" 
             (click)="rowSelect.emit({name: rowData.name, jobs: jobs, makespan: result.makespan}); selectJob(rowData)"
             [pReorderableRow]="index" 
             class="cursor-pointer">
-          <td class="text-center">
-            <button type="button" class="btn btn-sm btn-link p-0" [pRowToggler]="rowData" (click)="selectJob(rowData)">
-              <i [ngClass]="expanded ? 'pi pi-chevron-down text-primary' : 'pi pi-chevron-right text-muted'"></i>
-            </button>
-          </td>
           <td *ngFor="let col of columns">
             <span [ngClass]="{'text-muted': col.field !== 'name'}" 
                   [style.background-color]="col.field === 'name' ? getJobColor(rowData[col.field]) : ''"
@@ -72,59 +64,6 @@
           </td>
         </tr>
       </ng-template>
-      
-      <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
-        <tr class="bg-light">
-          <td [attr.colspan]="columns.length + 2" class="p-3">
-            <!-- Operations Selection -->
-            <div class="row mb-3">
-              <div class="col-12">
-                <h6 class="text-primary mb-2">
-                  <i class="pi pi-wrench mr-2"></i>Operations
-                </h6>
-                <div class="d-flex flex-wrap" *ngFor="let ops of rowData.route.operations; let i = index">
-                  <div class="btn-group btn-group-sm mr-2 mb-2" role="group">
-                    <button type="button" 
-                            class="btn" 
-                            [ngClass]="rowData.selectedOperation[i] == op ? 'btn-primary' : 'btn-outline-secondary'"
-                            *ngFor="let op of ops"
-                            (click)="selectOperation(rowData, op, i)">
-                      {{op[0]}} <small class="text-muted">({{op[1]}})</small>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Release Time Setting -->
-            <div class="row">
-              <div class="col-12">
-                <h6 class="text-primary mb-2">
-                  <i class="pi pi-clock mr-2"></i>Release Time
-                </h6>
-                <div class="input-group input-group-sm" style="max-width: 300px;">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="pi pi-calendar"></i>
-                    </span>
-                  </div>
-                  <input type="text" 
-                         class="form-control" 
-                         readonly
-                         [value]="(rowData.releaseTime * 1000 * 60 + this.baseStartTime) | date:'yyyy-MM-dd HH:mm'">
-                  <div class="input-group-append">
-                    <button type="button" 
-                            class="btn btn-outline-primary" 
-                            (click)="setReleaseTime(rowData)">
-                      <i class="pi pi-check mr-1"></i>Set
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </ng-template>
     </p-table>
   </div>
 </div>
@@ -134,4 +73,75 @@
   <button type="button" class="btn btn-success" (click)="saveSchedule()">
     <i class="pi pi-save mr-2"></i>Save Schedule
   </button>
+</div>
+
+<!-- Job Editor Sidebar -->
+<div class="job-editor-sidebar" [class.open]="sidebarOpen" *ngIf="selectedSidebarJob">
+  <div class="sidebar-overlay" (click)="closeSidebar()"></div>
+  
+  <div class="sidebar-content">
+    <!-- Sidebar Header -->
+    <div class="sidebar-header">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <span class="job-color-indicator" 
+                [style.background-color]="getJobColor(selectedSidebarJob.name)"></span>
+          <h5 class="mb-0 text-truncate">{{selectedSidebarJob.name}}</h5>
+        </div>
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="closeSidebar()">
+          <i class="pi pi-times"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Sidebar Body -->
+    <div class="sidebar-body">
+      <!-- Operations Section -->
+      <div class="mb-4">
+        <h6 class="text-primary mb-3">
+          <i class="pi pi-wrench mr-2"></i>Operations
+        </h6>
+        <div class="operation-group mb-3" *ngFor="let ops of selectedSidebarJob.route.operations; let i = index">
+          <label class="form-label text-muted small">Step {{i + 1}}</label>
+          <div class="btn-group d-flex" role="group">
+            <button type="button" 
+                    class="btn flex-fill" 
+                    [ngClass]="isOperationSelected(selectedSidebarJob, op, i) ? 'btn-primary' : 'btn-outline-secondary'"
+                    *ngFor="let op of ops"
+                    (click)="selectOperation(selectedSidebarJob, op, i)">
+              <span class="font-weight-bold">{{op[0]}}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Release Time Section -->
+      <div class="mb-4">
+        <h6 class="text-primary mb-3">
+          <i class="pi pi-clock mr-2"></i>Release Time
+        </h6>
+        <div class="form-group">
+          <label class="form-label text-muted small">Current Release Time</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="pi pi-calendar"></i>
+              </span>
+            </div>
+            <input type="text" 
+                   class="form-control" 
+                   readonly
+                   [value]="(selectedSidebarJob.releaseTime * 1000 * 60 + this.baseStartTime) | date:'yyyy-MM-dd HH:mm'">
+            <div class="input-group-append">
+              <button type="button" 
+                      class="btn btn-primary" 
+                      (click)="setReleaseTime(selectedSidebarJob)">
+                <i class="pi pi-check mr-1"></i>Set to Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -43,3 +43,96 @@
     box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
+
+/* Job Editor Sidebar Styles */
+.job-editor-sidebar {
+    position: fixed;
+    top: 0;
+    right: -500px;
+    width: 500px;
+    height: 100vh;
+    z-index: 1050;
+    transition: right 0.3s ease-in-out;
+}
+
+.job-editor-sidebar.open {
+    right: 0;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: -1;
+}
+
+.sidebar-content {
+    background: white;
+    height: 100%;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #dee2e6;
+    background: #f8f9fa;
+}
+
+.job-color-indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.sidebar-body {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+.operation-group {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 0.75rem;
+}
+
+.operation-group .btn {
+    min-height: 40px;
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.operation-group .btn:not(:last-child) {
+    border-right: none;
+}
+
+.operation-group .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .job-editor-sidebar {
+        width: 100vw;
+        right: -100vw;
+    }
+    
+    .sidebar-header {
+        padding: 1rem;
+    }
+    
+    .sidebar-body {
+        padding: 1rem;
+    }
+}

@@ -24,6 +24,10 @@ export class JobEditorComponent implements OnInit, OnChanges {
   selectedJobName;
   jobCols;
 
+  // Sidebar state management
+  sidebarOpen = false;
+  selectedSidebarJob: any = null;
+
   @ViewChild('dt') dataTable: Table;
 
   // D3 color scheme for consistency with Gantt chart
@@ -78,12 +82,8 @@ export class JobEditorComponent implements OnInit, OnChanges {
     this.selectedJobName = rowData.name;
     this.dataTable.selection = rowData;
 
-    let i = 0;
-    rowData.selectedOperation = [];
-    for (const op of rowData.routePath) {
-      rowData.selectedOperation[i] = rowData.route.operations[i][op];
-      i++;
-    }
+    // Open sidebar instead of expanding row
+    this.openSidebar(rowData);
   }
 
   selectOperation(rowData, event, i) {
@@ -97,19 +97,28 @@ export class JobEditorComponent implements OnInit, OnChanges {
     if (changes.entity !== undefined && changes.entity.currentValue !== undefined && !changes.entity.firstChange) {
       this.jobs = changes.entity.currentValue.jobs;
       this.result = changes.entity.currentValue.result;
-      this.selectJob(this.jobs.filter(j => j.name === this.selectedJobName)[0]);
+      // Don't auto-open sidebar after re-schedule, just update data
+      const job = this.jobs.filter(j => j.name === this.selectedJobName)[0];
+      if (job) {
+        this.dataTable.selection = job;
+      }
     }
     if (changes.result !== undefined && changes.result.currentValue !== undefined && !changes.result.firstChange) {
       this.result = changes.result.currentValue;
     }
     if (changes.scheduleLog !== undefined && changes.scheduleLog.currentValue !== undefined && !changes.scheduleLog.firstChange) {
       this.jobs = changes.scheduleLog.currentValue.jobs;
-      this.selectJob(this.jobs.filter(j => j.name === this.selectedJobName)[0]);
+      // Don't auto-open sidebar after re-schedule, just update data
+      const job = this.jobs.filter(j => j.name === this.selectedJobName)[0];
+      if (job) {
+        this.dataTable.selection = job;
+      }
     }
     if (changes.selectedJob !== undefined && changes.selectedJob.currentValue !== undefined && !changes.selectedJob.firstChange) {
       let i = 0;
       for (i = 0; i < this.jobs.length; i++) {
         if (this.jobs[i].name === changes.selectedJob.currentValue.name) {
+          // Only open sidebar when explicitly selected from external component
           this.selectJob(changes.selectedJob.currentValue);
           this.dataTable.first = Math.floor(i / this.dataTable.rows) * this.dataTable.rows;
           break;
@@ -137,5 +146,35 @@ export class JobEditorComponent implements OnInit, OnChanges {
 
   convertToTime(time) {
     return moment.parseZone(time).format('YYYY-MM-DD HH:mm');
+  }
+
+  // Sidebar management methods
+  openSidebar(job: any) {
+    this.selectedSidebarJob = job;
+    this.sidebarOpen = true;
+
+    // Always initialize/refresh selected operations for sidebar
+    job.selectedOperation = [];
+    let i = 0;
+    for (const op of job.routePath) {
+      job.selectedOperation[i] = job.route.operations[i][op];
+      i++;
+    }
+  }
+
+  closeSidebar() {
+    this.sidebarOpen = false;
+    this.selectedSidebarJob = null;
+  }
+
+  // Helper method to check if an operation is selected
+  isOperationSelected(job: any, operation: any, stepIndex: number): boolean {
+    if (!job.selectedOperation || !job.selectedOperation[stepIndex]) {
+      return false;
+    }
+
+    // Compare by both name and time (operation[0] and operation[1])
+    const selected = job.selectedOperation[stepIndex];
+    return selected[0] === operation[0] && selected[1] === operation[1];
   }
 }
